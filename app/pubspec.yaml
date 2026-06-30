@@ -1,0 +1,48 @@
+name: mobile_app
+description: Flutter client for mobile-app.
+publish_to: none
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  # State management
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+  # Navigation
+  go_router: ^14.6.2
+  # Networking (backend API client)
+  dio: ^5.7.0
+  # Native share sheet
+  share_plus: ^10.1.4
+  # SVG rendering (zodiac icons exported from Figma)
+  flutter_svg: ^2.0.10+1
+  # Audio playback (book chapter recitation)
+  just_audio: ^0.9.42
+  # Fonts (Inter, from Figma) — loaded at runtime, no asset bundling needed
+  google_fonts: ^6.2.1
+  # Design tokens (Figma-generated)
+  design_tokens:
+    path: ../packages/design_tokens
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.13
+  riverpod_generator: ^2.6.3
+  custom_lint: ^0.7.0
+  riverpod_lint: ^2.6.3
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/zodiac/
+    - assets/books/

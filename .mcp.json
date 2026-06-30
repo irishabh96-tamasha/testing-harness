@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "figma-dev-mode": {
+      "type": "http",
+      "url": "http://127.0.0.1:3845/mcp"
+    },
+    "linear-mcp": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/linear-mcp-server"],
+      "env": {
+        "LINEAR_API_KEY": "your-linear-api-key"
+      }
+    },
+    "confluence-mcp": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/confluence-mcp-server"],
+      "env": {
+        "ATLASSIAN_API_TOKEN": "your-token",
+        "ATLASSIAN_EMAIL": "your-email",
+        "CONFLUENCE_BASE_URL": "your-base-url"
+      }
+    }
+  }
+}

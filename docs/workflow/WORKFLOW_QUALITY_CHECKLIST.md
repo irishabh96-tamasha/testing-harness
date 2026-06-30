@@ -174,9 +174,9 @@ Check if ANY of the following apply:
 
 ---
 
-## {{TICKET_PREFIX}}-321 Retrospective Check
+## MOB-321 Retrospective Check
 
-**Purpose**: Prevent {{TICKET_PREFIX}}-321-type gaps in future work
+**Purpose**: Prevent MOB-321-type gaps in future work
 
 ### Gap Prevention Questions
 
@@ -212,13 +212,13 @@ Check if ANY of the following apply:
 
 ### Self-Check Question
 
-**"Would {{TICKET_PREFIX}}-321 gap happen with this workflow?"**
+**"Would MOB-321 gap happen with this workflow?"**
 
 - [ ] **NO** → Proceed with confidence
 - [ ] **YES** → Fix before PR
-- [ ] **UNSURE** → Review {{TICKET_PREFIX}}-321 report, invoke System Architect
+- [ ] **UNSURE** → Review MOB-321 report, invoke System Architect
 
-### {{TICKET_PREFIX}}-321 Gap Indicators
+### MOB-321 Gap Indicators
 
 **⚠️ WARNING SIGNS** (If ANY apply, review workflow):
 
@@ -276,7 +276,7 @@ Check if ANY of the following apply:
 
 **Completed by**: [ARCHitect-in-CLI]  
 **Date**: [YYYY-MM-DD]  
-**Linear Ticket**: {{TICKET_PREFIX}}-XXX
+**Linear Ticket**: MOB-XXX
 
 **System Architect Approval**: [YES/NO/N/A]  
 **Approval Reference**: [Link to Linear comment or ADR]
@@ -296,7 +296,7 @@ Check if ANY of the following apply:
 - ✅ System Architect review: N/A
 - ✅ Ready for PR
 
-**Example**: {{TICKET_PREFIX}}-321 documentation files (runbooks, best practices)
+**Example**: MOB-321 documentation files (runbooks, best practices)
 
 ### Pattern 2: Simple Code Changes
 
@@ -325,7 +325,7 @@ Check if ANY of the following apply:
 
 ## Failure Patterns (Avoid These)
 
-### Anti-Pattern 1: {{TICKET_PREFIX}}-321 Gap
+### Anti-Pattern 1: MOB-321 Gap
 
 **What Happened**:
 
@@ -380,12 +380,12 @@ Check if ANY of the following apply:
 ### v1.0 (2025-10-06)
 
 - Initial workflow quality checklist
-- {{TICKET_PREFIX}}-321 retrospective check
+- MOB-321 retrospective check
 - System Architect review gates
 - Gap prevention questions
 
 ---
 
-**This checklist prevents architectural governance gaps like {{TICKET_PREFIX}}-321**
+**This checklist prevents architectural governance gaps like MOB-321**
 
 **Remember**: Quality is not negotiable. Take time to do it right the first time.

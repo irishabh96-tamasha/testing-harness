@@ -15,7 +15,7 @@ FILES=(
   "docs/onboarding/DAY-1-CHECKLIST.md"
   "docs/onboarding/META-PROMPTS-FOR-USERS.md"
   "docs/onboarding/USER-JOURNEY-VALIDATION-REPORT.md"
-  "docs/onboarding/{{TICKET_PREFIX}}-326-COMPLETION-SUMMARY.md"
+  "docs/onboarding/MOB-326-COMPLETION-SUMMARY.md"
   "docs/team/PLANNING-AGENT-META-PROMPT.md"
   "patterns_library/database/rls-migration.md"
 )
@@ -79,6 +79,6 @@ echo "Files updated: ${#FILES[@]}"
 echo ""
 echo "Next steps:"
 echo "1. Review changes: git diff"
-echo "2. Commit changes: git add -A && git commit -m 'docs: fix remaining documentation references [{{TICKET_PREFIX}}-326]'"
+echo "2. Commit changes: git add -A && git commit -m 'docs: fix remaining documentation references [MOB-326]'"
 echo ""
 

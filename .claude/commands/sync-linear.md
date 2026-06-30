@@ -1,6 +1,6 @@
 ---
 description: Sync current work with Linear ticket status
-allowed-tools: [Read, Write, Edit, Bash, Grep, Glob, mcp__{{MCP_LINEAR_SERVER}}__*]
+allowed-tools: [Read, Write, Edit, Bash, Grep, Glob, mcp__linear-mcp__*]
 ---
 
 Synchronize current branch work with Linear ticket, ensuring ticket reflects actual progress.
@@ -12,13 +12,13 @@ Synchronize current branch work with Linear ticket, ensuring ticket reflects act
 Extract WOR number from branch:
 
 ```bash
-git branch --show-current | grep -oE '{{TICKET_PREFIX}}-[0-9]+'
+git branch --show-current | grep -oE 'MOB-[0-9]+'
 ```
 
 Fetch ticket details:
 
 ```text
-mcp__{{MCP_LINEAR_SERVER}}__get_issue {{{TICKET_PREFIX}}-number}
+mcp__linear-mcp__get_issue {MOB-number}
 ```
 
 ### 2. Analyze Work Done
@@ -72,7 +72,7 @@ Based on work analysis:
 Use Linear MCP to update:
 
 ```text
-mcp__{{MCP_LINEAR_SERVER}}__update_issue
+mcp__linear-mcp__update_issue
 ```
 
 Update fields:
@@ -117,7 +117,7 @@ Create detailed comment:
 Add comment via:
 
 ```text
-mcp__{{MCP_LINEAR_SERVER}}__create_comment
+mcp__linear-mcp__create_comment
 ```
 
 ### 6. Link Related Items

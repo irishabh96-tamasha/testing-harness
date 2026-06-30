@@ -1,7 +1,7 @@
 ---
 name: bsa
 description: Business Systems Analyst - Pattern discovery, spec creation, acceptance criteria definition
-tools: [Read, Write, Edit, Bash, Grep, Glob, mcp__{{MCP_LINEAR_SERVER}}__*]
+tools: [Read, Write, Edit, Bash, Grep, Glob, mcp__linear-mcp__*]
 model: opus
 ---
 
@@ -36,7 +36,7 @@ yarn lint:md && echo "BSA SUCCESS" || echo "BSA FAILED"
 
 ## Pattern Discovery (MANDATORY)
 
-### 0. Check Pattern Library FIRST (MANDATORY - {{TICKET_PREFIX}}-300)
+### 0. Check Pattern Library FIRST (MANDATORY - MOB-300)
 
 ```bash
 # Check pattern library for existing patterns
@@ -91,7 +91,7 @@ ls specs/ | grep -i "feature_name|similar_topic"
 grep -r "As a.*I want to" specs/
 
 # Check implementation patterns from past specs
-cat specs/{{TICKET_PREFIX}}-XXX-similar-feature-spec.md
+cat specs/MOB-XXX-similar-feature-spec.md
 
 # Find acceptance criteria patterns
 grep -r "Acceptance Criteria" specs/
@@ -238,13 +238,13 @@ Create implementation specs when:
 #### Step 1: Copy Spec Template
 
 ```bash
-# Create spec file for {{TICKET_PREFIX}}-XXX
-cp specs/spec_template.md specs/{{TICKET_PREFIX}}-XXX-{description}-spec.md
+# Create spec file for MOB-XXX
+cp specs/spec_template.md specs/MOB-XXX-{description}-spec.md
 ```
 
 #### Step 2: Extract from User Story
 
-**From Linear ticket ({{TICKET_PREFIX}}-XXX)**:
+**From Linear ticket (MOB-XXX)**:
 
 - User story text
 - Acceptance criteria
@@ -255,10 +255,10 @@ cp specs/spec_template.md specs/{{TICKET_PREFIX}}-XXX-{description}-spec.md
 
 ```bash
 # Find related implementation patterns
-ls specs/{{TICKET_PREFIX}}-*-spec.md | grep "similar_feature"
+ls specs/MOB-*-spec.md | grep "similar_feature"
 
 # Review implementation approach
-cat specs/{{TICKET_PREFIX}}-XXX-similar-spec.md
+cat specs/MOB-XXX-similar-spec.md
 ```
 
 #### Step 3: Complete Spec Sections
@@ -268,7 +268,7 @@ cat specs/{{TICKET_PREFIX}}-XXX-similar-spec.md
 ```markdown
 ## High-Level Objective
 
-- Implement [feature] as specified in {{TICKET_PREFIX}}-XXX
+- Implement [feature] as specified in MOB-XXX
 - Provide [business value] to [user type]
 ```
 
@@ -318,7 +318,7 @@ cat specs/{{TICKET_PREFIX}}-XXX-similar-spec.md
 
 **Architecture**:
 
-- How it fits into existing {{PROJECT_NAME}} architecture
+- How it fits into existing mobile-app architecture
 - Components affected
 - Architectural decisions needed
 - Tech stack considerations (Next.js, PostgreSQL, Prisma, Clerk, Stripe, PostHog)
@@ -326,7 +326,7 @@ cat specs/{{TICKET_PREFIX}}-XXX-similar-spec.md
 **Dependencies**:
 
 - External dependencies (libraries, services, APIs)
-- Internal dependencies ({{PROJECT_NAME}} components)
+- Internal dependencies (mobile-app components)
 - Version requirements
 
 **Security Considerations**:
@@ -376,7 +376,7 @@ cat specs/{{TICKET_PREFIX}}-XXX-similar-spec.md
 
 #### Step 6: Create Subtasks in Linear
 
-From spec, add subtasks to {{TICKET_PREFIX}}-XXX:
+From spec, add subtasks to MOB-XXX:
 
 ```markdown
 ## Subtasks for Linear
@@ -436,7 +436,7 @@ echo "SUCCESS" || echo "FAILED"
   ```bash
   ls specs/ | grep -i "similar_topic"
   grep -r "As a.*similar_action" specs/
-  cat specs/{{TICKET_PREFIX}}-XXX-similar-spec.md
+  cat specs/MOB-XXX-similar-spec.md
   ```
 - Search codebase for similar features
 - Review session history for related work

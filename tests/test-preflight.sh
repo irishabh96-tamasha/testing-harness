@@ -255,9 +255,9 @@ identity:
   TICKET_PREFIX: "TST"
   MAIN_BRANCH: "main"
 substitutions:
-  "{{PROJECT_NAME}}": "TestProject"
-  "{{GITHUB_ORG}}": "test-org"
-  "{{TICKET_PREFIX}}": "TST"
+  "mobile-app": "TestProject"
+  "tamasha-live": "test-org"
+  "MOB": "TST"
 protected:
   - "CLAUDE.md"
   - "settings.local.json"
@@ -307,10 +307,10 @@ echo -e "\n${CYAN}=== Test 2: scan_unreplaced_tokens -- file with unreplaced tok
 # =============================================================================
 mkdir -p "$TEST_DIR/token-dirty-file"
 cat > "$TEST_DIR/token-dirty-file/dirty.md" <<'EOF'
-# {{PROJECT_NAME}} README
-This is the {{GITHUB_ORG}} project.
+# mobile-app README
+This is the tamasha-live project.
 Line 3 is fine.
-Ticket prefix: {{TICKET_PREFIX}}
+Ticket prefix: MOB
 EOF
 
 output=$(
@@ -334,9 +334,9 @@ output=$(
 )
 
 assert_contains "$output" "SCAN_RESULT: dirty" "File with unreplaced tokens detected"
-assert_contains "$output" "dirty.md:1: unreplaced token {{PROJECT_NAME}}" "Reports file:line for PROJECT_NAME"
-assert_contains "$output" "dirty.md:2: unreplaced token {{GITHUB_ORG}}" "Reports file:line for GITHUB_ORG"
-assert_contains "$output" "dirty.md:4: unreplaced token {{TICKET_PREFIX}}" "Reports file:line for TICKET_PREFIX"
+assert_contains "$output" "dirty.md:1: unreplaced token mobile-app" "Reports file:line for PROJECT_NAME"
+assert_contains "$output" "dirty.md:2: unreplaced token tamasha-live" "Reports file:line for GITHUB_ORG"
+assert_contains "$output" "dirty.md:4: unreplaced token MOB" "Reports file:line for TICKET_PREFIX"
 
 # =============================================================================
 echo -e "\n${CYAN}=== Test 3: scan_unreplaced_tokens -- ignores non-manifest tokens ===${NC}\n"
@@ -475,7 +475,7 @@ output=$(
     load_manifest
 
     mkdir -p "$TMP_DIR/.claude"
-    echo "# {{PROJECT_NAME}} has unreplaced tokens" > "$TMP_DIR/.claude/readme.md"
+    echo "# mobile-app has unreplaced tokens" > "$TMP_DIR/.claude/readme.md"
 
     sync_plan="new|readme.md|readme.md"
     if run_preflight "$sync_plan" "$PROJ/.claude" 2>&1; then
@@ -488,7 +488,7 @@ output=$(
 
 assert_contains "$output" "PREFLIGHT_RESULT: fail" "Unreplaced token causes preflight failure"
 assert_contains "$output" "Unreplaced token violation" "Token violation error message shown"
-assert_contains "$output" "readme.md:1: unreplaced token {{PROJECT_NAME}}" "Token location reported"
+assert_contains "$output" "readme.md:1: unreplaced token mobile-app" "Token location reported"
 
 # =============================================================================
 echo -e "\n${CYAN}=== Test 8: --skip-preflight flag ===${NC}\n"
@@ -523,7 +523,7 @@ create_manifest_with_subs "$PROJ3"
 # Create mock upstream with ONLY unreplaced tokens (will fail preflight)
 MOCK_DIR3="$TEST_DIR/mock-upstream-auto"
 mkdir -p "$MOCK_DIR3/.claude"
-echo "# {{PROJECT_NAME}} still has tokens" > "$MOCK_DIR3/.claude/some-file.md"
+echo "# mobile-app still has tokens" > "$MOCK_DIR3/.claude/some-file.md"
 
 MOCKED3=$(create_mocked_script "$PROJ3" "$MOCK_DIR3")
 
@@ -548,7 +548,7 @@ create_manifest_with_subs "$PROJ4"
 
 MOCK_DIR4="$TEST_DIR/mock-upstream-noplaceholders"
 mkdir -p "$MOCK_DIR4/.claude"
-echo "# {{PROJECT_NAME}} still has tokens" > "$MOCK_DIR4/.claude/some-file.md"
+echo "# mobile-app still has tokens" > "$MOCK_DIR4/.claude/some-file.md"
 
 MOCKED4=$(create_mocked_script "$PROJ4" "$MOCK_DIR4")
 
@@ -558,7 +558,7 @@ output=$(bash "$MOCKED4" sync --no-placeholders 2>&1) || true
 assert_contains "$output" "Preflight passed" "Preflight passes when --no-placeholders skips token check"
 assert_not_contains "$output" "Unreplaced token violation" "Token violation NOT reported with --no-placeholders"
 # Verify tokens are preserved in the output file
-assert_file_content "$PROJ4/.claude/some-file.md" "{{PROJECT_NAME}}" "Tokens preserved in file with --no-placeholders"
+assert_file_content "$PROJ4/.claude/some-file.md" "mobile-app" "Tokens preserved in file with --no-placeholders"
 
 # =============================================================================
 echo -e "\n${CYAN}=== Test 11: Provenance tracking in .harness-sync.json ===${NC}\n"
@@ -718,7 +718,7 @@ output=$(
     load_manifest
 
     mkdir -p "$TMP_DIR/.claude"
-    echo "# {{PROJECT_NAME}} token" > "$TMP_DIR/.claude/readme.md"
+    echo "# mobile-app token" > "$TMP_DIR/.claude/readme.md"
 
     # Plan with scope violation, protected violation, and token violation
     sync_plan="new|../escape.txt|../escape.txt
@@ -747,7 +747,7 @@ create_manifest_with_subs "$PROJ6"
 
 MOCK_DIR6="$TEST_DIR/mock-upstream-integration"
 mkdir -p "$MOCK_DIR6/.claude/agents"
-echo "# {{PROJECT_NAME}} agent" > "$MOCK_DIR6/.claude/agents/be-developer.md"
+echo "# mobile-app agent" > "$MOCK_DIR6/.claude/agents/be-developer.md"
 echo "# Plain file no tokens" > "$MOCK_DIR6/.claude/agents/readme.md"
 
 MOCKED6=$(create_mocked_script "$PROJ6" "$MOCK_DIR6")

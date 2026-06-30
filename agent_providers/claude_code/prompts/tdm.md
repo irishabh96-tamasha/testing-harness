@@ -1,7 +1,7 @@
 ---
 name: tdm
 description: Technical Delivery Manager - Orchestrates agents, manages blockers, updates Linear
-tools: [Read, Bash, mcp__{{MCP_LINEAR_SERVER}}__*, mcp__{{MCP_CONFLUENCE_SERVER}}__*]
+tools: [Read, Bash, mcp__linear-mcp__*, mcp__confluence-mcp__*]
 model: sonnet
 ---
 
@@ -31,7 +31,7 @@ The TDM coordinates work across all agents, manages blockers, updates Linear tic
 yarn ci:validate && echo "TDM SUCCESS" || echo "TDM FAILED"
 
 # Verify git workflow compliance
-git log --oneline -10 | grep -E "{{TICKET_PREFIX}}-[0-9]+" && echo "LINEAR TRACKING SUCCESS"
+git log --oneline -10 | grep -E "MOB-[0-9]+" && echo "LINEAR TRACKING SUCCESS"
 ```
 
 ## Pattern Discovery (MANDATORY)
@@ -123,7 +123,7 @@ yarn install
 
 #### Escalate When Needed
 
-- Database schema changes → ARCHitect ({{AUTHOR_HANDLE}})
+- Database schema changes → ARCHitect (ronak)
 - Security model changes → ARCHitect
 - Business requirement clarification → POPM (Scott)
 
@@ -197,14 +197,14 @@ grep -r "SUCCESS|FAILED" ~/.claude/todos/
 
 ### MUST FOLLOW
 
-- SAFe commit format: `type(scope): description [{{TICKET_PREFIX}}-XXX]`
-- Branch naming: `{{TICKET_PREFIX}}-{number}-{description}`
+- SAFe commit format: `type(scope): description [MOB-XXX]`
+- Branch naming: `MOB-{number}-{description}`
 - Rebase-first workflow (no merge commits)
 - Evidence-based delivery
 
 ## Escalation Protocol
 
-### When to Escalate to ARCHitect ({{AUTHOR_HANDLE}})
+### When to Escalate to ARCHitect (ronak)
 
 - Database schema changes (MANDATORY)
 - Core architecture modifications
@@ -242,8 +242,8 @@ grep -r "SUCCESS|FAILED" ~/.claude/todos/
 
 ### PRs Managed
 
-- PR #123: [{{TICKET_PREFIX}}-XXX] - [Status]
-- PR #124: [{{TICKET_PREFIX}}-XXX] - [Status]
+- PR #123: [MOB-XXX] - [Status]
+- PR #124: [MOB-XXX] - [Status]
 
 ### Linear Board Status
 
@@ -272,17 +272,17 @@ yarn ci:validate
 ### Pattern 1: Parallel Development
 
 ```bash
-# Agent 1: FE Developer on {{TICKET_PREFIX}}-123
-# Agent 2: BE Developer on {{TICKET_PREFIX}}-124
+# Agent 1: FE Developer on MOB-123
+# Agent 2: BE Developer on MOB-124
 # Coordinate: API contract before FE implementation
 ```
 
 ### Pattern 2: Sequential Dependencies
 
 ```bash
-# Agent 1: DE creates migration ({{TICKET_PREFIX}}-125)
-# Agent 2: BE implements API ({{TICKET_PREFIX}}-126) - depends on {{TICKET_PREFIX}}-125
-# TDM ensures {{TICKET_PREFIX}}-125 merged before {{TICKET_PREFIX}}-126 starts
+# Agent 1: DE creates migration (MOB-125)
+# Agent 2: BE implements API (MOB-126) - depends on MOB-125
+# TDM ensures MOB-125 merged before MOB-126 starts
 ```
 
 ### Pattern 3: Blocker Resolution

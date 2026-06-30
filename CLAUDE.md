@@ -2,7 +2,7 @@
 
 ## AI Assistant Context for SAFe Multi-Agent Development
 
-**Repository**: {{PROJECT_NAME}}
+**Repository**: mobile-app
 **Methodology**: SAFe (Scaled Agile Framework) Agentic Workflow
 **Philosophy**: "Round Table" - Equal voice, mutual respect, shared responsibility
 
@@ -29,33 +29,40 @@ This is a **SAFe multi-agent development project** with 11 specialized AI agents
 
 ## Development Commands
 
+This is a monorepo: `app/` is the Flutter client, `backend/` is the Express API.
+
 ```bash
 # Development server
-{{DEV_COMMAND}}              # Start development server
+cd app && flutter run                          # App: run on device/emulator
+npm --prefix backend run dev                   # Backend: start API (watch mode)
 
 # Build and production
-{{BUILD_COMMAND}}            # Build for production
-{{START_COMMAND}}            # Start production server
+cd app && flutter build apk                    # App: Android build (use `ios` for iOS)
+npm --prefix backend run build                 # Backend: compile TypeScript
+npm --prefix backend start                     # Backend: start production server
 
 # Code quality
-{{LINT_COMMAND}}             # Run linting
-{{LINT_FIX_COMMAND}}         # Auto-fix linting issues
-{{TYPE_CHECK_COMMAND}}       # TypeScript validation
-{{FORMAT_CHECK_COMMAND}}     # Prettier formatting check
+cd app && flutter analyze                      # App: static analysis (lint)
+npm --prefix backend run lint                  # Backend: ESLint
+cd app && dart format .                         # App: auto-format
+npm --prefix backend run lint:fix              # Backend: auto-fix lint
+cd app && dart analyze                          # App: type/analysis check
+npm --prefix backend run typecheck             # Backend: tsc --noEmit
 
 # Testing
-{{TEST_UNIT_COMMAND}}        # Run unit tests
-{{TEST_INTEGRATION_COMMAND}} # Run integration tests
-{{TEST_E2E_COMMAND}}         # Run end-to-end tests
+cd app && flutter test                          # App: widget/unit tests
+npm --prefix backend test                       # Backend: unit tests (Jest)
+cd app && flutter test integration_test         # App: integration tests
+npm --prefix backend run test:integration       # Backend: API integration tests
 
-# Database (if applicable)
-{{DB_MIGRATE_COMMAND}}       # Run migrations
+# Database
+npm --prefix backend run prisma:migrate         # Run migrations (Prisma)
 
 # CI/CD validation (REQUIRED before PR)
-{{CI_VALIDATE_COMMAND}}      # Run all quality checks
+npm run ci:validate                             # Run all quality checks (both lanes)
 ```
 
-**Important**: Always run `{{CI_VALIDATE_COMMAND}}` before creating a pull request.
+**Important**: Always run `npm run ci:validate` before creating a pull request.
 
 ---
 
@@ -63,22 +70,26 @@ This is a **SAFe multi-agent development project** with 11 specialized AI agents
 
 ### Technology Stack
 
-- **Frontend**: {{FRONTEND_FRAMEWORK}}
-- **Backend**: {{BACKEND_FRAMEWORK}}
-- **Database**: {{DATABASE_SYSTEM}}
-- **ORM**: {{ORM_TOOL}}
-- **Authentication**: {{AUTH_PROVIDER}}
-- **Payments**: {{PAYMENT_PROVIDER}}
-- **Analytics**: {{ANALYTICS_PROVIDER}}
-- **UI Components**: {{UI_LIBRARY}}
+- **Frontend**: Flutter (Dart), Riverpod state management
+- **Backend**: Express (Node.js / TypeScript)
+- **Database**: PostgreSQL
+- **ORM**: Prisma
+- **Authentication**: TBD (backend-issued JWT planned)
+- **Payments**: None (out of scope for now)
+- **Analytics**: None (out of scope for now)
+- **UI Components**: Flutter Material / Cupertino + project design-system package (Figma-token driven)
+- **Design source**: Figma (Dev Mode MCP → design tokens → Dart theme → widgets)
 
 ### Repository Structure
 
 ```
-{{PROJECT_NAME}}/
+mobile-app/
 ├── CLAUDE.md                    # This file - AI assistant context
 ├── AGENTS.md                    # Agent team quick reference
 ├── CONTRIBUTING.md              # Git workflow and commit standards
+├── app/                         # Flutter client (lib/{features,core,design_system})
+├── backend/                     # Express API (src/, prisma/)
+├── packages/design_tokens/      # Figma → tokens → Dart theme
 ├── docs/                        # Documentation (onboarding, database, security, sop, workflow)
 ├── specs/                       # SAFe specifications (Epic/Feature/Story)
 ├── patterns_library/            # Reusable code patterns (7 categories)
@@ -93,7 +104,7 @@ This is a **SAFe multi-agent development project** with 11 specialized AI agents
 
 All work follows the SAFe hierarchy and specs-driven development:
 
-1. BSA creates spec in `specs/{{TICKET_PREFIX}}-XXX-feature-spec.md`
+1. BSA creates spec in `specs/MOB-XXX-feature-spec.md`
 2. System Architect validates architectural approach
 3. Implementation agents execute with pattern discovery
 4. QAS validates against acceptance criteria
@@ -124,30 +135,36 @@ Use in specs to highlight critical decisions:
 
 ### Authentication
 
-**Provider**: {{AUTH_PROVIDER}}
+**Provider**: TBD (backend-issued JWT planned)
 
 - Environment variables: See `.env.template`
-- Routes: {{AUTH_ROUTES}} / {{PROTECTED_ROUTES}}
+- Routes (backend): `/api/auth/*` (public) / `/api/*` (protected)
 - Patterns: `patterns_library/` + [docs/security/SECURITY_FIRST_ARCHITECTURE.md](docs/security/SECURITY_FIRST_ARCHITECTURE.md)
 
 ### Payments
 
-**Provider**: {{PAYMENT_PROVIDER}}
+**Provider**: None (out of scope for now)
 
-- Webhook endpoints: {{WEBHOOK_ROUTES}}
-- Patterns: `patterns_library/api/webhook-handler.md`
-- Idempotency required for all payment operations
+- Re-enable `patterns_library/api/webhook-handler.md` and the `stripe-patterns` skill if/when payments are added.
 
 ### Analytics
 
-**Provider**: {{ANALYTICS_PROVIDER}}
+**Provider**: None (out of scope for now)
 
-- Privacy-first: No tracking without explicit consent (GDPR/CCPA)
-- Error boundaries: Analytics failures must not crash the app
+- If added: privacy-first, no tracking without explicit consent (GDPR/CCPA); analytics failures must not crash the app.
+
+### Design (Figma → Flutter)
+
+**Source**: Figma Dev Mode MCP server (`figma-dev-mode` in `.mcp.json`, served locally at `http://127.0.0.1:3845/mcp` by the Figma desktop app).
+
+- **Before building any UI from a design, use the `figma-devmode` skill.**
+- Design variables flow: Figma → `packages/design_tokens` → `app/lib/design_system/app_theme.dart` → widgets via `Theme.of(context)`.
+- **Never hardcode** colors/spacing/type in widgets — they belong in `design_tokens`. `get_code` output is a structural hint only (it emits web), not code to paste.
+- Prereq: a Figma Dev Mode seat + the Dev Mode MCP server enabled in Figma.
 
 ### Database
 
-**System**: {{DATABASE_SYSTEM}} | **ORM**: {{ORM_TOOL}}
+**System**: PostgreSQL | **ORM**: Prisma
 
 **Guidelines**:
 - Always use ORM (type safety) with RLS context helpers (`withUserContext`, `withAdminContext`, `withSystemContext`)
@@ -158,24 +175,26 @@ Use in specs to highlight critical decisions:
 
 **Migration Workflow**:
 ```bash
-{{MIGRATION_CREATE_COMMAND}}     # Create migration
-{{MIGRATION_TEST_COMMAND}}       # Test locally
-git add {{MIGRATIONS_DIR}}/ && git commit -m "feat(db): add feature migration"
-{{MIGRATION_DEPLOY_COMMAND}}     # Deploy to production
+npx prisma migrate dev --name <feature>   # Create + apply migration locally (run in backend/)
+npx prisma migrate deploy                  # Apply against a test/staging DB to verify
+git add backend/prisma/migrations/ && git commit -m "feat(db): add feature migration"
+npx prisma migrate deploy                  # Deploy to production
 ```
 
 ---
 
 ## Code Quality
 
-**Linter**: {{LINTER_TOOL}} | **Config**: {{LINTER_CONFIG_FORMAT}}
+**Linter**: `flutter analyze` (app, `analysis_options.yaml`) + ESLint (backend, `eslint.config.mjs`)
 
 ```bash
-{{LINT_COMMAND}}          # Run linter
-{{LINT_FIX_COMMAND}}      # Auto-fix issues
+cd app && flutter analyze            # App: lint
+npm --prefix backend run lint        # Backend: lint
+cd app && dart format .              # App: auto-format
+npm --prefix backend run lint:fix    # Backend: auto-fix
 ```
 
-Always run `{{LINT_COMMAND}}` before committing. Consult your linting configuration file for project-specific rules.
+Always lint before committing. Consult `app/analysis_options.yaml` and `backend/eslint.config.mjs` for project-specific rules.
 
 ---
 
@@ -185,19 +204,19 @@ Always run `{{LINT_COMMAND}}` before committing. Consult your linting configurat
 
 ### PR Workflow
 
-1. Create feature branch: `{{TICKET_PREFIX}}-{number}-{description}`
-2. Implement with proper commits: `type(scope): description [{{TICKET_PREFIX}}-XXX]`
-3. Rebase: `git rebase origin/{{MAIN_BRANCH}}`
-4. Validate: `{{CI_VALIDATE_COMMAND}}` (must pass)
+1. Create feature branch: `MOB-{number}-{description}`
+2. Implement with proper commits: `type(scope): description [MOB-XXX]`
+3. Rebase: `git rebase origin/main`
+4. Validate: `npm run ci:validate` (must pass)
 5. Push: `git push --force-with-lease`
 6. Create PR using `.github/pull_request_template.md`
 7. Merge using "Rebase and merge" only
 
 ### Branch Protection
 
-- All PRs must be up-to-date with `{{MAIN_BRANCH}}`
+- All PRs must be up-to-date with `main`
 - All CI checks must pass
 - CODEOWNERS reviewers required
-- No direct pushes to `{{MAIN_BRANCH}}`
+- No direct pushes to `main`
 
 **Detailed Guides**: [docs/ci-cd/CI-CD-Pipeline-Guide.md](docs/ci-cd/CI-CD-Pipeline-Guide.md) | [docs/workflow/](docs/workflow/)

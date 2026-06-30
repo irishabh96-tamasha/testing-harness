@@ -1,7 +1,7 @@
 ---
 description: Start work on a new Linear ticket with proper workflow
-argument-hint: [{{TICKET_PREFIX}}-number]
-allowed-tools: [Read, Write, Edit, Bash, Grep, Glob, mcp__{{MCP_LINEAR_SERVER}}__*]
+argument-hint: [MOB-number]
+allowed-tools: [Read, Write, Edit, Bash, Grep, Glob, mcp__linear-mcp__*]
 ---
 
 You are starting work on a new Linear ticket.
@@ -12,7 +12,7 @@ You are starting work on a new Linear ticket.
 
 1. **Linear Ticket Exists?**
    - If no ticket number provided in arguments, ask user for Linear ticket number
-   - Verify ticket exists in Linear using `mcp__{{MCP_LINEAR_SERVER}}__get_issue`
+   - Verify ticket exists in Linear using `mcp__linear-mcp__get_issue`
    - Confirm ticket is in appropriate status (Todo, In Progress)
 
 2. **Stop-the-Line: AC/DoD Check** (MANDATORY)
@@ -24,8 +24,8 @@ You are starting work on a new Linear ticket.
    - Work begins ONLY when AC/DoD exists
 
 3. **Branch Naming**
-   - Format: `{{TICKET_PREFIX}}-{number}-{short-description}`
-   - Must start with {{TICKET_PREFIX}}- and ticket number
+   - Format: `MOB-{number}-{short-description}`
+   - Must start with MOB- and ticket number
    - Use lowercase with hyphens
 
 4. **Start from Latest Dev**
@@ -33,14 +33,14 @@ You are starting work on a new Linear ticket.
    - Verify no uncommitted changes
 
 5. **Create Feature Branch**
-   - Create branch: `git checkout -b {{TICKET_PREFIX}}-{number}-{description}`
+   - Create branch: `git checkout -b MOB-{number}-{description}`
    - Confirm branch created successfully
 
 ## Workflow
 
 If argument provided ($1):
 
-- Use as ticket number (e.g., `/start-work 347` → {{TICKET_PREFIX}}-347)
+- Use as ticket number (e.g., `/start-work 347` → MOB-347)
 - Fetch ticket details from Linear
 - Suggest branch name based on ticket title
 - Execute checkout workflow

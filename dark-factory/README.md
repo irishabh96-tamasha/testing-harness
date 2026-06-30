@@ -16,7 +16,7 @@ SSH.
 ```
  +------------------------------ Remote Server ----------------------------+
  |                                                                         |
- |  tmux session: factory-{{TICKET_PREFIX}}-123                            |
+ |  tmux session: factory-MOB-123                            |
  |  +-------------------------------------------------------------------+ |
  |  |                    TDM (lead)                                     | |
  |  |                    Claude Code                                    | |
@@ -66,7 +66,7 @@ SSH.
 ./dark-factory/scripts/factory-setup.sh
 
 # 2. Launch a feature-sized agent team for a ticket
-./dark-factory/scripts/factory-start.sh feature {{TICKET_PREFIX}}-123
+./dark-factory/scripts/factory-start.sh feature MOB-123
 
 # 3. Check on running sessions
 ./dark-factory/scripts/factory-status.sh
@@ -95,7 +95,7 @@ tail -f ~/.codex-yolo/audit.log
 
 ```bash
 # Morning: Start a team for today's ticket
-./dark-factory/scripts/factory-start.sh feature {{TICKET_PREFIX}}-42
+./dark-factory/scripts/factory-start.sh feature MOB-42
 
 # Throughout the day: Check on your agents
 ./dark-factory/scripts/factory-status.sh
@@ -104,13 +104,13 @@ tail -f ~/.codex-yolo/audit.log
 watch -n 5 ./dark-factory/scripts/factory-status.sh
 
 # Tail all agent logs live
-tail -f ~/.dark-factory/logs/factory-{{TICKET_PREFIX}}-42/*.log
+tail -f ~/.dark-factory/logs/factory-MOB-42/*.log
 
 # Jump into a specific agent's pane to observe
-./dark-factory/scripts/factory-attach.sh factory-{{TICKET_PREFIX}}-42 2
+./dark-factory/scripts/factory-attach.sh factory-MOB-42 2
 
 # End of day: Graceful shutdown
-./dark-factory/scripts/factory-stop.sh factory-{{TICKET_PREFIX}}-42
+./dark-factory/scripts/factory-stop.sh factory-MOB-42
 ```
 
 ### Status Dashboard Output
@@ -122,7 +122,7 @@ The status dashboard shows health for every agent in every session:
   Dark Factory Status Dashboard
 ========================================
 
-Session: factory-{{TICKET_PREFIX}}-42
+Session: factory-MOB-42
   Created: 2026-03-06 09:15:00
   Panes:
     [1] TDM (lead)           active        ← Claude running, recent output
@@ -141,7 +141,7 @@ Aggregate Stats
 
 **If a pane shows "dead"**: Attach and check for errors:
 ```bash
-./dark-factory/scripts/factory-attach.sh factory-{{TICKET_PREFIX}}-42 4
+./dark-factory/scripts/factory-attach.sh factory-MOB-42 4
 # In the pane, restart: claude --dangerously-skip-permissions
 ```
 
@@ -149,7 +149,7 @@ Aggregate Stats
 
 1. Connect Cursor to your server via Remote-SSH
 2. Open a terminal: `Ctrl+\``
-3. Attach read-only: `tmux attach -t factory-{{TICKET_PREFIX}}-42 -r`
+3. Attach read-only: `tmux attach -t factory-MOB-42 -r`
 4. Navigate panes: `Alt+Arrow` or `Prefix+q` (show numbers)
 5. Zoom one pane: `Prefix+z` (toggle)
 6. See file changes: Open worktree in Cursor's file explorer

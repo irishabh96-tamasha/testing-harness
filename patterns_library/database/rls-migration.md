@@ -75,18 +75,18 @@ ALTER TABLE "user_preferences" ADD CONSTRAINT "user_preferences_user_id_fkey"
 ALTER TABLE "user_preferences" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "user_preferences" FORCE ROW LEVEL SECURITY;
 
--- 5. Create RLS policy for superuser ({{DB_USER}})
+-- 5. Create RLS policy for superuser (app_user)
 -- Allows operations where user_id matches current session user
 CREATE POLICY user_preferences_isolation ON "user_preferences"
     FOR ALL
-    TO {{DB_USER}}
+    TO app_user
     USING (user_id = current_setting('app.current_user_id', true));
 
--- 6. Create RLS policy for application user ({{LINEAR_WORKSPACE}}_app_user)
+-- 6. Create RLS policy for application user (tamasha_app_user)
 -- Enforces same isolation for application-level access
 CREATE POLICY user_preferences_app_isolation ON "user_preferences"
     FOR ALL
-    TO {{LINEAR_WORKSPACE}}_app_user
+    TO tamasha_app_user
     USING (user_id = current_setting('app.current_user_id', true));
 
 -- =====================================================
@@ -96,7 +96,7 @@ CREATE POLICY user_preferences_app_isolation ON "user_preferences"
 -- 7. Create admin policy (allows admins to access all data)
 CREATE POLICY user_preferences_admin_access ON "user_preferences"
     FOR ALL
-    TO {{DB_USER}}
+    TO app_user
     USING (
         current_setting('app.current_role', true) = 'admin'
     );
@@ -109,15 +109,15 @@ CREATE POLICY user_preferences_admin_access ON "user_preferences"
 
 ```bash
 # Run migration on local database
-DATABASE_URL="postgresql://{{DB_USER}}:{{DB_PASSWORD}}@localhost:5432/{{DB_NAME}}" \
+DATABASE_URL="postgresql://app_user:app_password@localhost:5432/app_dev" \
 npx prisma migrate dev --name add_user_preferences_with_rls
 
 # Verify RLS policies were created
-docker exec -it {{DB_CONTAINER}} psql -U {{DB_USER}} -d {{DB_NAME}} \
+docker exec -it mobile-app-postgres psql -U app_user -d app_dev \
   -c "\d user_preferences"
 
 # Check RLS is enabled
-docker exec -it {{DB_CONTAINER}} psql -U {{DB_USER}} -d {{DB_NAME}} \
+docker exec -it mobile-app-postgres psql -U app_user -d app_dev \
   -c "SELECT tablename, rowsecurity FROM pg_tables WHERE tablename = 'user_preferences';"
 ```
 
@@ -149,7 +149,7 @@ Add new table documentation:
 
 **Recent Changes**:
 
-- 2025-10-03: Created table with RLS policies [{{TICKET_PREFIX}}-300]
+- 2025-10-03: Created table with RLS policies [MOB-300]
 ```
 
 ## RLS Policy Patterns
@@ -160,7 +160,7 @@ Add new table documentation:
 -- Users can only access their own data
 CREATE POLICY {table}_isolation ON {table}
     FOR ALL
-    TO {{DB_USER}}
+    TO app_user
     USING (user_id = current_setting('app.current_user_id', true));
 ```
 
@@ -170,7 +170,7 @@ CREATE POLICY {table}_isolation ON {table}
 -- Admins can access all data
 CREATE POLICY {table}_admin_access ON {table}
     FOR ALL
-    TO {{DB_USER}}
+    TO app_user
     USING (current_setting('app.current_role', true) = 'admin');
 ```
 
@@ -180,7 +180,7 @@ CREATE POLICY {table}_admin_access ON {table}
 -- System operations bypass user checks
 CREATE POLICY {table}_system_access ON {table}
     FOR ALL
-    TO {{DB_USER}}
+    TO app_user
     USING (current_setting('app.current_role', true) = 'system');
 ```
 
@@ -190,12 +190,12 @@ CREATE POLICY {table}_system_access ON {table}
 -- Public can read, only owner can modify
 CREATE POLICY {table}_public_read ON {table}
     FOR SELECT
-    TO {{DB_USER}}
+    TO app_user
     USING (true);  -- Anyone can read
 
 CREATE POLICY {table}_owner_write ON {table}
     FOR INSERT, UPDATE, DELETE
-    TO {{DB_USER}}
+    TO app_user
     USING (user_id = current_setting('app.current_user_id', true));
 ```
 
@@ -236,15 +236,15 @@ CREATE POLICY {table}_owner_write ON {table}
 npx prisma migrate dev --name {migration_name}
 
 # Verify RLS enabled
-psql -U {{DB_USER}} -d {{DB_NAME}} \
+psql -U app_user -d app_dev \
   -c "SELECT tablename, rowsecurity FROM pg_tables WHERE tablename = '{table}';"
 
 # Check policies exist
-psql -U {{DB_USER}} -d {{DB_NAME}} \
+psql -U app_user -d app_dev \
   -c "\d+ {table}"
 
 # Test user isolation
-psql -U {{LINEAR_WORKSPACE}}_app_user -d {{DB_NAME}} \
+psql -U tamasha_app_user -d app_dev \
   -c "SET app.current_user_id = 'test_user'; SELECT * FROM {table};"
 ```
 
@@ -271,13 +271,13 @@ ALTER TABLE "payments" FORCE ROW LEVEL SECURITY;
 -- User can only see their own payments
 CREATE POLICY payments_isolation ON "payments"
     FOR ALL
-    TO {{DB_USER}}
+    TO app_user
     USING (user_id = current_setting('app.current_user_id', true));
 
 -- Admins can see all payments
 CREATE POLICY payments_admin_access ON "payments"
     FOR ALL
-    TO {{DB_USER}}
+    TO app_user
     USING (current_setting('app.current_role', true) = 'admin');
 ```
 

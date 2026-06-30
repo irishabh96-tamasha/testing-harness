@@ -1,4 +1,4 @@
-# {{PROJECT_NAME}}-app CI/CD Pipeline Guide
+# mobile-app-app CI/CD Pipeline Guide
 
 _Automated multi-team collaboration with enforced rebase-first workflow_
 
@@ -27,8 +27,8 @@ This CI/CD pipeline solves multi-team collaboration challenges by automating the
 
 **Validates**:
 
-- Branch naming: `{{TICKET_PREFIX}}-{number}-{description}`
-- PR title includes Linear ticket: `[{{TICKET_PREFIX}}-XXX]`
+- Branch naming: `MOB-{number}-{description}`
+- PR title includes Linear ticket: `[MOB-XXX]`
 - Linear ticket extraction and validation
 
 **Failure Actions**:
@@ -69,7 +69,7 @@ This CI/CD pipeline solves multi-team collaboration challenges by automating the
 
 **Code Quality**:
 
-- ESLint with {{PROJECT_NAME}} standards
+- ESLint with mobile-app standards
 - TypeScript compilation
 - Prettier formatting
 - Code complexity analysis
@@ -161,16 +161,16 @@ All PRs to `{{PRIMARY_DEV_BRANCH}}` must pass:
 
 ```bash
 # Payment features
-/app/api/payments/ @payments-team {{ARCHITECT_GITHUB_HANDLE}}
-/lib/stripe/ @payments-team {{ARCHITECT_GITHUB_HANDLE}}
+/app/api/payments/ @payments-team ronak
+/lib/stripe/ @payments-team ronak
 
 # Authentication
-/app/api/auth/ @auth-team {{ARCHITECT_GITHUB_HANDLE}}
-/middleware.ts @auth-team {{ARCHITECT_GITHUB_HANDLE}}
+/app/api/auth/ @auth-team ronak
+/middleware.ts @auth-team ronak
 
 # Core configuration
-/.env.template {{ARCHITECT_GITHUB_HANDLE}}
-/config.ts {{ARCHITECT_GITHUB_HANDLE}}
+/.env.template ronak
+/config.ts ronak
 ```
 
 ### Team Notifications
@@ -185,9 +185,9 @@ All PRs to `{{PRIMARY_DEV_BRANCH}}` must pass:
 **Team Assignment**:
 
 - Auto-assignment based on ticket ranges
-- {{TICKET_PREFIX}}-1X: Payments team
-- {{TICKET_PREFIX}}-2X: Auth team
-- {{TICKET_PREFIX}}-3X: Frontend team
+- MOB-1X: Payments team
+- MOB-2X: Auth team
+- MOB-3X: Frontend team
 
 ## 🚀 Setup Instructions
 
@@ -273,10 +273,10 @@ git checkout dev
 git pull origin dev
 
 # Create feature branch
-git checkout -b {{TICKET_PREFIX}}-15-stripe-checkout-integration
+git checkout -b MOB-15-stripe-checkout-integration
 
 # Make changes and commit with SAFe format
-git commit -m "feat(payments): add Stripe checkout flow [{{TICKET_PREFIX}}-15]"
+git commit -m "feat(payments): add Stripe checkout flow [MOB-15]"
 ```
 
 ### 2. Before Creating PR
@@ -290,7 +290,7 @@ git rebase origin/dev
 yarn ci:validate
 
 # Push with force-with-lease
-git push --force-with-lease origin {{TICKET_PREFIX}}-15-stripe-checkout-integration
+git push --force-with-lease origin MOB-15-stripe-checkout-integration
 ```
 
 ### 3. Creating PR
@@ -314,7 +314,7 @@ yarn test:unit --verbose
 # If linting fails
 yarn lint:fix
 git add .
-git commit -m "style: fix linting issues [{{TICKET_PREFIX}}-15]"
+git commit -m "style: fix linting issues [MOB-15]"
 ```
 
 ## 🔧 Troubleshooting
@@ -325,8 +325,8 @@ git commit -m "style: fix linting issues [{{TICKET_PREFIX}}-15]"
 
 ```bash
 # Rename branch
-git branch -m {{TICKET_PREFIX}}-15-correct-format
-git push origin -u {{TICKET_PREFIX}}-15-correct-format
+git branch -m MOB-15-correct-format
+git push origin -u MOB-15-correct-format
 git push origin --delete old-branch-name
 ```
 
@@ -432,10 +432,10 @@ gh api repos/:owner/:repo/branches/dev/protection \
 
 ## 📞 Support
 
-**Pipeline Issues**: {{ARCHITECT_GITHUB_HANDLE}} (ARCHitect-in-the-IDE)  
-**Team Coordination**: #{{LINEAR_WORKSPACE}}-development
+**Pipeline Issues**: ronak (ARCHitect-in-the-IDE)  
+**Team Coordination**: #tamasha-development
 **Emergency**: dev-team@{{PROJECT_SLUG}}.com
 
 **Last Updated**: 2025-08-16  
 **Version**: 1.0  
-**Maintained by**: {{PROJECT_NAME}} Development Team
+**Maintained by**: mobile-app Development Team

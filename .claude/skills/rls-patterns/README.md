@@ -1,7 +1,7 @@
 # RLS Patterns
 
 ![Status](https://img.shields.io/badge/status-production-green)
-![Harness](https://img.shields.io/badge/harness-{{HARNESS_VERSION}}-blue)
+![Harness](https://img.shields.io/badge/harness-v2.10.0-blue)
 
 > Row Level Security patterns for database operations. NEVER use direct prisma calls.
 
@@ -13,7 +13,7 @@
 
 ## Intellectual Property
 
-The skill system architecture and {{PROJECT_SHORT}} harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
+The skill system architecture and MOB harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
 
 ## Quick Start
 
@@ -47,7 +47,7 @@ Enforces Row Level Security (RLS) patterns for all database operations. Ensures 
 | Field | Value |
 |-------|-------|
 | Last Updated | 2026-01-04 |
-| Harness Version | {{HARNESS_VERSION}} |
+| Harness Version | v2.10.0 |
 
 ---
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# {{PROJECT_SHORT}} SAFe Multi-Agent Development - Agent Prompt Installation Script
+# MOB SAFe Multi-Agent Development - Agent Prompt Installation Script
 # 
 # This script installs the 11 agent prompts for Claude Code or Augment Code
 # 
@@ -57,7 +57,7 @@ print_info() {
 
 show_help() {
     cat << EOF
-{{PROJECT_SHORT}} SAFe Agent Prompt Installation Script
+MOB SAFe Agent Prompt Installation Script
 
 USAGE:
     ./scripts/install-prompts.sh [OPTIONS]

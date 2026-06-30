@@ -1,6 +1,6 @@
-# {{PROJECT_SHORT}} Skills
+# MOB Skills
 
-These skills are part of the **{{PROJECT_NAME}}** multi-agent harness for Gemini CLI.
+These skills are part of the **mobile-app** multi-agent harness for Gemini CLI.
 
 ## License
 
@@ -10,7 +10,7 @@ These skills are part of the **{{PROJECT_NAME}}** multi-agent harness for Gemini
 
 ## Intellectual Property
 
-The skill system architecture and {{PROJECT_SHORT}} harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
+The skill system architecture and MOB harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
 
 SAFe® is a registered trademark of Scaled Agile, Inc.
 

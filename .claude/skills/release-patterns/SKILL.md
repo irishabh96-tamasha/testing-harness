@@ -28,7 +28,7 @@ Invoke this skill when:
 
 ```bash
 # FORBIDDEN: Missing ticket reference
-gh pr create --title "feat: add feature"  # Missing [{{TICKET_PREFIX}}-XXX]
+gh pr create --title "feat: add feature"  # Missing [MOB-XXX]
 
 # FORBIDDEN: Using squash/merge commits
 gh pr merge --squash  # Breaks linear history
@@ -45,7 +45,7 @@ git push origin feature  # When branch is behind dev
 
 ```bash
 # CORRECT: Ticket reference in title
-gh pr create --title "feat(scope): description [{{TICKET_PREFIX}}-XXX]"
+gh pr create --title "feat(scope): description [MOB-XXX]"
 
 # CORRECT: Rebase merge only
 gh pr merge --rebase --delete-branch
@@ -55,15 +55,15 @@ yarn ci:validate && git push --force-with-lease
 
 # CORRECT: Always rebase first
 git fetch origin && git rebase origin/dev
-git push --force-with-lease origin {{TICKET_PREFIX}}-XXX-description
+git push --force-with-lease origin MOB-XXX-description
 ```
 
 ## Pre-PR Checklist (MANDATORY)
 
 Before creating any PR:
 
-- [ ] Branch name: `{{TICKET_PREFIX}}-{number}-{description}`
-- [ ] Commits follow: `type(scope): description [{{TICKET_PREFIX}}-XXX]`
+- [ ] Branch name: `MOB-{number}-{description}`
+- [ ] Commits follow: `type(scope): description [MOB-XXX]`
 - [ ] Rebased on latest dev: `git fetch origin && git rebase origin/dev`
 - [ ] CI passes locally: `yarn ci:validate`
 - [ ] Linear history: No merge commits (`git log --oneline --graph -10`)
@@ -78,12 +78,12 @@ yarn ci:validate && echo "READY FOR PR" || echo "FIX ISSUES FIRST"
 ## PR Creation Template
 
 ````bash
-gh pr create --title "feat(scope): description [{{TICKET_PREFIX}}-XXX]" --body "$(cat <<'EOF'
+gh pr create --title "feat(scope): description [MOB-XXX]" --body "$(cat <<'EOF'
 ## Summary
 
-Implements [feature/fix] as specified in Linear ticket {{TICKET_PREFIX}}-XXX.
+Implements [feature/fix] as specified in Linear ticket MOB-XXX.
 
-**Linear Ticket**: https://linear.app/{{LINEAR_WORKSPACE}}/issue/{{TICKET_PREFIX}}-XXX
+**Linear Ticket**: https://linear.app/tamasha/issue/MOB-XXX
 
 ## Changes Made
 
@@ -128,7 +128,7 @@ Before merging any PR, invoke QAS for independent review:
 
 ```text
 Task tool: QAS subagent
-Prompt: "Review PR #XXX for {{TICKET_PREFIX}}-YYY. Validate commit format, CI status, patterns."
+Prompt: "Review PR #XXX for MOB-YYY. Validate commit format, CI status, patterns."
 ```
 
 ## Authoritative References

@@ -22,7 +22,7 @@ name: Deploy
 
 on:
   push:
-    branches: [{{MAIN_BRANCH}}]
+    branches: [main]
   workflow_dispatch:
     inputs:
       environment:
@@ -381,13 +381,13 @@ echo "NEXT STEPS:"
 echo "  1. Verify application functionality"
 echo "  2. Check error rates in monitoring"
 echo "  3. Create incident ticket if needed"
-echo "  4. Return to main branch: git checkout {{MAIN_BRANCH}}"
+echo "  4. Return to main branch: git checkout main"
 ```
 
 ## Customization Guide
 
 1. **Replace all template placeholders** with your project-specific values:
-   - `{{MAIN_BRANCH}}` - primary branch name (e.g., `main`, `master`)
+   - `main` - primary branch name (e.g., `main`, `master`)
    - `{{DEPLOY_COMMAND}}` - your deployment CLI command
    - `{{DEPLOY_TOKEN_VAR}}` / `{{DEPLOY_TOKEN_SECRET}}` - deployment credentials
    - `{{DATABASE_URL_VAR}}` - database connection variable name

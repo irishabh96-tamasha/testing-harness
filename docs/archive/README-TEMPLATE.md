@@ -1,6 +1,6 @@
-# {{PROJECT_SHORT}} SAFe-Agentic-Workflow Template
+# MOB SAFe-Agentic-Workflow Template
 
-This repository provides a comprehensive template for establishing a sophisticated human-AI collaborative development workflow, inspired by the {{PROJECT_NAME}} ({{PROJECT_SHORT}}) project. It embodies principles of Evidence-Based Delivery, Pattern-Driven Development, and a Spec-Driven Workflow, all structured around a SAFe Agile Release Train (ART) model.
+This repository provides a comprehensive template for establishing a sophisticated human-AI collaborative development workflow, inspired by the mobile-app (MOB) project. It embodies principles of Evidence-Based Delivery, Pattern-Driven Development, and a Spec-Driven Workflow, all structured around a SAFe Agile Release Train (ART) model.
 
 ## 🚀 Quick Start
 
@@ -16,10 +16,10 @@ To integrate this workflow into your new or existing project, follow these steps
 
    ```bash
    # First, clone this template repository to a temporary location
-   git clone https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}.git /tmp/{{LINEAR_WORKSPACE}}-workflow-template
+   git clone https://github.com/tamasha-live/mobile-app.git /tmp/tamasha-workflow-template
 
    # Then, run the script from your project's root
-   bash /tmp/{{LINEAR_WORKSPACE}}-workflow-template/apply-workflow.sh
+   bash /tmp/tamasha-workflow-template/apply-workflow.sh
    ```
 
 3. **Follow the interactive prompts.** The script will ask you to choose your AI agent provider (Claude Code or Augment) and provide project-specific details (e.g., ticket prefix, primary development branch).
@@ -107,8 +107,8 @@ We welcome contributions! This template is designed to be adapted and improved b
    - [Pattern Discovery Protocol](./patterns_library/README.md) - How to find and reuse patterns
 
 2. **Report Issues**:
-   - Found a bug? [Open an issue](https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}/issues)
-   - Have a feature request? [Start a discussion](https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}/discussions)
+   - Found a bug? [Open an issue](https://github.com/tamasha-live/mobile-app/issues)
+   - Have a feature request? [Start a discussion](https://github.com/tamasha-live/mobile-app/discussions)
 
 3. **Submit Pull Requests**:
    - Follow the [CONTRIBUTING.md](./project_workflow/CONTRIBUTING.md) workflow
@@ -123,7 +123,7 @@ We are committed to providing a welcoming and inclusive environment. Please be r
 
 After running `apply-workflow.sh`, your typical workflow will look like:
 
-1. **Create a spec**: `cp specs_templates/spec_template.md specs/{{TICKET_PREFIX}}-123-my-feature-spec.md`
+1. **Create a spec**: `cp specs_templates/spec_template.md specs/MOB-123-my-feature-spec.md`
 2. **Fill in requirements**: Define user story, acceptance criteria, tasks
 3. **Implement using agents**: Follow the spec with agent collaboration
 4. **Validate with demo script**: Run the demo script from spec

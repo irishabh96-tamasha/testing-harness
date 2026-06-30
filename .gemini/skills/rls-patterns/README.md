@@ -1,7 +1,7 @@
 # RLS Patterns
 
 ![Status](https://img.shields.io/badge/status-production-green)
-![Harness](https://img.shields.io/badge/harness-{{HARNESS_VERSION}}-blue)
+![Harness](https://img.shields.io/badge/harness-v2.10.0-blue)
 ![Provider](https://img.shields.io/badge/provider-Gemini_CLI-orange)
 
 > Row Level Security patterns for database operations. Use when writing Prisma/database code, creating API routes that access data, or implementing webhooks. Enforces withUserContext, withAdminContext, or withSystemContext helpers. NEVER use direct prisma calls.
@@ -14,7 +14,7 @@
 
 ## Intellectual Property
 
-The skill system architecture and {{PROJECT_SHORT}} harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
+The skill system architecture and MOB harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
 
 SAFe® is a registered trademark of Scaled Agile, Inc.
 
@@ -46,7 +46,7 @@ Row Level Security patterns for database operations. Enforces withUserContext, w
 | Field | Value |
 |-------|-------|
 | Last Updated | 2026-01-14 |
-| Harness Version | {{HARNESS_VERSION}} |
+| Harness Version | v2.10.0 |
 
 ---
 

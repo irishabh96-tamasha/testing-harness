@@ -1,7 +1,7 @@
 # Orchestration Patterns
 
 ![Status](https://img.shields.io/badge/status-production-green)
-![Harness](https://img.shields.io/badge/harness-{{HARNESS_VERSION}}-blue)
+![Harness](https://img.shields.io/badge/harness-v2.10.0-blue)
 
 > Agentic orchestration patterns for long-running tasks. Implements evidence-based delivery and Simon Willison's agent loop.
 
@@ -13,7 +13,7 @@
 
 ## Intellectual Property
 
-The skill system architecture and {{PROJECT_SHORT}} harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
+The skill system architecture and MOB harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
 
 ## Quick Start
 
@@ -46,7 +46,7 @@ Codifies evidence-based delivery and iterative agent loops for orchestrating com
 | Field | Value |
 |-------|-------|
 | Last Updated | 2026-01-04 |
-| Harness Version | {{HARNESS_VERSION}} |
+| Harness Version | v2.10.0 |
 
 ---
 

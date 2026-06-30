@@ -25,10 +25,10 @@ Since Gemini CLI doesn't have native Linear integration, use the Linear web UI o
 
 ```bash
 # Via Linear Web UI
-# Navigate to: https://linear.app/team/{{PROJECT_TEAM_NAME}}/issue/{{TICKET_PREFIX}}-XXX
+# Navigate to: https://linear.app/team/{{PROJECT_TEAM_NAME}}/issue/MOB-XXX
 
 # Or use Linear CLI if installed
-linear issue view {{TICKET_PREFIX}}-XXX
+linear issue view MOB-XXX
 ```
 
 ### Creating Issues
@@ -44,7 +44,7 @@ linear issue create --title "feat(scope): description" --team {{PROJECT_TEAM_NAM
 ```bash
 # Via Linear Web UI: Open issue and update status
 # Or use Linear CLI:
-linear issue update {{TICKET_PREFIX}}-XXX --state "Done"
+linear issue update MOB-XXX --state "Done"
 ```
 
 ### Adding Comments
@@ -52,7 +52,7 @@ linear issue update {{TICKET_PREFIX}}-XXX --state "Done"
 ```bash
 # Via Linear Web UI: Open issue and add comment
 # Or use Linear CLI:
-linear issue comment {{TICKET_PREFIX}}-XXX "**Dev Evidence**\n\n..."
+linear issue comment MOB-XXX "**Dev Evidence**\n\n..."
 ```
 
 ## Evidence Policy (MUST)
@@ -74,7 +74,7 @@ Every issue requires evidence at each phase:
 
 **PR**: https://github.com/{{ORG_NAME}}/{{REPO_NAME}}/pull/XXX
 **Commit**: [short-hash]
-**Branch**: {{TICKET_PREFIX}}-XXX-description
+**Branch**: MOB-XXX-description
 
 **Implementation:**
 
@@ -156,7 +156,7 @@ Backlog -> Ready -> In Progress -> Testing -> Ready for Review -> Done
 
 ### GitHub-Linear Auto-Sync
 
-Tickets referenced in commit messages (e.g., `[{{TICKET_PREFIX}}-123]`) automatically move to **Done** when the PR merges. Child stories not referenced in any commit message must be manually closed after merge.
+Tickets referenced in commit messages (e.g., `[MOB-123]`) automatically move to **Done** when the PR merges. Child stories not referenced in any commit message must be manually closed after merge.
 
 **Best practice**: Reference Feature-level tickets in commit messages. After merge, manually close orphaned child stories that weren't referenced.
 
@@ -176,7 +176,7 @@ Linear uses UUIDs internally. When working with APIs:
 
 ```typescript
 // Issue identifiers (human-readable)
-const issueId = "{{TICKET_PREFIX}}-459";
+const issueId = "MOB-459";
 
 // UUIDs (API operations)
 const uuid = "ef6a5fa0-2b46-417f-8266-dea2d187b10a";
@@ -191,8 +191,8 @@ const uuid = "ef6a5fa0-2b46-417f-8266-dea2d187b10a";
 
 PRs are automatically linked when:
 
-- Branch name contains `{{TICKET_PREFIX}}-XXX`
-- PR title contains `[{{TICKET_PREFIX}}-XXX]`
+- Branch name contains `MOB-XXX`
+- PR title contains `[MOB-XXX]`
 
 ### Create Sub-Issue
 

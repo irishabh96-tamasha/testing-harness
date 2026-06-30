@@ -1,349 +1,125 @@
-# Authenticated Page Pattern
+# Async Data Screen Pattern (Flutter + Riverpod)
+
+> Filename kept as `authenticated-page.md` for index stability; this is the
+> Flutter screen pattern (the Next.js "authenticated page" analog).
 
 ## What It Does
 
-Creates a server-side rendered page that requires authentication, with proper access control, data fetching, and error handling.
+Creates a Flutter screen that loads data from the backend API through a Riverpod
+provider and renders explicit loading / error / data states. Auth (when added)
+is carried by the Dio client; the screen itself just consumes the provider.
 
 ## When to Use
 
-- User dashboard pages
-- Admin pages
-- Protected content areas
-- Any page requiring authentication
-- Pages with user-specific or admin-specific data
+- Any screen that fetches user/server data on open
+- Dashboards, detail screens, profile screens
+- Screens behind auth (token attached by the Dio interceptor, not the widget)
 
 ## Code Pattern
 
-```typescript
-// app/dashboard/{page}/page.tsx OR app/admin/{page}/page.tsx
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
-import { withUserContext, withAdminContext } from '@/lib/rls-context';
-import { prisma } from '@/lib/prisma';
+```dart
+// app/lib/features/{feature}/{feature}_screen.dart
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_app/core/network/api_client.dart';
 
-// IMPORTANT: Force dynamic rendering for authenticated pages
-// This ensures auth context is available at runtime
-export const dynamic = 'force-dynamic';
-
-/**
- * Server component data fetching with RLS
- */
-async function getData(userId: string) {
-  // For user pages - use withUserContext
-  return await withUserContext(prisma, userId, async (client) => {
-    return client.{table_name}.findMany({
-      where: { user_id: userId },
-      orderBy: { created_at: 'desc' },
-      take: 50
-    });
-  });
-
-  // For admin pages - use withAdminContext
-  // return await withAdminContext(prisma, userId, async (client) => {
-  //   return client.{table_name}.findMany({
-  //     orderBy: { created_at: 'desc' }
-  //   });
-  // });
+// 1. Model (or use a generated/freezed model)
+class {Resource} {
+  const {Resource}({required this.id, required this.name});
+  factory {Resource}.fromJson(Map<String, dynamic> json) =>
+      {Resource}(id: json['id'] as String, name: json['name'] as String);
+  final String id;
+  final String name;
 }
 
-/**
- * Main page component
- */
-export default async function {Page}() {
-  // 1. Authentication check
-  const { userId } = await auth();
+// 2. Provider: fetch via the shared Dio client (auth handled there)
+final {resource}Provider =
+    FutureProvider.autoDispose<List<{Resource}>>((ref) async {
+  final dio = ref.watch(apiClientProvider);
+  final res = await dio.get<List<dynamic>>('/api/{resource}');
+  return (res.data ?? <dynamic>[])
+      .map((e) => {Resource}.fromJson(e as Map<String, dynamic>))
+      .toList();
+});
 
-  if (!userId) {
-    redirect('/sign-in');
+// 3. Screen: render the three states explicitly
+class {Feature}Screen extends ConsumerWidget {
+  const {Feature}Screen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<List<{Resource}>> items = ref.watch({resource}Provider);
+    return Scaffold(
+      appBar: AppBar(title: const Text('{Title}')),
+      body: items.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (Object e, _) => _ErrorView(
+          message: 'Could not load {resource}.',
+          onRetry: () => ref.invalidate({resource}Provider),
+        ),
+        data: (List<{Resource}> data) => RefreshIndicator(
+          onRefresh: () => ref.refresh({resource}Provider.future),
+          child: ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (_, int i) => ListTile(title: Text(data[i].name)),
+          ),
+        ),
+      ),
+    );
   }
-
-  // 2. Optional: Admin verification (for admin pages only)
-  // const { orgId, orgRole } = await auth();
-  // const ADMIN_ORG_ID = process.env.CLERK_ADMIN_ORG_ID;
-  // const ADMIN_ROLE = 'org:admin';
-  //
-  // if (orgId !== ADMIN_ORG_ID || orgRole !== ADMIN_ROLE) {
-  //   redirect('/admin-denied');
-  // }
-
-  // 3. Fetch data with RLS enforcement
-  const data = await getData(userId);
-
-  // 4. Render UI
-  return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">{Page Title}</h1>
-
-      {/* Empty state */}
-      {data.length === 0 ? (
-        <EmptyState />
-      ) : (
-        <DataDisplay data={data} />
-      )}
-    </div>
-  );
 }
 
-/**
- * Empty state component
- */
-function EmptyState() {
-  return (
-    <div className="text-center p-12 border border-dashed rounded-lg">
-      <p className="text-muted-foreground mb-4">
-        No data found
-      </p>
-      <Button asChild>
-        <Link href="/{create-path}">
-          Create New Item
-        </Link>
-      </Button>
-    </div>
-  );
-}
+class _ErrorView extends StatelessWidget {
+  const _ErrorView({required this.message, required this.onRetry});
+  final String message;
+  final VoidCallback onRetry;
 
-/**
- * Data display component
- */
-function DataDisplay({ data }: { data: Awaited<ReturnType<typeof getData>> }) {
-  return (
-    <div className="grid gap-4">
-      {data.map((item) => (
-        <Card key={item.id}>
-          <CardHeader>
-            <CardTitle>{item.title}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {/* Render item details */}
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  );
-}
-```
-
-## Admin Page Variant
-
-```typescript
-// app/admin/{resource}/page.tsx
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
-import { withAdminContext } from '@/lib/rls-context';
-import { prisma } from '@/lib/prisma';
-
-export const dynamic = 'force-dynamic';
-
-async function getAdminData(userId: string) {
-  return await withAdminContext(prisma, userId, async (client) => {
-    return client.{table_name}.findMany({
-      orderBy: { created_at: 'desc' },
-      include: {
-        // Include related data
-      }
-    });
-  });
-}
-
-export default async function AdminPage() {
-  // 1. Authentication check
-  const { userId, orgId, orgRole } = await auth();
-
-  if (!userId) {
-    redirect('/sign-in');
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(message, style: Theme.of(context).textTheme.bodyMedium),
+          const SizedBox(height: 16),
+          FilledButton(onPressed: onRetry, child: const Text('Retry')),
+        ],
+      ),
+    );
   }
-
-  // 2. Admin verification
-  const ADMIN_ORG_ID = process.env.CLERK_ADMIN_ORG_ID || 'org_33W01Dy8pptgCnFovSYNiAYFWm4';
-  const ADMIN_ROLE = 'org:admin';
-
-  if (orgId !== ADMIN_ORG_ID || orgRole !== ADMIN_ROLE) {
-    redirect('/admin-denied');
-  }
-
-  // 3. Fetch admin data
-  const data = await getAdminData(userId);
-
-  // 4. Render admin UI
-  return (
-    <div className="container mx-auto p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Admin: {Resource}</h1>
-        <Button asChild>
-          <Link href="/admin/{resource}/new">
-            <Plus className="mr-2 h-4 w-4" />
-            Create New
-          </Link>
-        </Button>
-      </div>
-
-      <AdminTable data={data} />
-    </div>
-  );
-}
-```
-
-## Client Component Auth Pattern
-
-```typescript
-// app/dashboard/{page}/page.tsx
-"use client"
-
-import { useUser } from '@clerk/nextjs';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-
-export default function ClientAuthPage() {
-  const { isLoaded, isSignedIn, user } = useUser();
-  const router = useRouter();
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    // Wait for Clerk to load
-    if (!isLoaded) return;
-
-    // Redirect if not signed in
-    if (!isSignedIn) {
-      router.push('/sign-in');
-      return;
-    }
-
-    // Fetch user data
-    fetchData();
-  }, [isLoaded, isSignedIn]);
-
-  async function fetchData() {
-    const response = await fetch('/api/user/data');
-    const result = await response.json();
-    setData(result.data);
-  }
-
-  if (!isLoaded || !isSignedIn) {
-    return <LoadingState />;
-  }
-
-  return (
-    <div className="container mx-auto p-6">
-      <h1>Welcome, {user.firstName}!</h1>
-      {/* Render data */}
-    </div>
-  );
 }
 ```
 
 ## Customization Guide
 
-1. **Replace placeholders**:
-   - `{Page}` → Page name (e.g., `Dashboard`, `AdminContent`)
-   - `{page}` → URL segment (e.g., `dashboard`, `admin/content`)
-   - `{table_name}` → Prisma model
-   - `{Page Title}` → Display title
-   - `{Resource}` → Resource name for admin pages
+1. Replace `{Feature}`, `{Resource}`, `{resource}`, `{Title}` and the endpoint.
+2. Swap the hand-written model/provider for generated ones if using
+   `riverpod_generator` / `freezed` (see `riverpod-async-provider.md`).
+3. Register the screen's route in `app/lib/core/router/app_router.dart`.
+4. Pull all styling from `Theme.of(context)` — never hardcode colors/spacing.
 
-2. **Choose auth pattern**:
-   - Server component (recommended) - Better performance, SEO
-   - Client component - When you need hooks, state, effects
+## Checklist
 
-3. **Choose RLS context**:
-   - `withUserContext` - User-specific pages
-   - `withAdminContext` - Admin pages
+- [ ] All three states handled (loading, error with retry, data)
+- [ ] Provider is `autoDispose` unless the data must outlive the screen
+- [ ] No direct color/spacing literals (use theme + `design_tokens`)
+- [ ] Route added to `app_router.dart`
+- [ ] Widget test covers the data + error states
 
-4. **Add features**:
-   - Search/filter functionality
-   - Pagination
-   - Real-time updates
-   - Export capabilities
-
-## Security Checklist
-
-- [x] **Auth Check**: Verify `userId` exists
-- [x] **Admin Verification**: Check org/role for admin pages
-- [x] **RLS Context**: All data fetched with proper context
-- [x] **Redirect**: Redirect unauthenticated users
-- [x] **Dynamic Rendering**: Use `export const dynamic = 'force-dynamic'`
-
-## Validation Commands
+## Validation
 
 ```bash
-# Type checking
-yarn type-check
-
-# Linting
-yarn lint
-
-# Build check
-yarn build
-
-# E2E tests
-yarn test:e2e
-```
-
-## Example: User Dashboard
-
-```typescript
-// app/dashboard/payments/page.tsx
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
-import { withUserContext } from '@/lib/rls-context';
-import { prisma } from '@/lib/prisma';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-
-export const dynamic = 'force-dynamic';
-
-async function getUserPayments(userId: string) {
-  return await withUserContext(prisma, userId, async (client) => {
-    return client.payments.findMany({
-      where: { user_id: userId },
-      orderBy: { created_at: 'desc' },
-      take: 20
-    });
-  });
-}
-
-export default async function PaymentsPage() {
-  const { userId } = await auth();
-
-  if (!userId) {
-    redirect('/sign-in');
-  }
-
-  const payments = await getUserPayments(userId);
-
-  return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Payment History</h1>
-
-      {payments.length === 0 ? (
-        <p>No payments found</p>
-      ) : (
-        <div className="grid gap-4">
-          {payments.map((payment) => (
-            <Card key={payment.id}>
-              <CardHeader>
-                <CardTitle>${payment.amount / 100}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>Status: {payment.status}</p>
-                <p>Date: {new Date(payment.created_at).toLocaleDateString()}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
+cd app && flutter analyze && flutter test
 ```
 
 ## Related Patterns
 
-- [User Context API](../api/user-context-api.md) - API for data fetching
-- [Admin Context API](../api/admin-context-api.md) - Admin APIs
-- [Form with Validation](./form-with-validation.md) - Forms on auth pages
-- [E2E User Flow](../testing/e2e-user-flow.md) - Testing auth flows
+- [Riverpod Async Provider](./riverpod-async-provider.md) - state + mutations
+- [Data List](./data-table.md) - collection rendering
+- [Form with Validation](./form-with-validation.md) - data entry
+- [User Context API](../api/user-context-api.md) - the backend endpoint
 
 ---
 
-**Pattern Source**: `app/admin/mini-course/content/page.tsx`
-**Last Updated**: 2025-10-03
+**Last Updated**: 2026-06
 **Validated By**: System Architect

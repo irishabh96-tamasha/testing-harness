@@ -1,9 +1,9 @@
 # Frontend Patterns
 
 ![Status](https://img.shields.io/badge/status-production-green)
-![Harness](https://img.shields.io/badge/harness-{{HARNESS_VERSION}}-blue)
+![Harness](https://img.shields.io/badge/harness-v2.10.0-blue)
 
-> Frontend patterns for Next.js App Router, Clerk auth, shadcn/Radix UI, and PostHog analytics.
+> Frontend patterns for Flutter (Dart): Riverpod state, go_router navigation, Dio networking, and a Figma-token-driven theme.
 
 ## License
 
@@ -13,41 +13,45 @@
 
 ## Intellectual Property
 
-The skill system architecture and {{PROJECT_SHORT}} harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
+The skill system architecture and MOB harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
 
 ## Quick Start
 
 This skill activates automatically when you:
-- Build new UI components or pages
-- Implement authentication flows
-- Add forms with validation
-- Integrate PostHog analytics events
-- Work with shadcn/ui or Radix components
+- Build new screens or widgets
+- Wire state / data loading / mutations (Riverpod)
+- Add navigation routes (go_router)
+- Call the backend API (Dio)
+- Apply theming and design tokens
 
 ## What This Skill Does
 
-Ensures consistent frontend development using established patterns for Next.js App Router, Clerk authentication, shadcn/ui components, and PostHog analytics. Includes accessibility standards and responsive design patterns.
+Ensures consistent Flutter development: Riverpod for state, go_router for
+navigation, Dio for the API, and `Theme.of(context)` fed by the Figma-generated
+`design_tokens` package for all styling. Includes accessibility and widget
+conventions. For implementing a Figma design, pair with the `figma-devmode` skill.
 
 ## Trigger Keywords
 
 | Primary | Secondary |
 |---------|-----------|
-| component | UI |
-| page | Next.js |
-| Clerk | auth flow |
-| shadcn | PostHog |
+| widget | screen |
+| Riverpod | state |
+| go_router | navigation |
+| Dio | theme / tokens |
 
 ## Related Skills
 
-- [api-patterns](../api-patterns/) - Backend API integration
-- [testing-patterns](../testing-patterns/) - Component testing
+- [figma-devmode](../figma-devmode/) - Figma frame → widget
+- [testing-patterns](../testing-patterns/) - widget / golden / integration tests
+- [api-patterns](../api-patterns/) - backend API the app calls
 
 ## Maintenance
 
 | Field | Value |
 |-------|-------|
-| Last Updated | 2026-01-04 |
-| Harness Version | {{HARNESS_VERSION}} |
+| Last Updated | 2026-06 |
+| Harness Version | v2.10.0 |
 
 ---
 

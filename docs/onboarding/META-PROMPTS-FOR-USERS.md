@@ -2,7 +2,7 @@
 
 **Purpose**: Copy-paste prompts to help you get started with the 11-agent team structure.
 
-**Repository**: {{GITHUB_REPO_URL}}
+**Repository**: https://github.com/tamasha-live/mobile-app
 
 ---
 
@@ -23,7 +23,7 @@
 **Copy-paste this to your AI assistant**:
 
 ```
-I want to set up the SAFe Multi-Agent Development methodology in my project. I've cloned the repository from {{GITHUB_REPO_URL}}.
+I want to set up the SAFe Multi-Agent Development methodology in my project. I've cloned the repository from https://github.com/tamasha-live/mobile-app.
 
 Please help me with the following:
 
@@ -39,7 +39,7 @@ Please help me with the following:
 
 4. **First Steps**: After installing agents, what should I do first to validate the setup is working?
 
-5. **Template Customization**: I see placeholders like {{PROJECT_NAME}}, {{TICKET_PREFIX}}, etc. Can you help me identify all placeholders I need to replace and where to find them?
+5. **Template Customization**: I see placeholders like mobile-app, MOB, etc. Can you help me identify all placeholders I need to replace and where to find them?
 
 My project details:
 - Project name: [YOUR_PROJECT_NAME]
@@ -171,10 +171,10 @@ I've cloned the SAFe multi-agent Agentic Workflow repository and need to customi
 Please help me:
 
 1. **Find All Placeholders**: Search the repository for all instances of:
-   - {{PROJECT_NAME}}
-   - {{TICKET_PREFIX}}
+   - mobile-app
+   - MOB
    - {{PRIMARY_DEV_BRANCH}}
-   - {{ARCHITECT_GITHUB_HANDLE}}
+   - ronak
    - {{CONFLUENCE_URL}}
    - {{DB_SUPERUSER_ROLE}}
    - {{DB_APP_USER_ROLE}}
@@ -269,7 +269,7 @@ Reference: See CI-CD-Pipeline-Guide.md and CONTRIBUTING.md for workflow details.
 I've just set up the SAFe Multi-Agent Development methodology. Please help me validate my setup by walking through this Day 1 checklist:
 
 **Setup Validation**:
-- [ ] Repository cloned: `git clone {{GITHUB_REPO_URL}}`
+- [ ] Repository cloned: `git clone https://github.com/tamasha-live/mobile-app`
 - [ ] Agent provider installed: [Claude Code / Augment Code]
 - [ ] Agent prompts copied to correct location
 - [ ] Environment variables configured
@@ -382,8 +382,8 @@ Reference: Check AGENTS.md, CONTRIBUTING.md, and CI-CD-Pipeline-Guide.md for con
 
 - **AGENTS.md**: Quick reference for all 11 agent roles
 - **CONTRIBUTING.md**: Complete workflow guide
-- **GitIngest Link**: https://gitingest.com/{{GITHUB_ORG}}/{{GITHUB_REPO}}
+- **GitIngest Link**: https://gitingest.com/tamasha-live/{{GITHUB_REPO}}
 
 ---
 
-**Questions?** Open an issue on GitHub or contact {{AUTHOR_EMAIL}}
+**Questions?** Open an issue on GitHub or contact ronak@tamasha.live

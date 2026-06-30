@@ -65,7 +65,7 @@
 | Aspect                  | v1.0            | v1.1                       | Notes   |
 | ----------------------- | --------------- | -------------------------- | ------- |
 | **Gate exists**         | ❌ No           | ✅ **YES**                 | **NEW** |
-| **Branch verification** | ❌ None         | ✅ TDM checks {{TICKET_PREFIX}}-XXX-...  | **NEW** |
+| **Branch verification** | ❌ None         | ✅ TDM checks MOB-XXX-...  | **NEW** |
 | **Linear status**       | ❌ Not verified | ✅ Must be "In Progress"   | **NEW** |
 | **CONTRIBUTING.md**     | ❌ Not enforced | ✅ TDM verifies compliance | **NEW** |
 | **Git sync**            | ❌ Not checked  | ✅ TDM ensures latest dev  | **NEW** |
@@ -143,7 +143,7 @@
 | **Reviewer**          | N/A   | **Main Claude (me)**                   | **NEW** |
 | **Focus**             | N/A   | Comprehensive quality + judgment       | **NEW** |
 | **Checks**            | N/A   | Code quality, UX, security, perf, docs | **NEW** |
-| **If approved**       | N/A   | Notify {{AUTHOR_NAME}} for HITL                  | **NEW** |
+| **If approved**       | N/A   | Notify Ronak for HITL                  | **NEW** |
 | **If changes needed** | N/A   | TDM coordinates fixes                  | **NEW** |
 | **Estimated time**    | N/A   | ~10-20 minutes                         | **NEW** |
 
@@ -151,13 +151,13 @@
 
 ---
 
-### Stage 9: {{AUTHOR_NAME}} HITL Review & Merge
+### Stage 9: Ronak HITL Review & Merge
 
 | Aspect                   | v1.0                  | v1.1                         | Notes            |
 | ------------------------ | --------------------- | ---------------------------- | ---------------- |
 | Scott reviews            | ✅ Yes (first review) | ✅ Yes (final review)        | **ROLE CHANGED** |
 | Scott approves           | ✅ Required           | ✅ Required                  | **UNCHANGED**    |
-| {{AUTHOR_NAME}} merges             | ✅ Required           | ✅ Required                  | **UNCHANGED**    |
+| Ronak merges             | ✅ Required           | ✅ Required                  | **UNCHANGED**    |
 | Human gate               | ✅ Critical           | ✅ Critical                  | **UNCHANGED**    |
 | PR quality at this stage | Variable              | **Higher (2 agent reviews)** | **IMPROVED**     |
 | Issues to catch          | Many                  | **Fewer (pre-screened)**     | **IMPROVED**     |

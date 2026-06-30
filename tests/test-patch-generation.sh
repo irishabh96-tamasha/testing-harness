@@ -220,9 +220,9 @@ identity:
   TICKET_PREFIX: "MFP"
   MAIN_BRANCH: "main"
 substitutions:
-  "{{PROJECT_NAME}}": "MyForkProject"
-  "{{GITHUB_ORG}}": "my-fork-org"
-  "{{TICKET_PREFIX}}": "MFP"
+  "mobile-app": "MyForkProject"
+  "tamasha-live": "my-fork-org"
+  "MOB": "MFP"
 renames:
   "agents/be-developer.md": "agents/backend-eng.md"
   "skills/rls-patterns/": "skills/firestore-security/"
@@ -245,8 +245,8 @@ identity:
   TICKET_PREFIX: "TST"
   MAIN_BRANCH: "main"
 substitutions:
-  "{{PROJECT_NAME}}": "TestProject"
-  "{{GITHUB_ORG}}": "test-org"
+  "mobile-app": "TestProject"
+  "tamasha-live": "test-org"
 protected:
   - "settings.local.json"
 YAML
@@ -360,7 +360,7 @@ MOCK_UP2="$TEST_DIR/upstream-rename"
 mkdir -p "$MOCK_UP2/.claude/agents"
 cat > "$MOCK_UP2/.claude/agents/be-developer.md" << 'EOF'
 # Updated Backend Developer
-This is the updated upstream content for {{PROJECT_NAME}}.
+This is the updated upstream content for mobile-app.
 EOF
 
 # Also create a file in a renamed directory
@@ -369,7 +369,7 @@ echo "# Old Security Pattern" > "$PROJ2/.claude/skills/firestore-security/SKILL.
 
 mkdir -p "$MOCK_UP2/.claude/skills/rls-patterns"
 cat > "$MOCK_UP2/.claude/skills/rls-patterns/SKILL.md" << 'EOF'
-# Updated RLS Pattern for {{PROJECT_NAME}}
+# Updated RLS Pattern for mobile-app
 New upstream content.
 EOF
 
@@ -405,13 +405,13 @@ echo -e "\n${CYAN}=== Test 5: Patches are substitution-aware ===${NC}\n"
 # AC: Patches are substitution-aware (use fork's placeholder values)
 # =============================================================================
 
-# The upstream files contain {{PROJECT_NAME}} which should be substituted
+# The upstream files contain mobile-app which should be substituted
 # to "MyForkProject" in the patches
 if [ -f "$FILE_RENAME_PATCH" ]; then
     assert_file_content "$FILE_RENAME_PATCH" "MyForkProject" \
         "Patch content has substituted value (MyForkProject)"
-    assert_file_not_content "$FILE_RENAME_PATCH" "{{PROJECT_NAME}}" \
-        "Patch content does NOT have raw placeholder {{PROJECT_NAME}}"
+    assert_file_not_content "$FILE_RENAME_PATCH" "mobile-app" \
+        "Patch content does NOT have raw placeholder mobile-app"
 fi
 
 if [ -f "$DIR_RENAME_PATCH" ]; then
@@ -669,9 +669,9 @@ create_basic_manifest "$PROJ8"
 MOCK_UP8="$TEST_DIR/upstream-subs"
 mkdir -p "$MOCK_UP8/.claude"
 cat > "$MOCK_UP8/.claude/README.md" << 'EOF'
-# Welcome to {{PROJECT_NAME}}
-This is the {{GITHUB_ORG}} project.
-Ticket prefix: {{TICKET_PREFIX}}
+# Welcome to mobile-app
+This is the tamasha-live project.
+Ticket prefix: MOB
 EOF
 
 MOCKED8=$(create_mocked_script "$PROJ8" "$MOCK_UP8")
@@ -683,13 +683,13 @@ assert_file_exists "$SUB_PATCH" \
 
 if [ -f "$SUB_PATCH" ]; then
     assert_file_content "$SUB_PATCH" "TestProject" \
-        "Substitution applied: {{PROJECT_NAME}} -> TestProject"
+        "Substitution applied: mobile-app -> TestProject"
     assert_file_content "$SUB_PATCH" "test-org" \
-        "Substitution applied: {{GITHUB_ORG}} -> test-org"
-    assert_file_not_content "$SUB_PATCH" "{{PROJECT_NAME}}" \
-        "No raw {{PROJECT_NAME}} placeholder in patch"
-    assert_file_not_content "$SUB_PATCH" "{{GITHUB_ORG}}" \
-        "No raw {{GITHUB_ORG}} placeholder in patch"
+        "Substitution applied: tamasha-live -> test-org"
+    assert_file_not_content "$SUB_PATCH" "mobile-app" \
+        "No raw mobile-app placeholder in patch"
+    assert_file_not_content "$SUB_PATCH" "tamasha-live" \
+        "No raw tamasha-live placeholder in patch"
 fi
 
 

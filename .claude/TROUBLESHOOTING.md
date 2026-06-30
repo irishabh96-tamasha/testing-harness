@@ -130,7 +130,7 @@ Should show all `.md` files.
 
 3. **Ticket prefix mismatch**
 
-   If command references `{{TICKET_PREFIX}}-XXX` but your project uses different prefix,
+   If command references `MOB-XXX` but your project uses different prefix,
    update the command file.
 
 ---
@@ -166,7 +166,7 @@ Should show all `.md` files.
 
    ```bash
    # Copy command from hooks config and run it
-   git branch --show-current 2>/dev/null | grep -q '^{{TICKET_PREFIX}}-[0-9]'
+   git branch --show-current 2>/dev/null | grep -q '^MOB-[0-9]'
    echo $?  # 0 = matched, 1 = no match
    ```
 
@@ -336,7 +336,7 @@ Can you show me the current harness configuration?
 ## Getting Help
 
 1. **Check this document first**
-2. **Read the Whitepaper** - `docs/whitepapers/CLAUDE-CODE-HARNESS-MODERNIZATION-{{TICKET_PREFIX}}-444.md`
+2. **Read the Whitepaper** - `docs/whitepapers/CLAUDE-CODE-HARNESS-MODERNIZATION-MOB-444.md`
 3. **Check AGENTS.md** - For agent selection guidance
 4. **Check CONTRIBUTING.md** - For workflow issues
 

@@ -15,7 +15,7 @@ Executes testing using patterns from `patterns_library/testing/`. Validates acce
 
 **Your workflow in 4 steps:**
 
-1. **Read spec** → `cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md`
+1. **Read spec** → `cat specs/MOB-XXX-{feature}-spec.md`
 2. **Find test pattern** → Check spec for testing strategy, read from `patterns_library/testing/`
 3. **Copy & customize** → Follow pattern's test implementation guide
 4. **Validate** → Run `yarn test:unit && yarn test:integration && yarn test:e2e`
@@ -29,19 +29,19 @@ Executes testing using patterns from `patterns_library/testing/`. Validates acce
 yarn test:unit && yarn test:integration && yarn test:e2e && echo "QAS SUCCESS" || echo "QAS FAILED"
 ```
 
-## Pattern Execution Workflow ({{TICKET_PREFIX}}-300)
+## Pattern Execution Workflow (MOB-300)
 
 ### Step 1: Read Your Spec
 
 ```bash
 # Get your assignment
-cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+cat specs/MOB-XXX-{feature}-spec.md
 
 # Find the testing strategy (BSA defined this)
-grep -A 10 "Testing Strategy" specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+grep -A 10 "Testing Strategy" specs/MOB-XXX-{feature}-spec.md
 
 # Find pattern references
-grep -A 3 "Pattern:" specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+grep -A 3 "Pattern:" specs/MOB-XXX-{feature}-spec.md
 ```
 
 ### Step 2: Load the Test Pattern

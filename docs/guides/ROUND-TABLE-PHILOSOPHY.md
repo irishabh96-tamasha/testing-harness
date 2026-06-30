@@ -171,7 +171,7 @@ No ticket moves to "Ready for Review" without evidence. This is enforced by the 
 | Performance data     | Benchmarks for performance-sensitive changes             | Tagged   |
 | Security scan        | Security audit output for `#EXPORT_CRITICAL` features    | Tagged   |
 
-Evidence is attached to the Linear ticket as comments using the `mcp__{{MCP_LINEAR_SERVER}}__create_comment` tool.
+Evidence is attached to the Linear ticket as comments using the `mcp__linear-mcp__create_comment` tool.
 
 ### POPM Approval Process
 
@@ -320,5 +320,5 @@ These pillars are not just management concepts -- they are inscribed on the Roun
 
 **Questions?**
 
-- GitHub Discussions: {{GITHUB_REPO_URL}}/discussions
-- Email: {{AUTHOR_EMAIL}}
+- GitHub Discussions: https://github.com/tamasha-live/mobile-app/discussions
+- Email: ronak@tamasha.live

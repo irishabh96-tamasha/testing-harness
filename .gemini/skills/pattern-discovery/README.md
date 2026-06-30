@@ -1,7 +1,7 @@
 # Pattern Discovery
 
 ![Status](https://img.shields.io/badge/status-production-green)
-![Harness](https://img.shields.io/badge/harness-{{HARNESS_VERSION}}-blue)
+![Harness](https://img.shields.io/badge/harness-v2.10.0-blue)
 ![Provider](https://img.shields.io/badge/provider-Gemini_CLI-orange)
 
 > Pattern library discovery for pattern-first development. Use BEFORE implementing any new feature, creating components, writing API routes, or adding database operations. Ensures existing patterns are checked first.
@@ -14,7 +14,7 @@
 
 ## Intellectual Property
 
-The skill system architecture and {{PROJECT_SHORT}} harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
+The skill system architecture and MOB harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
 
 SAFe® is a registered trademark of Scaled Agile, Inc.
 
@@ -46,7 +46,7 @@ Ensures existing patterns are checked before writing new code. Implements 'Searc
 | Field | Value |
 |-------|-------|
 | Last Updated | 2026-01-14 |
-| Harness Version | {{HARNESS_VERSION}} |
+| Harness Version | v2.10.0 |
 
 ---
 

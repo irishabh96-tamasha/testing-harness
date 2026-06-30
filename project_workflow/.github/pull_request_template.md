@@ -1,10 +1,10 @@
-# Pull Request: [Brief Description] [{{TICKET_PREFIX}}-XXX]
+# Pull Request: [Brief Description] [MOB-XXX]
 
 ## 📋 Summary
 
 <!-- Provide a brief description of the changes in this PR -->
 
-**Linear Ticket**: [{{TICKET_PREFIX}}-XXX](https://linear.app/{{LINEAR_WORKSPACE}}/issue/{{TICKET_PREFIX}}-XXX)
+**Linear Ticket**: [MOB-XXX](https://linear.app/tamasha/issue/MOB-XXX)
 **Type**: `feat` | `fix` | `docs` | `style` | `refactor` | `test` | `chore`  
 **Team**: `payments` | `auth` | `frontend` | `backend` | `qa` | `devops`
 
@@ -193,7 +193,7 @@ VARIABLE_NAME=description
 
 **Required Reviewers:**
 
-- [ ] @{{ARCHITECT_GITHUB_HANDLE}} (ARCHitect-in-the-IDE)
+- [ ] @ronak (ARCHitect-in-the-IDE)
 - [ ] Team lead: @<!-- team-lead -->
 
 **Optional Reviewers:**
@@ -211,7 +211,7 @@ VARIABLE_NAME=description
 
 ### Review Checklist
 
-- [ ] Code follows {{PROJECT_NAME}} coding standards
+- [ ] Code follows mobile-app coding standards
 - [ ] Business logic is sound
 - [ ] Error handling is comprehensive
 - [ ] Tests are adequate and passing
@@ -234,5 +234,5 @@ VARIABLE_NAME=description
 <!--
 Template Version: 1.0
 Last Updated: 2025-08-16
-Maintained by: {{PROJECT_NAME}} Development Team
+Maintained by: mobile-app Development Team
 -->

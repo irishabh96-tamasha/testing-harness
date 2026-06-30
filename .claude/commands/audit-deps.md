@@ -159,7 +159,7 @@ Document findings in `docs/agent-outputs/technical-docs/dependency-audit-report-
 
 Create Linear tickets for each actionable item:
 
-- {{TICKET_PREFIX}}-{number}: {description}
+- MOB-{number}: {description}
 ```
 
 ### 7. Create Linear Tickets
@@ -174,7 +174,7 @@ For each significant finding:
 Use MCP:
 
 ```text
-mcp__{{MCP_LINEAR_SERVER}}__create_issue
+mcp__linear-mcp__create_issue
 ```
 
 ## Audit Frequency
@@ -202,4 +202,4 @@ To adapt this command for your infrastructure, replace these placeholders:
 
 | Placeholder       | Description               | Example               |
 | ----------------- | ------------------------- | --------------------- |
-| `{{TICKET_PREFIX}}` | Your Linear ticket prefix | `WOR`, `PROJ`, `TASK` |
+| `MOB` | Your Linear ticket prefix | `WOR`, `PROJ`, `TASK` |

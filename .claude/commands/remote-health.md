@@ -86,7 +86,7 @@ Test PostgreSQL connection:
 # └─────────────────────────────────────────────────────────────────────┘
 
 ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} \
-  "docker exec {{DB_CONTAINER}} pg_isready -U {{DB_USER}}"
+  "docker exec mobile-app-postgres pg_isready -U app_user"
 ```
 
 ### 5. Redis/Cache Connectivity
@@ -194,8 +194,8 @@ Calculate overall health score (0-100):
 | `{{PROJECT}}`         | Your project name         | `myapp`                     |
 | `{{CONTAINER_NAME}}`  | Docker container name     | `myapp-staging`             |
 | `{{APP_PORT}}`        | Port your app runs on     | `3000`                      |
-| `{{DB_CONTAINER}}`    | Database container name   | `myapp-postgres`            |
-| `{{DB_USER}}`         | Database username         | `app_user`                  |
+| `mobile-app-postgres`    | Database container name   | `myapp-postgres`            |
+| `app_user`         | Database username         | `app_user`                  |
 | `{{REDIS_CONTAINER}}` | Redis container name      | `myapp-redis`               |
 
 ## Related Commands

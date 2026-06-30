@@ -29,7 +29,7 @@ Guide consistent ticket management. Provides evidence templates for the mandator
 
 ```text
 # Get issue by identifier
-get_issue({ id: "{{TICKET_PREFIX}}-459" })
+get_issue({ id: "MOB-459" })
 
 # List issues with filters
 list_issues({
@@ -55,7 +55,7 @@ create_issue({
 
 ```text
 update_issue({
-  id: "{{TICKET_PREFIX}}-459",
+  id: "MOB-459",
   state: "Done",
 })
 ```
@@ -64,7 +64,7 @@ update_issue({
 
 ```text
 create_comment({
-  issueId: "{{TICKET_PREFIX}}-459",
+  issueId: "MOB-459",
   body: "**Dev Evidence**\n\n...",
 })
 ```
@@ -88,7 +88,7 @@ Every issue requires evidence at each phase:
 
 **PR**: https://github.com/{{ORG_NAME}}/{{REPO_NAME}}/pull/XXX
 **Commit**: [short-hash]
-**Branch**: {{TICKET_PREFIX}}-XXX-description
+**Branch**: MOB-XXX-description
 
 **Implementation:**
 - [x] Feature implemented
@@ -153,7 +153,7 @@ Backlog -> Ready -> In Progress -> Testing -> Ready for Review -> Done
 
 ### GitHub-Linear Auto-Sync
 
-Tickets referenced in commit messages (e.g., `[{{TICKET_PREFIX}}-123]`) automatically move to **Done** when the PR merges. Child stories not referenced in any commit message must be manually closed after merge.
+Tickets referenced in commit messages (e.g., `[MOB-123]`) automatically move to **Done** when the PR merges. Child stories not referenced in any commit message must be manually closed after merge.
 
 **Best practice**: Reference Feature-level tickets in commit messages. After merge, manually close orphaned child stories that were not referenced.
 
@@ -173,7 +173,7 @@ Most ticket systems use UUIDs internally. When working with APIs:
 
 ```text
 // Issue identifiers (human-readable)
-const issueId = "{{TICKET_PREFIX}}-459";
+const issueId = "MOB-459";
 
 // UUIDs (API operations)
 const uuid = "ef6a5fa0-2b46-417f-8266-dea2d187b10a";
@@ -188,8 +188,8 @@ const uuid = "ef6a5fa0-2b46-417f-8266-dea2d187b10a";
 
 PRs are automatically linked when:
 
-- Branch name contains `{{TICKET_PREFIX}}-XXX`
-- PR title contains `[{{TICKET_PREFIX}}-XXX]`
+- Branch name contains `MOB-XXX`
+- PR title contains `[MOB-XXX]`
 
 ### Create Sub-Issue
 

@@ -29,7 +29,7 @@ Focus on execution with markdown quality validation.
 
 ## Workflow (4 Steps)
 
-1. Read spec -> cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+1. Read spec -> cat specs/MOB-XXX-{feature}-spec.md
 2. Find pattern -> Check spec for documentation pattern reference
 3. Copy & customize -> Follow pattern's documentation template
 4. Validate -> Run lint:md and type-check

@@ -1,10 +1,10 @@
-# {{PROJECT_SHORT}} Pattern Library
+# MOB Pattern Library
 
 > **Copy-Paste Ready Code Patterns for Agent-Driven Development**
 
 ## Overview
 
-This pattern library provides battle-tested, production-ready code patterns extracted from the {{PROJECT_SHORT}} codebase. Each pattern is:
+This pattern library provides battle-tested, production-ready code patterns extracted from the MOB codebase. Each pattern is:
 
 - ✅ **Copy-Paste Ready** - Minimal customization needed
 - ✅ **Security Validated** - RLS enforced, auth required, input validated
@@ -22,13 +22,17 @@ This pattern library provides battle-tested, production-ready code patterns extr
 | [Webhook Handler](./api/webhook-handler.md)       | External webhook processing              | Stripe, Clerk, third-party events |
 | [Zod Validation API](./api/zod-validation-api.md) | Input validation with Zod schemas        | Form submissions, API inputs      |
 
-### UI Components
+### UI Components (Flutter)
 
-| Pattern                                              | File                           | Use Case                 |
-| ---------------------------------------------------- | ------------------------------ | ------------------------ |
-| [Authenticated Page](./ui/authenticated-page.md)     | Protected page with auth check | User dashboard, profile  |
-| [Form with Validation](./ui/form-with-validation.md) | React Hook Form + Zod          | Data entry, settings     |
-| [Data Table](./ui/data-table.md)                     | Server-side paginated table    | List views, admin panels |
+| Pattern                                                  | File                                   | Use Case                      |
+| -------------------------------------------------------- | -------------------------------------- | ----------------------------- |
+| [Async Data Screen](./ui/authenticated-page.md)          | Riverpod screen, loading/error/data    | Dashboards, detail, profile   |
+| [Data List](./ui/data-table.md)                          | Scrollable list + pull-to-refresh      | Feeds, history, list views    |
+| [Form with Validation](./ui/form-with-validation.md)     | Form + validators + submit controller  | Data entry, settings          |
+| [Riverpod Async Provider](./ui/riverpod-async-provider.md) | AsyncNotifier state + mutations      | Any backend-backed app state  |
+
+> Styling comes from `Theme.of(context)` (fed by `packages/design_tokens`). Build
+> from Figma via the `figma-devmode` skill. Never hardcode colors/spacing/type.
 
 ### Database Operations
 
@@ -198,6 +202,6 @@ As patterns prove useful:
 
 ---
 
-**Last Updated**: 2026-03
-**Pattern Count**: 18
-**Maintained by**: {{PROJECT_NAME}} Development Team + System Architect
+**Last Updated**: 2026-06
+**Pattern Count**: 19
+**Maintained by**: mobile-app Development Team + System Architect

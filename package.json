@@ -1,0 +1,16 @@
+{
+  "name": "mobile-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SAFe agentic harness monorepo: Flutter app + Express backend",
+  "scripts": {
+    "backend:lint": "npm --prefix backend run lint",
+    "backend:typecheck": "npm --prefix backend run typecheck",
+    "backend:test": "npm --prefix backend test",
+    "backend:validate": "npm run backend:lint && npm run backend:typecheck && npm run backend:test",
+    "app:analyze": "cd app && flutter analyze",
+    "app:test": "cd app && flutter test",
+    "app:validate": "npm run app:analyze && npm run app:test",
+    "ci:validate": "npm run backend:validate && npm run app:validate"
+  }
+}

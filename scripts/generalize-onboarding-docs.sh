@@ -36,30 +36,30 @@ update_file() {
 
   echo "  - Updating: $description"
 
-  # Replace {{PROJECT_SHORT}} SAFe with SAFe (but keep SAFe Multi-Agent Development)
-  sed -i 's/{{PROJECT_SHORT}} SAFe Multi-Agent Development/SAFe Multi-Agent Development/g' "$file"
-  sed -i 's/{{PROJECT_SHORT}} SAFe/SAFe multi-agent/g' "$file"
-  sed -i 's/the {{PROJECT_SHORT}} methodology/the SAFe methodology/g' "$file"
+  # Replace MOB SAFe with SAFe (but keep SAFe Multi-Agent Development)
+  sed -i 's/MOB SAFe Multi-Agent Development/SAFe Multi-Agent Development/g' "$file"
+  sed -i 's/MOB SAFe/SAFe multi-agent/g' "$file"
+  sed -i 's/the MOB methodology/the SAFe methodology/g' "$file"
 
   # Replace specific GitHub URLs with placeholders
-  sed -i 's|https://github\.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}|{{GITHUB_REPO_URL}}|g' "$file"
-  sed -i 's|https://gitingest\.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}|https://gitingest.com/{{GITHUB_ORG}}/{{GITHUB_REPO}}|g' "$file"
-  sed -i 's|git clone https://github\.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}|git clone {{GITHUB_REPO_URL}}|g' "$file"
-  sed -i 's|cd {{PROJECT_REPO}}|cd {{PROJECT_NAME}}|g' "$file"
-  sed -i 's|https://{{GITHUB_ORG}}\.github\.io/{{PROJECT_REPO}}/|https://{{GITHUB_ORG}}.github.io/{{GITHUB_REPO}}/|g' "$file"
+  sed -i 's|https://github\.com/tamasha-live/mobile-app|https://github.com/tamasha-live/mobile-app|g' "$file"
+  sed -i 's|https://gitingest\.com/tamasha-live/mobile-app|https://gitingest.com/tamasha-live/{{GITHUB_REPO}}|g' "$file"
+  sed -i 's|git clone https://github\.com/tamasha-live/mobile-app|git clone https://github.com/tamasha-live/mobile-app|g' "$file"
+  sed -i 's|cd mobile-app|cd mobile-app|g' "$file"
+  sed -i 's|https://tamasha-live\.github\.io/mobile-app/|https://tamasha-live.github.io/{{GITHUB_REPO}}/|g' "$file"
 
-  # Replace {{TICKET_PREFIX}}- ticket prefix with generic placeholder
-  sed -i 's/{{TICKET_PREFIX}}-\([0-9]\+\)/{{TICKET_PREFIX}}-\1/g' "$file"
-  sed -i 's/{{TICKET_PREFIX}}-326/{{TICKET_PREFIX}}-326/g' "$file"
+  # Replace MOB- ticket prefix with generic placeholder
+  sed -i 's/MOB-\([0-9]\+\)/MOB-\1/g' "$file"
+  sed -i 's/MOB-326/MOB-326/g' "$file"
 
-  # Replace PROJ-1 examples with {{TICKET_PREFIX}}-1
-  sed -i 's/PROJ-1/{{TICKET_PREFIX}}-1/g' "$file"
+  # Replace PROJ-1 examples with MOB-1
+  sed -i 's/PROJ-1/MOB-1/g' "$file"
 
   # Keep generic GitHub URLs (like github.com/settings/tokens)
   # These are useful examples and should not be replaced
 
   # Clean up any double placeholder issues
-  sed -i 's/{{TICKET_PREFIX}}-{{TICKET_PREFIX}}/{{TICKET_PREFIX}}/g' "$file"
+  sed -i 's/MOB-MOB/MOB/g' "$file"
 
   echo -e "${GREEN}  ✓ Updated: $file${NC}"
 }
@@ -75,11 +75,11 @@ echo ""
 echo -e "${GREEN}✓ All files updated successfully!${NC}"
 echo ""
 echo "Changes made:"
-echo "  1. Replaced '{{PROJECT_SHORT}} SAFe' with 'SAFe multi-agent' or 'SAFe'"
-echo "  2. Replaced GitHub URLs with {{GITHUB_REPO_URL}} placeholder"
-echo "  3. Replaced GitIngest URLs with {{GITHUB_ORG}}/{{GITHUB_REPO}} placeholders"
-echo "  4. Replaced '{{TICKET_PREFIX}}-' with '{{TICKET_PREFIX}}-' for ticket references"
-echo "  5. Generalized clone/cd commands with {{PROJECT_NAME}}"
+echo "  1. Replaced 'MOB SAFe' with 'SAFe multi-agent' or 'SAFe'"
+echo "  2. Replaced GitHub URLs with https://github.com/tamasha-live/mobile-app placeholder"
+echo "  3. Replaced GitIngest URLs with tamasha-live/{{GITHUB_REPO}} placeholders"
+echo "  4. Replaced 'MOB-' with 'MOB-' for ticket references"
+echo "  5. Generalized clone/cd commands with mobile-app"
 echo ""
 echo "Backup files created with .bak extension"
 echo "To restore: for f in docs/onboarding/*.bak; do mv \"\$f\" \"\${f%.bak}\"; done"

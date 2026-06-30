@@ -20,18 +20,18 @@ Ensure consistent PR creation, CI/CD validation, and release coordination follow
 
 Before creating any PR:
 
-- [ ] Branch name: `{{TICKET_PREFIX}}-{number}-{description}`
-- [ ] Commits follow: `type(scope): description [{{TICKET_PREFIX}}-XXX]`
-- [ ] Rebased on latest main: `git fetch origin && git rebase origin/{{MAIN_BRANCH}}`
+- [ ] Branch name: `MOB-{number}-{description}`
+- [ ] Commits follow: `type(scope): description [MOB-XXX]`
+- [ ] Rebased on latest main: `git fetch origin && git rebase origin/main`
 - [ ] CI passes locally: `{{CI_VALIDATE_COMMAND}}`
 
 ## PR Creation
 
 ```bash
 gh pr create \
-  --title "feat(scope): description [{{TICKET_PREFIX}}-XXX]" \
+  --title "feat(scope): description [MOB-XXX]" \
   --body "## Summary
-Implements feature as specified in {{TICKET_PREFIX}}-XXX.
+Implements feature as specified in MOB-XXX.
 
 ## Changes
 - Change 1

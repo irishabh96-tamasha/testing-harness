@@ -15,7 +15,7 @@ Rollback the {{DEV_MACHINE}} dev environment to a previous Docker image version.
 Get current problematic version:
 
 ```bash
-# {{TICKET_PREFIX}}-445: Updated container name per Terminology Contract
+# MOB-445: Updated container name per Terminology Contract
 ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} "docker inspect {{PROJECT}}-dev-app | grep 'org.opencontainers.image.revision' | cut -d'\"' -f4"
 ```
 
@@ -32,7 +32,7 @@ Document the issue for Linear ticket creation later.
 Show recent images on {{DEV_MACHINE}}:
 
 ```bash
-ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} "docker images {{REGISTRY}}/{{PROJECT_NAME}}/dev --format 'table {{.Tag}}\t{{.ID}}\t{{.CreatedAt}}'"
+ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} "docker images {{REGISTRY}}/mobile-app/dev --format 'table {{.Tag}}\t{{.ID}}\t{{.CreatedAt}}'"
 ```
 
 Cross-reference with git commits to show messages:
@@ -61,7 +61,7 @@ Default behavior: Select image before current (most common rollback scenario)
 Pull the specific version from registry:
 
 ```bash
-ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} "docker pull {{REGISTRY}}/{{PROJECT_NAME}}/dev:dev-{target-sha}"
+ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} "docker pull {{REGISTRY}}/mobile-app/dev:dev-{target-sha}"
 ```
 
 If image not in registry (old version pruned), use local cached image.
@@ -77,14 +77,14 @@ ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} "cd {{PROJECT_PATH}} && 
 Update docker-compose.dev.yml to use specific image tag:
 
 ```bash
-# From: image: {{REGISTRY}}/{{PROJECT_NAME}}/dev:latest
-# To:   image: {{REGISTRY}}/{{PROJECT_NAME}}/dev:dev-{target-sha}
+# From: image: {{REGISTRY}}/mobile-app/dev:latest
+# To:   image: {{REGISTRY}}/mobile-app/dev:dev-{target-sha}
 ```
 
 Use SSH + sed for inline replacement:
 
 ```bash
-ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} "cd {{PROJECT_PATH}} && sed -i 's|{{REGISTRY}}/{{PROJECT_NAME}}/dev:latest|{{REGISTRY}}/{{PROJECT_NAME}}/dev:dev-{target-sha}|g' docker-compose.dev.yml"
+ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} "cd {{PROJECT_PATH}} && sed -i 's|{{REGISTRY}}/mobile-app/dev:latest|{{REGISTRY}}/mobile-app/dev:dev-{target-sha}|g' docker-compose.dev.yml"
 ```
 
 ### 6. Restart Services
@@ -118,7 +118,7 @@ curl -s http://{{REMOTE_HOST}}:3000/api/health | jq
 Confirm correct commit SHA:
 
 ```bash
-# {{TICKET_PREFIX}}-445: Updated container name per Terminology Contract
+# MOB-445: Updated container name per Terminology Contract
 ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} "docker inspect {{PROJECT}}-dev-app | grep 'org.opencontainers.image.revision' | cut -d'\"' -f4"
 ```
 
@@ -149,7 +149,7 @@ Provide comprehensive rollback summary:
 Problem Detected
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Version:  3a49b85 - feat(ci): add Slack notifications [{{TICKET_PREFIX}}-350]
+Version:  3a49b85 - feat(ci): add Slack notifications [MOB-350]
 Issue:    Health check failing / Services crashing
 Time:     Deployed 5 minutes ago
 
@@ -157,7 +157,7 @@ Time:     Deployed 5 minutes ago
 Rollback Target
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Selected: e9722d4 - style(docs): apply markdown linting fixes [{{TICKET_PREFIX}}-347]
+Selected: e9722d4 - style(docs): apply markdown linting fixes [MOB-347]
 Reason:   Last known stable version
 Age:      7 hours ago
 
@@ -175,7 +175,7 @@ Rollback Progress
 Post-Rollback Status
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Running:  e9722d4 - style(docs): apply markdown linting fixes [{{TICKET_PREFIX}}-347]
+Running:  e9722d4 - style(docs): apply markdown linting fixes [MOB-347]
 Status:   ✅ Healthy
 URL:      http://{{REMOTE_HOST}}:3000
 Duration: 1m 23s
@@ -200,7 +200,7 @@ When issue is resolved and new build is ready, restore to latest:
 
 ```bash
 # Restore docker-compose.dev.yml to use :latest tag
-ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} "cd {{PROJECT_PATH}} && sed -i 's|{{REGISTRY}}/{{PROJECT_NAME}}/dev:dev-[a-f0-9]*|{{REGISTRY}}/{{PROJECT_NAME}}/dev:latest|g' docker-compose.dev.yml"
+ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} "cd {{PROJECT_PATH}} && sed -i 's|{{REGISTRY}}/mobile-app/dev:dev-[a-f0-9]*|{{REGISTRY}}/mobile-app/dev:latest|g' docker-compose.dev.yml"
 
 # Then deploy normally
 /remote-deploy
@@ -214,7 +214,7 @@ If rollback target image not found:
 
 - Try older version
 - Pull from registry manually
-- Check available tags: `docker images | grep {{PROJECT_NAME}}`
+- Check available tags: `docker images | grep mobile-app`
 
 ### Services Still Failing
 
@@ -261,12 +261,12 @@ To adapt this command for your infrastructure, replace these placeholders:
 
 | Placeholder       | Description                 | Example                              |
 | ----------------- | --------------------------- | ------------------------------------ |
-| `{{TICKET_PREFIX}}` | Your Linear ticket prefix   | `WOR`, `PROJ`, `TASK`                |
+| `MOB` | Your Linear ticket prefix   | `WOR`, `PROJ`, `TASK`                |
 | `{{SSH_KEY_PATH}}`  | Path to SSH private key     | `~/.ssh/id_ed25519_staging`          |
-| `{{REMOTE_USER}}`   | Username on remote host     | `deploy`, `{{AUTHOR_HANDLE}}`               |
+| `{{REMOTE_USER}}`   | Username on remote host     | `deploy`, `ronak`               |
 | `{{REMOTE_HOST}}`   | Remote host name/IP         | `pop-os`, `staging.example.com`      |
-| `{{PROJECT_PATH}}`  | Project directory on remote | `~/Projects/{{PROJECT_NAME}}`, `~/app` |
-| `{{REGISTRY}}`      | Container registry URL      | `{{CONTAINER_REGISTRY}}`                 |
-| `{{PROJECT_NAME}}`  | Project name in registry    | `myapp`, `webapp`                    |
+| `{{PROJECT_PATH}}`  | Project directory on remote | `~/Projects/mobile-app`, `~/app` |
+| `{{REGISTRY}}`      | Container registry URL      | `ghcr.io/tamasha-live`                 |
+| `mobile-app`  | Project name in registry    | `myapp`, `webapp`                    |
 | `{{PROJECT}}`       | Short project identifier    | `myapp`, `webapp`                    |
 | `{{DEV_MACHINE}}`   | Remote dev machine name     | `Pop OS`, `staging`, `dev-server`    |

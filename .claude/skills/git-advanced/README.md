@@ -1,7 +1,7 @@
 # Git Advanced
 
 ![Status](https://img.shields.io/badge/status-production-green)
-![Harness](https://img.shields.io/badge/harness-{{HARNESS_VERSION}}-blue)
+![Harness](https://img.shields.io/badge/harness-v2.10.0-blue)
 
 > Advanced git operations including rebase, bisect, cherry-pick, and conflict resolution.
 
@@ -13,7 +13,7 @@
 
 ## Intellectual Property
 
-The skill system architecture and {{PROJECT_SHORT}} harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
+The skill system architecture and MOB harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
 
 ## Quick Start
 
@@ -47,7 +47,7 @@ Provides guidance for advanced git operations with safety considerations. This p
 | Field | Value |
 |-------|-------|
 | Last Updated | 2026-01-04 |
-| Harness Version | {{HARNESS_VERSION}} |
+| Harness Version | v2.10.0 |
 
 ---
 

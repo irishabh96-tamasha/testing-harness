@@ -89,7 +89,7 @@ PR/Release -> RTE
 ```markdown
 **Blocker Escalation**
 
-**Ticket**: {{TICKET_PREFIX}}-XXX
+**Ticket**: MOB-XXX
 **Blocked Since**: [timestamp]
 **Agent**: [which specialist is blocked]
 
@@ -130,7 +130,7 @@ All work must include evidence in the ticket system:
 **Implementation Evidence**
 
 **Agent**: [which specialist]
-**Ticket**: {{TICKET_PREFIX}}-XXX
+**Ticket**: MOB-XXX
 
 **Work Completed**:
 - [x] Task 1

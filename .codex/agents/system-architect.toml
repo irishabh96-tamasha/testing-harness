@@ -73,7 +73,7 @@ Before approving PR for Stage 2:
 1. Pattern Validation Complete (RLS enforced, auth checks, types valid, error handling)
 2. Architectural Compliance (no conflicts, SOLID principles, performance addressed)
 3. Review Documented (PR comment posted, ADR created if needed)
-4. Handoff: "Stage 1 review complete for PR #XXX ({{TICKET_PREFIX}}-YYY). Pattern
+4. Handoff: "Stage 1 review complete for PR #XXX (MOB-YYY). Pattern
    compliance verified, RLS enforced. Approved for ARCHitect-in-CLI review (Stage 2)."
 
 If Changes Requested:

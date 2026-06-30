@@ -59,8 +59,8 @@ Cursor supports project-level MCP server configuration via `.cursor/mcp.json`. T
 To activate:
 
 1. Open `.cursor/mcp.json`
-2. Replace `{{MCP_LINEAR_SERVER}}` with your preferred server name (e.g., `linear`)
-3. Replace `{{MCP_CONFLUENCE_SERVER}}` with your preferred server name (e.g., `confluence`)
+2. Replace `linear-mcp` with your preferred server name (e.g., `linear`)
+3. Replace `confluence-mcp` with your preferred server name (e.g., `confluence`)
 4. Set environment variable values (API keys, tokens, URLs)
 5. Cursor auto-detects the config -- servers appear in Settings > Features > MCP Servers
 
@@ -114,7 +114,7 @@ Reference these manually when you want Cursor to adopt a specific SAFe agent per
 Reference these when working with background agents or MCP:
 
 ```
-@30-background-agents Set up a background agent for {{TICKET_PREFIX}}-42
+@30-background-agents Set up a background agent for MOB-42
 @31-mcp-integration Configure Linear MCP for ticket management
 ```
 
@@ -122,7 +122,7 @@ Reference these when working with background agents or MCP:
 
 1. **DRY**: Rules reference existing docs (CLAUDE.md, AGENTS.md, patterns_library/) rather than duplicating content
 2. **Concise**: Each rule stays under 200 lines to respect Cursor's context limits
-3. **Template-Ready**: Uses `{{TICKET_PREFIX}}`, `{{MAIN_BRANCH}}`, and other placeholders for project customization
+3. **Template-Ready**: Uses `MOB`, `main`, and other placeholders for project customization
 4. **Hierarchical**: Numbering (00-02, 10-16, 20-23, 30-31) groups rules by activation type
 
 ## Relationship to Other Configurations

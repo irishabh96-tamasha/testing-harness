@@ -313,7 +313,7 @@ Each skill should have a README.md for quick reference:
 # {Skill Name}
 
 ![Status](https://img.shields.io/badge/status-production-green)
-![Harness](https://img.shields.io/badge/harness-{{HARNESS_VERSION}}-blue)
+![Harness](https://img.shields.io/badge/harness-v2.10.0-blue)
 
 > {One-line description from YAML frontmatter}
 
@@ -538,4 +538,4 @@ If a skill is being replaced or removed:
 
 ---
 
-*This guide is part of the [{{PROJECT_SHORT}} SAFe Agentic Workflow](https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}) harness.*
+*This guide is part of the [MOB SAFe Agentic Workflow](https://github.com/tamasha-live/mobile-app) harness.*

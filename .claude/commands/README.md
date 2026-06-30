@@ -1,6 +1,6 @@
-# {{PROJECT_SHORT}} Commands
+# MOB Commands
 
-These slash commands are part of the **{{PROJECT_NAME}}™** multi-agent harness.
+These slash commands are part of the **mobile-app™** multi-agent harness.
 
 ## License
 

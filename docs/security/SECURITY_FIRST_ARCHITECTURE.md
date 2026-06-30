@@ -1,10 +1,10 @@
-# Security-First Architecture Assessment: {{PROJECT_NAME}} Development Standards
+# Security-First Architecture Assessment: mobile-app Development Standards
 
 **Strategic Analysis for Development Teams**
 
-> **📋 Confluence Reference**: [Security-First Architecture Assessment](https://{{ARCHITECT_GITHUB_HANDLE}}.atlassian.net/wiki/spaces/WA/pages/355565570/Security-First+Architecture+Assessment+{{PROJECT_NAME}}+Development+Standards)
+> **📋 Confluence Reference**: [Security-First Architecture Assessment](https://ronak.atlassian.net/wiki/spaces/WA/pages/355565570/Security-First+Architecture+Assessment+mobile-app+Development+Standards)
 >
-> This document provides the complete strategic assessment of {{PROJECT_NAME}}'s security-first architecture for all development teams working on SOLID/DRY improvements and future service development.
+> This document provides the complete strategic assessment of mobile-app's security-first architecture for all development teams working on SOLID/DRY improvements and future service development.
 
 ---
 
@@ -111,7 +111,7 @@ await auditLog({
 
 ## 🚀 Future Service Requirements
 
-**Every new {{PROJECT_NAME}} service MUST**:
+**Every new mobile-app service MUST**:
 
 1. Use `withUserContext`/`withAdminContext` for data access
 2. Implement service-specific auth extensions
@@ -153,7 +153,7 @@ await auditLog({
 
 ## 💡 Strategic Impact
 
-The {{PROJECT_NAME}} security architecture represents **mature enterprise thinking** that enables:
+The mobile-app security architecture represents **mature enterprise thinking** that enables:
 
 - **Faster Development**: Security patterns are solved infrastructure
 - **Lower Risk**: Consistent security model across all services
@@ -167,7 +167,7 @@ The {{PROJECT_NAME}} security architecture represents **mature enterprise thinki
 
 ## 📚 Related Documentation
 
-- **Implementation Details**: [Confluence Security Assessment](https://{{ARCHITECT_GITHUB_HANDLE}}.atlassian.net/wiki/spaces/WA/pages/355565570/Security-First+Architecture+Assessment+{{PROJECT_NAME}}+Development+Standards)
+- **Implementation Details**: [Confluence Security Assessment](https://ronak.atlassian.net/wiki/spaces/WA/pages/355565570/Security-First+Architecture+Assessment+mobile-app+Development+Standards)
 - **Authentication Guide**: [AUTHENTICATION.md](./AUTHENTICATION.md)
 - **RLS Troubleshooting**: [RLS_TROUBLESHOOTING.md](./RLS_TROUBLESHOOTING.md)
 - **Environment Setup**: [ENVIRONMENT_VARIABLES.md](./ENVIRONMENT_VARIABLES.md)

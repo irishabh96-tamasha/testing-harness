@@ -1,0 +1,94 @@
+import { Router, type Request, type Response } from "express";
+import { z } from "zod";
+import type { Status } from "@prisma/client";
+import { prisma } from "../lib/prisma";
+import { withSystemContext } from "../lib/rls-context";
+
+export const statusRouter = Router();
+
+/** Public shape returned to the app. */
+function serialize(s: Status) {
+  return {
+    id: s.id,
+    deityId: s.deityId,
+    imageUrl: s.imageUrl,
+    authorName: s.authorName,
+    authorSubtitle: s.authorSubtitle,
+    tagline: s.tagline,
+    authorAvatarUrl: s.authorAvatarUrl,
+    likes: s.likes,
+    views: s.views,
+  };
+}
+
+/** GET /api/home/feed — all statuses across deities (the Home feed). */
+statusRouter.get("/api/home/feed", async (_req: Request, res: Response) => {
+  try {
+    const list = await withSystemContext(prisma, "home:feed", (db) =>
+      db.status.findMany({ orderBy: [{ deityId: "asc" }, { sort: "asc" }] }),
+    );
+    res.json(list.map(serialize));
+  } catch {
+    res.status(500).json({ error: "Failed to load home feed" });
+  }
+});
+
+/** GET /api/status?deity=<id> — that deity's statuses (ordered). */
+statusRouter.get("/api/status", async (req: Request, res: Response) => {
+  try {
+    const deity =
+      typeof req.query.deity === "string" ? req.query.deity : "all";
+    const list = await withSystemContext(prisma, "status:list", (db) =>
+      db.status.findMany({
+        where: { deityId: deity },
+        orderBy: { sort: "asc" },
+      }),
+    );
+    res.json(list.map(serialize));
+  } catch {
+    res.status(500).json({ error: "Failed to load statuses" });
+  }
+});
+
+const LikeBody = z.object({ liked: z.boolean() });
+
+/** POST /api/status/:id/like { liked } — persist a like / unlike. */
+statusRouter.post(
+  "/api/status/:id/like",
+  async (req: Request, res: Response) => {
+    const parsed = LikeBody.safeParse(req.body);
+    if (!parsed.success) {
+      res.status(400).json({ error: "Body must be { liked: boolean }" });
+      return;
+    }
+    try {
+      const updated = await withSystemContext(prisma, "status:like", (db) =>
+        db.status.update({
+          where: { id: req.params.id },
+          data: { likes: { increment: parsed.data.liked ? 1 : -1 } },
+        }),
+      );
+      res.json(serialize(updated));
+    } catch {
+      res.status(404).json({ error: "Status not found" });
+    }
+  },
+);
+
+/** POST /api/status/:id/view — persist a view. */
+statusRouter.post(
+  "/api/status/:id/view",
+  async (req: Request, res: Response) => {
+    try {
+      const updated = await withSystemContext(prisma, "status:view", (db) =>
+        db.status.update({
+          where: { id: req.params.id },
+          data: { views: { increment: 1 } },
+        }),
+      );
+      res.json(serialize(updated));
+    } catch {
+      res.status(404).json({ error: "Status not found" });
+    }
+  },
+);

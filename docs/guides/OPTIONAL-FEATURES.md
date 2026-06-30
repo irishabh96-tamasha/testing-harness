@@ -126,7 +126,7 @@ in-repo markdown.
 #### 2.2 Remove Confluence references from agent prompts
 
 - [ ] Edit `agent_providers/claude_code/prompts/tech-writer.md` -- remove
-      references to Confluence and `{{MCP_CONFLUENCE_SERVER}}`
+      references to Confluence and `confluence-mcp`
 - [ ] Edit `agent_providers/claude_code/prompts/bsa.md` -- remove Confluence
       MCP tool references
 - [ ] Edit `agent_providers/claude_code/prompts/tdm.md` -- remove Confluence
@@ -148,7 +148,7 @@ in-repo markdown.
 
 #### 2.5 Clean up template placeholders and environment
 
-- [ ] In `TEMPLATE_SETUP.md`, the `{{MCP_CONFLUENCE_SERVER}}` placeholder row
+- [ ] In `TEMPLATE_SETUP.md`, the `confluence-mcp` placeholder row
       can be removed (already done if you used the setup wizard)
 - [ ] In `.env.template`, remove or comment out the `CONFLUENCE_URL` and
       `CONFLUENCE_API_TOKEN` variables
@@ -184,7 +184,7 @@ your platform instead. For example:
 
 | Original Reference | Replacement (Notion) | Replacement (GitHub Wiki) |
 |---|---|---|
-| `{{MCP_CONFLUENCE_SERVER}}` | Your Notion MCP or API integration | `github-wiki` or in-repo `docs/` |
+| `confluence-mcp` | Your Notion MCP or API integration | `github-wiki` or in-repo `docs/` |
 | Confluence page links | Notion page links | Wiki page links or file paths |
 | "Publish to Confluence" | "Update Notion page" | "Commit to `docs/`" |
 
@@ -619,7 +619,7 @@ grep "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS" .claude/settings.json 2>/dev/null \
 1. Copy or keep the `dark-factory/` directory in your project
 2. Run `./dark-factory/scripts/factory-setup.sh` (validates prerequisites and merge queue)
 3. Edit `~/.dark-factory/env` with your project settings
-4. Start a session: `./dark-factory/scripts/factory-start.sh feature {{TICKET_PREFIX}}-123`
+4. Start a session: `./dark-factory/scripts/factory-start.sh feature MOB-123`
 
 ### Dark Factory Components
 

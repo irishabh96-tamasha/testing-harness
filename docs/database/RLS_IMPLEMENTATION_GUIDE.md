@@ -2,7 +2,7 @@
 
 ## 🔒 Overview
 
-This guide documents the complete Row Level Security (RLS) implementation for the {{PROJECT_NAME}} application database. RLS provides database-level security that complements our application-level security, ensuring users can only access their own data even through direct database queries.
+This guide documents the complete Row Level Security (RLS) implementation for the mobile-app application database. RLS provides database-level security that complements our application-level security, ensuring users can only access their own data even through direct database queries.
 
 ## 📊 Security Architecture
 
@@ -23,8 +23,8 @@ This guide documents the complete Row Level Security (RLS) implementation for th
 
 ### 1. Database Users
 
-- **`{{DB_USER}}`**: Superuser for migrations and admin operations
-- **`{{LINEAR_WORKSPACE}}_app_user`**: Application user with RLS enforcement (recommended for production)
+- **`app_user`**: Superuser for migrations and admin operations
+- **`tamasha_app_user`**: Application user with RLS enforcement (recommended for production)
 
 ### 2. Protected Tables
 
@@ -70,7 +70,7 @@ SET app.context_type = 'user_request';
 -- Users can only access their own data
 CREATE POLICY user_isolation ON "table_name"
   FOR ALL
-  TO {{LINEAR_WORKSPACE}}_app_user
+  TO tamasha_app_user
   USING (user_id = current_setting('app.current_user_id', true));
 ```
 
@@ -80,7 +80,7 @@ CREATE POLICY user_isolation ON "table_name"
 -- Only verified admins can access admin data
 CREATE POLICY admin_only ON "admin_table"
   FOR ALL
-  TO {{LINEAR_WORKSPACE}}_app_user
+  TO tamasha_app_user
   USING (
     EXISTS (
       SELECT 1 FROM user_roles
@@ -96,7 +96,7 @@ CREATE POLICY admin_only ON "admin_table"
 -- System processes and admins can access system tables
 CREATE POLICY system_admin ON "system_table"
   FOR ALL
-  TO {{LINEAR_WORKSPACE}}_app_user
+  TO tamasha_app_user
   USING (
     EXISTS (
       SELECT 1 FROM user_roles
@@ -189,7 +189,7 @@ export default async function AdminPage() {
 - Without `export const dynamic = 'force-dynamic'`, queries will fail with "permission denied"
 - Forcing dynamic rendering ensures queries execute at request time with proper RLS context
 
-**Related Issues**: {{TICKET_PREFIX}}-277, {{TICKET_PREFIX}}-279
+**Related Issues**: MOB-277, MOB-279
 
 ## 📋 Implementation Checklist
 
@@ -306,8 +306,8 @@ export default async function AdminPage() {
 
 ---
 
-**This RLS implementation provides enterprise-grade database security that complements application-level security, ensuring comprehensive data protection for all {{PROJECT_NAME}} users.**
+**This RLS implementation provides enterprise-grade database security that complements application-level security, ensuring comprehensive data protection for all mobile-app users.**
 
 **Last Updated**: 2025-08-28  
 **Version**: 1.0 (Complete Implementation)  
-**Maintained by**: {{PROJECT_NAME}} Development Team
+**Maintained by**: mobile-app Development Team

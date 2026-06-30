@@ -1,6 +1,6 @@
 # Comparative Analysis: Self-Referential Loops vs SAFe Multi-Agent Orchestration
 
-**{{PROJECT_SHORT}} Technical Whitepaper**
+**MOB Technical Whitepaper**
 **Document ID**: WP-2026-001
 **Date**: January 5, 2026
 **Author**: ARCHitect-in-CLI (System Architect Agent)
@@ -10,7 +10,7 @@
 
 ## Abstract
 
-This whitepaper analyzes two distinct approaches to AI-assisted iterative development: the **Ralph Wiggum** self-referential loop pattern and the **{{PROJECT_SHORT}} SAFe Agentic Workflow** distributed multi-agent orchestration model. Through systematic comparison, we demonstrate that while both approaches solve the fundamental problem of autonomous iteration, the SAFe model provides critical safety rails, independent verification, and evidence-based delivery mechanisms that enterprise software development requires. Our conclusion is that the SAFe approach already incorporates the core value of self-referential iteration while adding the compliance, audit, and coordination capabilities that differentiate production systems from demonstrations.
+This whitepaper analyzes two distinct approaches to AI-assisted iterative development: the **Ralph Wiggum** self-referential loop pattern and the **MOB SAFe Agentic Workflow** distributed multi-agent orchestration model. Through systematic comparison, we demonstrate that while both approaches solve the fundamental problem of autonomous iteration, the SAFe model provides critical safety rails, independent verification, and evidence-based delivery mechanisms that enterprise software development requires. Our conclusion is that the SAFe approach already incorporates the core value of self-referential iteration while adding the compliance, audit, and coordination capabilities that differentiate production systems from demonstrations.
 
 ---
 
@@ -36,7 +36,7 @@ This analysis examines both approaches through the lens of enterprise software d
 
 This whitepaper compares:
 - **Ralph Wiggum**: Anthropic's plugin implementing continuous self-referential AI loops
-- **{{PROJECT_SHORT}} SAFe Harness**: Multi-agent orchestration with Simon Willison's Agent Loop and external verification gates
+- **MOB SAFe Harness**: Multi-agent orchestration with Simon Willison's Agent Loop and external verification gates
 
 ---
 
@@ -117,11 +117,11 @@ Ralph Wiggum implements what its documentation calls "a continuous self-referent
 
 ---
 
-## 3. {{PROJECT_SHORT}} SAFe Harness: The Distributed Model
+## 3. MOB SAFe Harness: The Distributed Model
 
 ### 3.1 Architecture Overview
 
-The {{PROJECT_SHORT}} SAFe Harness implements distributed multi-agent orchestration with explicit handoffs, external verification gates, and evidence-based delivery.
+The MOB SAFe Harness implements distributed multi-agent orchestration with explicit handoffs, external verification gates, and evidence-based delivery.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────┐
@@ -607,7 +607,7 @@ This analysis validates the SAFe harness design:
 
 **Ralph Wiggum is what you'd build if you only solved the iteration problem.**
 
-**The {{PROJECT_SHORT}} SAFe Harness solves iteration + safety + coordination + evidence.**
+**The MOB SAFe Harness solves iteration + safety + coordination + evidence.**
 
 For production enterprise software development, the additional complexity of the SAFe approach is justified by the safety, auditability, and quality guarantees it provides.
 
@@ -618,7 +618,7 @@ For production enterprise software development, the additional complexity of the
 1. **Simon Willison's Agent Loop**: The iteration pattern at the core of SAFe implementation agents
 2. **SAFe (Scaled Agile Framework)**: Enterprise agile methodology underlying the harness
 3. **Ralph Wiggum Plugin**: Anthropic's self-referential loop implementation
-4. **{{PROJECT_SHORT}} SAFe Harness**: `/home/{{AUTHOR_HANDLE}}/Projects/{{PROJECT_REPO}}/`
+4. **MOB SAFe Harness**: `/home/ronak/Projects/mobile-app/`
 
 ## Appendix B: Related Documents
 
@@ -629,4 +629,4 @@ For production enterprise software development, the additional complexity of the
 
 ---
 
-*This whitepaper was authored by ARCHitect-in-CLI as part of comparative analysis work for the {{PROJECT_SHORT}} SAFe Agentic Workflow project.*
+*This whitepaper was authored by ARCHitect-in-CLI as part of comparative analysis work for the MOB SAFe Agentic Workflow project.*

@@ -1,6 +1,6 @@
-# {{PROJECT_SHORT}} Agents
+# MOB Agents
 
-These agents are part of the **{{PROJECT_NAME}}™** multi-agent harness.
+These agents are part of the **mobile-app™** multi-agent harness.
 
 ## License
 

@@ -65,8 +65,8 @@ If not installed, visit: https://docs.anthropic.com/claude/docs/claude-code
 **Step 2: Clone the Repository**
 
 ```bash
-git clone {{GITHUB_REPO_URL}}
-cd {{PROJECT_NAME}}
+git clone https://github.com/tamasha-live/mobile-app
+cd mobile-app
 ```
 
 **Step 3: Install Agents**
@@ -115,8 +115,8 @@ If not installed, visit: https://www.augmentcode.com/
 **Step 2: Clone the Repository**
 
 ```bash
-git clone {{GITHUB_REPO_URL}}
-cd {{PROJECT_NAME}}
+git clone https://github.com/tamasha-live/mobile-app
+cd mobile-app
 ```
 
 **Step 3: Copy Augment Configurations**
@@ -242,9 +242,9 @@ Task({
 ```typescript
 Task({
   subagent_type: "bsa",
-  description: "Create spec for {{TICKET_PREFIX}}-123",
+  description: "Create spec for MOB-123",
   prompt:
-    "Create comprehensive spec for {{TICKET_PREFIX}}-123 user profile feature. Include pattern discovery, acceptance criteria, and testing strategy. Reference existing patterns from patterns_library/.",
+    "Create comprehensive spec for MOB-123 user profile feature. Include pattern discovery, acceptance criteria, and testing strategy. Reference existing patterns from patterns_library/.",
 });
 ```
 
@@ -297,7 +297,7 @@ Task({
 ### Workflow 3: TDM-Orchestrated (Complex)
 
 ```
-@tdm I need to implement {{TICKET_PREFIX}}-123 (user profile feature).
+@tdm I need to implement MOB-123 (user profile feature).
 
 Please:
 1. Read the Linear ticket
@@ -371,7 +371,7 @@ head -6 .claude/agents/bsa.md
 **Issue**: Agent can't access a tool
 
 - **Solution**: Check `tools:` line in agent frontmatter
-- **Example**: BSA should have `tools: [Read, Write, Edit, Bash, Grep, Glob, mcp__{{MCP_LINEAR_SERVER}}__*]`
+- **Example**: BSA should have `tools: [Read, Write, Edit, Bash, Grep, Glob, mcp__linear-mcp__*]`
 
 **Issue**: Pattern discovery not working
 
@@ -448,7 +448,7 @@ yarn ci:validate && echo "CI SUCCESS"
 - **docs/sop/AGENT_WORKFLOW_SOP.md**: Workflow and orchestration guide
 - **patterns_library/README.md**: Pattern library index
 - **CONTRIBUTING.md**: Git workflow and PR process
-- **Confluence Cheat Sheet**: https://{{AUTHOR_HANDLE}}.atlassian.net/wiki/spaces/WA/pages/366411778
+- **Confluence Cheat Sheet**: https://ronak.atlassian.net/wiki/spaces/WA/pages/366411778
 
 ---
 
@@ -470,5 +470,5 @@ yarn ci:validate && echo "CI SUCCESS"
 
 **Questions?**
 
-- GitHub Discussions: {{GITHUB_REPO_URL}}/discussions
-- Email: {{AUTHOR_EMAIL}}
+- GitHub Discussions: https://github.com/tamasha-live/mobile-app/discussions
+- Email: ronak@tamasha.live

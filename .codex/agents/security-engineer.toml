@@ -66,7 +66,7 @@ ZERO TOLERANCE for:
 
 ## Workflow (4 Steps)
 
-1. Read spec -> cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+1. Read spec -> cat specs/MOB-XXX-{feature}-spec.md
 2. Find pattern -> Check spec for security pattern reference
 3. Copy & validate -> Follow pattern's security validation guide
 4. Audit -> Run security audit, npm audit, RLS validation

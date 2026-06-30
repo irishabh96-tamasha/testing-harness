@@ -2,12 +2,12 @@
 
 ## 📋 Overview
 
-This document provides a comprehensive, human-readable catalog of all Row Level Security (RLS) policies in the {{PROJECT_NAME}} application database. It serves as the definitive reference for understanding data access controls at the database level.
+This document provides a comprehensive, human-readable catalog of all Row Level Security (RLS) policies in the mobile-app application database. It serves as the definitive reference for understanding data access controls at the database level.
 
 **Purpose**: Document all RLS policies to ensure data governance compliance, security audits, and GDPR adherence.
 
 **Last Updated**: [DATE]
-**Ticket**: {{TICKET_PREFIX}}-XXX
+**Ticket**: MOB-XXX
 **Classification**: Tier 1 Critical - Security & Data Intersection
 
 ---
@@ -16,7 +16,7 @@ This document provides a comprehensive, human-readable catalog of all Row Level 
 
 ### Context System
 
-The {{PROJECT_NAME}} RLS system uses PostgreSQL session variables to establish security context:
+The mobile-app RLS system uses PostgreSQL session variables to establish security context:
 
 ```sql
 -- User context (set automatically by application)
@@ -119,8 +119,8 @@ USING (current_setting('app.user_role', true) = 'admin');
 
 #### Migration History
 
-- **Created**: {{TICKET_PREFIX}}-XXX ([migration_name])
-- **Modified**: {{TICKET_PREFIX}}-YYY ([description])
+- **Created**: MOB-XXX ([migration_name])
+- **Modified**: MOB-YYY ([description])
 ```
 
 ---
@@ -175,7 +175,7 @@ USING (current_setting('app.user_role', true) = 'admin');
 
 #### Migration History
 
-- **Created**: {{TICKET_PREFIX}}-001 (initial_rls_setup)
+- **Created**: MOB-001 (initial_rls_setup)
 
 ---
 
@@ -204,7 +204,7 @@ USING (current_setting('app.user_role', true) = 'admin');
 
 #### Migration History
 
-- **Created**: {{TICKET_PREFIX}}-XXX ([migration_name])
+- **Created**: MOB-XXX ([migration_name])
 
 ---
 

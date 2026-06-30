@@ -5,7 +5,7 @@ description: SAFe development workflow guidance including branch naming conventi
 
 # SAFe Workflow Skill
 
-> **TEMPLATE**: This skill uses `{{TICKET_PREFIX}}` as a placeholder. Replace with your project's ticket prefix (e.g., `WOR`, `PROJ`, `FEAT`).
+> **TEMPLATE**: This skill uses `MOB` as a placeholder. Replace with your project's ticket prefix (e.g., `WOR`, `PROJ`, `FEAT`).
 
 ## Purpose
 
@@ -20,12 +20,12 @@ Enforce SAFe-compliant git workflow with standardized branch naming, commit mess
 
 ## Branch Naming Convention
 
-**Format**: `{{TICKET_PREFIX}}-{number}-{short-description}`
+**Format**: `MOB-{number}-{short-description}`
 
 ```text
 # Good
-{{TICKET_PREFIX}}-447-create-safe-workflow-skill
-{{TICKET_PREFIX}}-123-fix-login-redirect
+MOB-447-create-safe-workflow-skill
+MOB-123-fix-login-redirect
 
 # Bad
 feature/add-dark-mode       (missing ticket number)
@@ -34,7 +34,7 @@ john-new-feature            (personal naming)
 
 ## Commit Message Format
 
-**Format**: `type(scope): description [{{TICKET_PREFIX}}-XXX]`
+**Format**: `type(scope): description [MOB-XXX]`
 
 | Type       | When to Use                   |
 | ---------- | ----------------------------- |
@@ -46,24 +46,24 @@ john-new-feature            (personal naming)
 | `chore`    | Maintenance, dependencies     |
 
 ```text
-feat(harness): create safe-workflow skill [{{TICKET_PREFIX}}-447]
-fix(auth): resolve login redirect [{{TICKET_PREFIX}}-57]
+feat(harness): create safe-workflow skill [MOB-447]
+fix(auth): resolve login redirect [MOB-57]
 ```
 
 ## Rebase-First Workflow
 
 ```bash
 # 1. Start from latest main
-git checkout {{MAIN_BRANCH}} && git pull origin {{MAIN_BRANCH}}
+git checkout main && git pull origin main
 
 # 2. Create feature branch
-git checkout -b {{TICKET_PREFIX}}-{number}-{description}
+git checkout -b MOB-{number}-{description}
 
 # 3. Make commits
-git commit -m "type(scope): description [{{TICKET_PREFIX}}-XXX]"
+git commit -m "type(scope): description [MOB-XXX]"
 
 # 4. Before pushing - rebase
-git fetch origin && git rebase origin/{{MAIN_BRANCH}}
+git fetch origin && git rebase origin/main
 
 # 5. Push with force-with-lease
 git push --force-with-lease

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This directory contains the master templates for the spec-driven workflow, which is the process for defining work in {{PROJECT_SHORT}} projects. All implementation tasks are guided by a detailed, version-controlled specification file (`spec.md`) that serves as the single source of truth.
+This directory contains the master templates for the spec-driven workflow, which is the process for defining work in MOB projects. All implementation tasks are guided by a detailed, version-controlled specification file (`spec.md`) that serves as the single source of truth.
 
 ## Templates
 
@@ -36,7 +36,7 @@ for teams that prefer tabular formats. Keep one authoritative source.
 
 ### `spec_template.md`
 
-The master template for a single unit of work (typically a Linear User Story). The BSA agent copies this template to create a new `{{TICKET_PREFIX}}-XXX-feature-name-spec.md` file for each task.
+The master template for a single unit of work (typically a Linear User Story). The BSA agent copies this template to create a new `MOB-XXX-feature-name-spec.md` file for each task.
 
 ## The Specification as a Work Contract
 

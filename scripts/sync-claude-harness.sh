@@ -47,7 +47,7 @@ MANIFEST_JSON=""  # Path to cached JSON parse of manifest (set by load_manifest)
 HAS_MANIFEST=false
 
 # Upstream configuration (defaults, can be overridden via config)
-UPSTREAM_REPO="{{GITHUB_ORG}}/{{PROJECT_REPO}}"
+UPSTREAM_REPO="tamasha-live/mobile-app"
 UPSTREAM_BRANCH="main"
 UPSTREAM_PATH=".claude"  # Legacy default; overridden by SYNC_SCOPE when manifest has sync_scope
 
@@ -284,7 +284,7 @@ trap cleanup EXIT
 # Load configuration from .harness-sync.json
 load_config() {
     if [ -f "$SYNC_CONFIG" ]; then
-        UPSTREAM_REPO=$(json_get "$SYNC_CONFIG" "upstream_repo" "{{GITHUB_ORG}}/{{PROJECT_REPO}}")
+        UPSTREAM_REPO=$(json_get "$SYNC_CONFIG" "upstream_repo" "tamasha-live/mobile-app")
         UPSTREAM_BRANCH=$(json_get "$SYNC_CONFIG" "upstream_branch" "main")
     fi
 }
@@ -709,7 +709,7 @@ compare_file_with_paths() {
 #
 # Key design decisions:
 #   - Substitutions sorted by key length descending (longest-match-first)
-#     to prevent partial matches (e.g., {{GITHUB_REPO_URL}} before {{GITHUB_ORG}})
+#     to prevent partial matches (e.g., https://github.com/tamasha-live/mobile-app before tamasha-live)
 #   - Only explicit manifest keys are substituted (not arbitrary {{...}} patterns)
 #   - Both {{PLACEHOLDER}} tokens and literal strings are supported
 #   - Identity values are also applied as {{KEY}} -> value substitutions
@@ -1117,7 +1117,7 @@ JSEOF
 # Only flags tokens that SHOULD have been replaced (not arbitrary {{...}}).
 #
 # Usage: scan_unreplaced_tokens "/path/to/file" "rel_path"
-# Output: lines like "rel_path:42: unreplaced token {{PROJECT_NAME}}"
+# Output: lines like "rel_path:42: unreplaced token mobile-app"
 # Returns: 0 if clean, 1 if unreplaced tokens found
 scan_unreplaced_tokens() {
     local file_path="$1"
@@ -2512,8 +2512,8 @@ do_init() {
   "last_synced_at": null,
   "sync_history": [],
   "project_customizations": {
-    "ticket_prefix": "{{TICKET_PREFIX}}-",
-    "project_name": "{{PROJECT_SHORT}}",
+    "ticket_prefix": "MOB-",
+    "project_name": "MOB",
     "main_branch": "dev"
   }
 }

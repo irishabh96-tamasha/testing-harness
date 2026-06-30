@@ -210,7 +210,7 @@ What might change or be improved.
 ## Knowledge Transfer (KT) Document Template
 
 ```markdown
-# KT: [Topic Name] - {{TICKET_PREFIX}}-XXX
+# KT: [Topic Name] - MOB-XXX
 
 ## Summary
 
@@ -246,7 +246,7 @@ How to verify everything works.
 
 ## Related Tickets
 
-- {{TICKET_PREFIX}}-XXX: [Related work]
+- MOB-XXX: [Related work]
 
 ## Future Work
 
@@ -260,8 +260,8 @@ What should be done next.
 | ADRs           | `docs/adr/`                          | `ADR-XXX-{description}.md`             |
 | Runbooks       | `docs/runbooks/`                     | `{operation}-runbook.md`               |
 | Architecture   | `docs/architecture/`                 | `{system}-architecture.md`             |
-| KT Docs        | `docs/`                              | `KT-{{TICKET_PREFIX}}-XXX-{topic}.md`    |
-| Technical Docs | `docs/agent-outputs/technical-docs/` | `{{TICKET_PREFIX}}-XXX-{description}.md` |
+| KT Docs        | `docs/`                              | `KT-MOB-XXX-{topic}.md`    |
+| Technical Docs | `docs/agent-outputs/technical-docs/` | `MOB-XXX-{description}.md` |
 
 ## Documentation Checklist
 

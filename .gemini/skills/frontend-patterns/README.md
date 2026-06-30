@@ -1,7 +1,7 @@
 # Frontend Patterns
 
 ![Status](https://img.shields.io/badge/status-production-green)
-![Harness](https://img.shields.io/badge/harness-{{HARNESS_VERSION}}-blue)
+![Harness](https://img.shields.io/badge/harness-v2.10.0-blue)
 ![Provider](https://img.shields.io/badge/provider-Gemini_CLI-orange)
 
 > Frontend patterns for Next.js App Router, Clerk auth, shadcn/Radix UI, and PostHog analytics. Use when building UI components, creating pages, implementing auth flows, or adding analytics events. Ensures consistent UX patterns and accessibility standards.
@@ -14,7 +14,7 @@
 
 ## Intellectual Property
 
-The skill system architecture and {{PROJECT_SHORT}} harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
+The skill system architecture and MOB harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
 
 SAFe® is a registered trademark of Scaled Agile, Inc.
 
@@ -47,7 +47,7 @@ Frontend patterns for Next.js App Router, Clerk auth, shadcn/Radix UI, and PostH
 | Field | Value |
 |-------|-------|
 | Last Updated | 2026-01-14 |
-| Harness Version | {{HARNESS_VERSION}} |
+| Harness Version | v2.10.0 |
 
 ---
 

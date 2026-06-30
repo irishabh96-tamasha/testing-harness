@@ -90,7 +90,7 @@ curl -X POST http://localhost:3000/api/endpoint -d '{"test": true}'
 Every spec must include:
 
 ````markdown
-# SPEC-{{TICKET_PREFIX}}-{number}: {Feature Name}
+# SPEC-MOB-{number}: {Feature Name}
 
 ## Summary
 
@@ -129,10 +129,10 @@ As a [user type], I want [goal] so that [benefit].
 
 ## Logical Commits
 
-1. `feat(scope): implement data model [{{TICKET_PREFIX}}-{number}]`
-2. `feat(scope): add API endpoint [{{TICKET_PREFIX}}-{number}]`
-3. `feat(scope): create UI component [{{TICKET_PREFIX}}-{number}]`
-4. `test(scope): add unit tests [{{TICKET_PREFIX}}-{number}]`
+1. `feat(scope): implement data model [MOB-{number}]`
+2. `feat(scope): add API endpoint [MOB-{number}]`
+3. `feat(scope): create UI component [MOB-{number}]`
+4. `test(scope): add unit tests [MOB-{number}]`
 
 ````
 
@@ -175,7 +175,7 @@ grep -r "similar feature" app/ lib/
 
 # Check existing specs for format
 ls specs/
-cat specs/SPEC-{{TICKET_PREFIX}}-XXX-example.md
+cat specs/SPEC-MOB-XXX-example.md
 ```
 
 ## Spec Quality Checklist
@@ -193,8 +193,8 @@ Before submitting spec:
 
 | Output Type  | Location                                              |
 | ------------ | ----------------------------------------------------- |
-| Impl specs   | `specs/SPEC-{{TICKET_PREFIX}}-{number}-{description}.md`            |
-| Requirements | `docs/agent-outputs/requirements/{{TICKET_PREFIX}}-{number}-*.md`   |
+| Impl specs   | `specs/SPEC-MOB-{number}-{description}.md`            |
+| Requirements | `docs/agent-outputs/requirements/MOB-{number}-*.md`   |
 | ADRs         | `docs/adr/ADR-{number}-{description}.md`              |
 
 ## Evidence for Linear
@@ -204,7 +204,7 @@ After spec approval:
 ```markdown
 **BSA Spec Evidence**
 
-**Spec**: specs/SPEC-{{TICKET_PREFIX}}-{number}-{description}.md
+**Spec**: specs/SPEC-MOB-{number}-{description}.md
 **Status**: Approved by [reviewer]
 
 **Deliverables**:

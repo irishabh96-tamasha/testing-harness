@@ -10,7 +10,7 @@
 
 **Workflow SOPs:**
 
-- [Agent Workflow SOP v1.4](./docs/sop/AGENT_WORKFLOW_SOP.md) - vNext contract, Exit States, Role Collapsing ({{TICKET_PREFIX}}-497/499)
+- [Agent Workflow SOP v1.4](./docs/sop/AGENT_WORKFLOW_SOP.md) - vNext contract, Exit States, Role Collapsing (MOB-497/499)
 - [Agent Configuration SOP](./docs/sop/AGENT_CONFIGURATION_SOP.md) - Tool restrictions, model selection
 - [ARCHitect-in-CLI Role](./docs/workflow/ARCHITECT_IN_CLI_ROLE.md) - Primary orchestrator definition
 
@@ -24,9 +24,9 @@
 
 **Project Standards:**
 
-- [Harness Whitepaper](./docs/whitepapers/CLAUDE-CODE-HARNESS-MODERNIZATION-{{TICKET_PREFIX}}-444.md) - Complete harness architecture
+- [Harness Whitepaper](./docs/whitepapers/CLAUDE-CODE-HARNESS-MODERNIZATION-MOB-444.md) - Complete harness architecture
 - [Agent Perspective](./docs/whitepapers/CLAUDE-CODE-HARNESS-AGENT-PERSPECTIVE.md) - Why the harness works
-- [SAFe Methodology](https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}) - This repository
+- [SAFe Methodology](https://github.com/tamasha-live/mobile-app) - This repository
 
 ## When to Use Which Agent
 
@@ -104,7 +104,7 @@ cp specs_templates/planning_template.md specs/{feature}-planning.md
 # Fill with Epic → Features → Stories → Enablers
 
 # User story → Use spec template
-cp specs_templates/spec_template.md specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+cp specs_templates/spec_template.md specs/MOB-XXX-{feature}-spec.md
 # Fill with implementation details
 ```
 
@@ -112,7 +112,7 @@ cp specs_templates/spec_template.md specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.m
 
 ```bash
 # 1. Read spec for clear goal
-cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+cat specs/MOB-XXX-{feature}-spec.md
 
 # 2. Extract:
 # - User story (goal)
@@ -249,11 +249,11 @@ Each agent has explicit exit states that define handoff points:
 │ QAS Gate        │ QAS             │ YES - no approval = stop│
 │ Stage 1 Review  │ System Architect│ YES - pattern check     │
 │ Stage 2 Review  │ ARCHitect-CLI   │ YES - architecture check│
-│ HITL Merge      │ {{AUTHOR_NAME}}            │ YES - final authority   │
+│ HITL Merge      │ Ronak            │ YES - final authority   │
 └─────────────────┴─────────────────┴─────────────────────────┘
 ```
 
-### Role Collapsing ({{TICKET_PREFIX}}-499)
+### Role Collapsing (MOB-499)
 
 - **RTE**: Collapsible (PR creation, CI shepherding can be done by implementer)
 - **QAS**: NOT collapsible (independence gate - spawn subagent for verification)
@@ -326,8 +326,8 @@ Use `@agent-name` for simple, single-step tasks:
 @tech-writer Document the user profile API in README
 
 # Coordination
-@tdm Coordinate implementation of {{TICKET_PREFIX}}-123 user profile feature
-@rte Create PR for {{TICKET_PREFIX}}-123 and run CI validation
+@tdm Coordinate implementation of MOB-123 user profile feature
+@rte Create PR for MOB-123 and run CI validation
 ```
 
 ### Task Tool Invocation (Complex Tasks)
@@ -338,8 +338,8 @@ Use `Task()` for complex, multi-step tasks with detailed instructions:
 // BSA: Create comprehensive spec
 Task({
   subagent_type: "bsa",
-  description: "Create spec for {{TICKET_PREFIX}}-123",
-  prompt: `Create comprehensive spec for {{TICKET_PREFIX}}-123 user profile feature.
+  description: "Create spec for MOB-123",
+  prompt: `Create comprehensive spec for MOB-123 user profile feature.
 
 Requirements:
 - User can view and edit their profile
@@ -358,8 +358,8 @@ Please:
 // Backend Developer: Implement with pattern discovery
 Task({
   subagent_type: "be-developer",
-  description: "Implement {{TICKET_PREFIX}}-123 API",
-  prompt: `Read spec at specs/{{TICKET_PREFIX}}-123-user-profile-spec.md
+  description: "Implement MOB-123 API",
+  prompt: `Read spec at specs/MOB-123-user-profile-spec.md
 
 Implement the user profile API endpoints:
 1. GET /api/user/profile - Get current user's profile
@@ -379,8 +379,8 @@ Pattern discovery is MANDATORY before implementation.`,
 // QAS: Execute comprehensive testing
 Task({
   subagent_type: "qas",
-  description: "Test {{TICKET_PREFIX}}-123 feature",
-  prompt: `Read spec at specs/{{TICKET_PREFIX}}-123-user-profile-spec.md
+  description: "Test MOB-123 feature",
+  prompt: `Read spec at specs/MOB-123-user-profile-spec.md
 
 Execute the testing strategy defined by BSA:
 
@@ -407,8 +407,8 @@ Validate all acceptance criteria from the spec.`,
 // TDM: Reactive blocker resolution (NOT orchestration)
 Task({
   subagent_type: "tdm",
-  description: "Resolve blocker for {{TICKET_PREFIX}}-123",
-  prompt: `A blocker has been reported for {{TICKET_PREFIX}}-123.
+  description: "Resolve blocker for MOB-123",
+  prompt: `A blocker has been reported for MOB-123.
 
 TDM Responsibilities (per v1.3 SOP):
 1. Monitor progress - read session archaeology, Linear, PR comments
@@ -435,11 +435,11 @@ ARCHitect-in-CLI is the primary orchestrator.`,
 
 ### Pro Tips
 
-1. **Always reference specs**: `Read spec at specs/{{TICKET_PREFIX}}-XXX-spec.md`
+1. **Always reference specs**: `Read spec at specs/MOB-XXX-spec.md`
 2. **Mandate pattern discovery**: `Pattern discovery is MANDATORY before implementation`
 3. **Check #EXPORT_CRITICAL tags**: `Review #EXPORT_CRITICAL tags in spec first`
 4. **Validate with commands**: Use success validation commands from agent prompts
-5. **Update Linear**: TDM can update Linear with `mcp__{{MCP_LINEAR_SERVER}}__create_comment`
+5. **Update Linear**: TDM can update Linear with `mcp__linear-mcp__create_comment`
 6. **TDM is reactive**: Don't use TDM for orchestration—use ARCHitect-in-CLI
 
 ---

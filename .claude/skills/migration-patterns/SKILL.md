@@ -176,7 +176,7 @@ Before PR:
 
 For production migrations:
 
-- [ ] @{{AUTHOR_HANDLE}} must be present (MANDATORY)
+- [ ] @ronak must be present (MANDATORY)
 - [ ] Backup taken before migration
 - [ ] Rollback plan documented
 - [ ] Post-migration validation steps defined

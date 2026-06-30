@@ -16,10 +16,10 @@ usage() {
     echo "Usage: $0 <team-size> [ticket-id]"
     echo ""
     echo "  team-size   One of: story, feature, epic"
-    echo "  ticket-id   Optional ticket identifier (e.g., {{TICKET_PREFIX}}-123)"
+    echo "  ticket-id   Optional ticket identifier (e.g., MOB-123)"
     echo ""
     echo "Examples:"
-    echo "  $0 story {{TICKET_PREFIX}}-456"
+    echo "  $0 story MOB-456"
     echo "  $0 feature"
     exit 1
 }

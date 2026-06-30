@@ -1,7 +1,7 @@
 # Confluence Docs
 
 ![Status](https://img.shields.io/badge/status-production-green)
-![Harness](https://img.shields.io/badge/harness-{{HARNESS_VERSION}}-blue)
+![Harness](https://img.shields.io/badge/harness-v2.10.0-blue)
 
 > Documentation templates for ADRs, runbooks, and architecture docs.
 
@@ -13,7 +13,7 @@
 
 ## Intellectual Property
 
-The skill system architecture and {{PROJECT_SHORT}} harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
+The skill system architecture and MOB harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
 
 ## Quick Start
 
@@ -46,7 +46,7 @@ Provides standardized templates for creating technical documentation. Ensures co
 | Field | Value |
 |-------|-------|
 | Last Updated | 2026-01-04 |
-| Harness Version | {{HARNESS_VERSION}} |
+| Harness Version | v2.10.0 |
 
 ---
 

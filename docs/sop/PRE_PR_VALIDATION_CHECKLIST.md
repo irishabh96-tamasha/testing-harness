@@ -40,11 +40,11 @@
 
 - [ ] **Bash scripts >100 lines** → MANDATORY System Architect review
   - Example: Deployment scripts, automation tools, setup scripts
-  - {{TICKET_PREFIX}}-XXX Gap: 710-line `deploy-migration-prod.sh` delivered without review
+  - MOB-XXX Gap: 710-line `deploy-migration-prod.sh` delivered without review
 
 - [ ] **CI/CD workflow created/modified** → MANDATORY System Architect review
   - Example: GitHub Actions workflows, pipeline changes
-  - {{TICKET_PREFIX}}-XXX Gap: 641-line `migration-validation.yml` delivered without review
+  - MOB-XXX Gap: 641-line `migration-validation.yml` delivered without review
 
 - [ ] **Infrastructure-as-code** → MANDATORY System Architect review
   - Example: Terraform, CloudFormation, Docker Compose
@@ -84,7 +84,7 @@
 
 - [ ] **Validation/verification scripts >200 lines** → MANDATORY System Architect review
   - Example: Pre-commit hooks, data validation
-  - {{TICKET_PREFIX}}-XXX Gap: 3 TypeScript scripts delivered without review
+  - MOB-XXX Gap: 3 TypeScript scripts delivered without review
 
 - [ ] **Custom build tools** → MANDATORY System Architect review
   - Example: Build scripts, code generation
@@ -166,9 +166,9 @@
 
 ## Workflow Compliance
 
-- [ ] Branch naming: `{{TICKET_PREFIX}}-{number}-{description}` or `__TICKET_PREFIX__-{number}-{description}`
+- [ ] Branch naming: `MOB-{number}-{description}` or `__TICKET_PREFIX__-{number}-{description}`
 - [ ] Commit messages: SAFe format with ticket reference
-  - Format: `type(scope): description [{{TICKET_PREFIX}}-XXX]`
+  - Format: `type(scope): description [MOB-XXX]`
   - Types: feat, fix, docs, style, refactor, test, chore
 - [ ] Rebase onto latest `dev` or `__PRIMARY_DEV_BRANCH__` (no merge commits)
 - [ ] All automated checks passing
@@ -209,7 +209,7 @@
 
 **Completed by**: [ARCHitect-in-CLI / Agent Name]  
 **Date**: [YYYY-MM-DD]  
-**Linear Ticket**: {{TICKET_PREFIX}}-XXX
+**Linear Ticket**: MOB-XXX
 
 ### System Architect Approval (if required)
 
@@ -233,7 +233,7 @@
 
 ---
 
-## Example: {{TICKET_PREFIX}}-321 Failure Analysis
+## Example: MOB-321 Failure Analysis
 
 **Gap Identified**: System Architect review NOT obtained before PR
 
@@ -273,4 +273,4 @@ If this checklist had been used:
 
 ---
 
-**This checklist prevents architectural governance gaps like {{TICKET_PREFIX}}-321**
+**This checklist prevents architectural governance gaps like MOB-321**

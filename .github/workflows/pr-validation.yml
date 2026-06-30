@@ -7,7 +7,7 @@
 # - Commit message format validation
 #
 # Customize placeholders:
-# - {{TICKET_PREFIX}}: Your ticket prefix (e.g., "WOR", "PROJ")
+# - MOB: Your ticket prefix (e.g., "WOR", "PROJ")
 
 name: PR Validation
 
@@ -49,11 +49,11 @@ jobs:
           echo "Checking commit messages..."
           echo "$COMMITS" | while read -r msg; do
             # Check for conventional commit format with ticket reference
-            if ! echo "$msg" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .+ \[{{TICKET_PREFIX}}-[0-9]+\]$"; then
+            if ! echo "$msg" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .+ \[MOB-[0-9]+\]$"; then
               # Allow merge commits and generated commits
               if ! echo "$msg" | grep -qE "^(Merge|🤖 Generated)"; then
                 echo "::warning::Commit message may not follow SAFe format: $msg"
-                echo "Expected: type(scope): description [{{TICKET_PREFIX}}-XXX]"
+                echo "Expected: type(scope): description [MOB-XXX]"
               fi
             fi
           done
@@ -64,9 +64,9 @@ jobs:
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
 
-          if ! echo "$PR_TITLE" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .+ \[{{TICKET_PREFIX}}-[0-9]+\]$"; then
+          if ! echo "$PR_TITLE" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .+ \[MOB-[0-9]+\]$"; then
             echo "::warning::PR title may not follow SAFe format"
-            echo "Expected: type(scope): description [{{TICKET_PREFIX}}-XXX]"
+            echo "Expected: type(scope): description [MOB-XXX]"
             echo "Got: $PR_TITLE"
           else
             echo "✅ PR title follows SAFe format"
@@ -76,9 +76,9 @@ jobs:
         env:
           PR_BODY: ${{ github.event.pull_request.body }}
         run: |
-          if echo "$PR_BODY" | grep -qE "{{TICKET_PREFIX}}-[0-9]+"; then
+          if echo "$PR_BODY" | grep -qE "MOB-[0-9]+"; then
             echo "✅ Linear ticket reference found in PR body"
           else
             echo "::warning::No Linear ticket reference found in PR body"
-            echo "Please include a reference like {{TICKET_PREFIX}}-123"
+            echo "Please include a reference like MOB-123"
           fi

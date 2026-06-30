@@ -37,7 +37,7 @@
 ### AC-2: Substitutions applied in longest-match-first order (prevents partial matches)
 - **PASS**
 - Line 643-644: `const sortedKeys = Object.keys(combined).sort((a, b) => b.length - a.length);`
-- This sorts by key length descending, ensuring `{{GITHUB_REPO_URL}}` is matched before `{{GITHUB_ORG}}`
+- This sorts by key length descending, ensuring `https://github.com/tamasha-live/mobile-app` is matched before `tamasha-live`
 - Evidence: Test 2 explicitly verifies longest-match-first ordering
 
 ### AC-3: Both `{{PLACEHOLDER}}` tokens and literal string substitutions supported

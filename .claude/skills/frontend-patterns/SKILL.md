@@ -1,491 +1,151 @@
 ---
 name: frontend-patterns
-description: Frontend patterns for Next.js App Router, Clerk auth, shadcn/Radix UI, and PostHog analytics. Use when building UI components, creating pages, implementing auth flows, or adding analytics events. Ensures consistent UX patterns and accessibility standards.
+description: Frontend patterns for Flutter (Dart) with Riverpod state, go_router navigation, Dio networking, and a Figma-token-driven theme. Use when building screens/widgets, wiring state, adding routes, or calling the backend API. Ensures consistent, idiomatic, accessible Flutter UI.
 user-invocable: false
 allowed-tools: Read, Grep, Glob
 ---
 
-# Frontend Patterns Skill
+# Frontend Patterns Skill (Flutter)
 
 ## Purpose
 
-Ensure consistent frontend development using established patterns for Next.js App Router, Clerk authentication, shadcn/ui components, and PostHog analytics.
+Ensure consistent Flutter development: Riverpod for state, go_router for
+navigation, Dio for the API, and `Theme.of(context)` fed by the Figma-generated
+`design_tokens` package for all styling.
 
 ## When This Skill Applies
 
-Invoke this skill when:
+- Building or modifying any screen or widget
+- Wiring state / data loading / mutations
+- Adding navigation routes
+- Calling the backend API from the app
+- Theming and applying design tokens
 
-- Building new UI components or pages
-- Implementing authentication flows
-- Adding forms with validation
-- Integrating PostHog analytics events
-- Creating protected/authenticated routes
-- Working with shadcn/ui or Radix components
+> If the work implements a Figma design, ALSO use the `figma-devmode` skill.
 
-## Next.js App Router Patterns
-
-### Server vs Client Components
-
-```typescript
-// SERVER COMPONENT (default) - Use for:
-// - Data fetching
-// - Auth checks
-// - SEO-critical content
-// app/dashboard/page.tsx
-import { auth } from "@clerk/nextjs/server";
-
-export default async function DashboardPage() {
-  const { userId } = await auth();
-  // Fetch data server-side...
-}
-
-// CLIENT COMPONENT - Use for:
-// - Interactivity (onClick, onChange)
-// - Browser APIs (localStorage, window)
-// - Hooks (useState, useEffect)
-// app/dashboard/_components/interactive-widget.tsx
-("use client");
-
-import { useState } from "react";
-
-export function InteractiveWidget() {
-  const [count, setCount] = useState(0);
-  // Interactive logic...
-}
-```
-
-### Protected Pages
-
-**CRITICAL**: Always use `export const dynamic = 'force-dynamic'` for authenticated pages:
-
-```typescript
-// app/dashboard/[page]/page.tsx
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-
-// REQUIRED - Auth context unavailable at build time
-export const dynamic = "force-dynamic";
-
-export default async function ProtectedPage() {
-  const { userId } = await auth();
-
-  if (!userId) {
-    redirect("/sign-in");
-  }
-
-  // Render protected content...
-}
-```
-
-### Route Organization
+## Project Layout
 
 ```text
-app/
-├── (auth)/                    # Auth routes (sign-in, sign-up)
-│   ├── sign-in/[[...sign-in]]/page.tsx
-│   └── sign-up/[[...sign-up]]/page.tsx
-├── (marketing)/               # Public marketing pages
-│   ├── page.tsx               # Homepage
-│   └── pricing/page.tsx
-├── dashboard/                 # Protected user area
-│   ├── page.tsx
-│   └── _components/           # Page-specific components
-└── admin/                     # Admin-only area
-    └── page.tsx
+app/lib/
+├── main.dart                    # ProviderScope + MaterialApp.router
+├── core/
+│   ├── network/api_client.dart  # apiClientProvider (Dio)
+│   └── router/app_router.dart   # GoRouter config (one route per screen)
+├── design_system/
+│   └── app_theme.dart           # design_tokens → ThemeData
+└── features/<feature>/          # one folder per feature
+    ├── <feature>_screen.dart
+    └── <feature>_controller.dart
+packages/design_tokens/          # colors/spacing/typography (Figma-generated)
 ```
 
-## Clerk Authentication Patterns
+## State Management (Riverpod)
 
-### Auth-Enabled Mode
+- **Default to `AsyncNotifier`** (or `FutureProvider` for read-only) — see
+  `patterns_library/ui/riverpod-async-provider.md`.
+- Widgets are `ConsumerWidget` / `ConsumerStatefulWidget`; they `ref.watch`
+  state and call notifier methods. Keep widgets dumb.
+- Wrap async work in `AsyncValue.guard`; render all three states
+  (loading / error+retry / data).
+- Prefer `autoDispose`; use `.family` for keyed state.
+- Surface one-off events (snackbars, navigation) via `ref.listen`, never in `build`.
 
-```typescript
-// Server component auth check
-import { auth } from '@clerk/nextjs/server';
-
-export default async function Page() {
-  const { userId } = await auth();
-  // userId is string | null
+```dart
+class CounterController extends AutoDisposeAsyncNotifier<int> {
+  @override
+  Future<int> build() async => 0;
+  Future<void> increment() async =>
+      state = AsyncData((state.valueOrNull ?? 0) + 1);
 }
-
-// Client component auth
-"use client"
-import { useUser, useAuth } from '@clerk/nextjs';
-
-export function UserProfile() {
-  const { user, isLoaded, isSignedIn } = useUser();
-  const { signOut } = useAuth();
-
-  if (!isLoaded) return <Skeleton />;
-  if (!isSignedIn) return <SignInPrompt />;
-
-  return <div>Welcome, {user.firstName}!</div>;
-}
+final counterControllerProvider =
+    AutoDisposeAsyncNotifierProvider<CounterController, int>(CounterController.new);
 ```
 
-### Auth-Disabled Mode (Feature Toggle)
+## Navigation (go_router)
 
-When auth is disabled via feature flags, provide graceful fallbacks:
+- All routes declared in `core/router/app_router.dart`, one `GoRoute` per screen,
+  each with a `name`. Navigate with `context.goNamed('home')` /
+  `context.pushNamed(...)`, not by constructing widgets directly.
 
-```typescript
-// Check feature flag
-import { FEATURES } from '@/config/features';
-
-export function AuthWrapper({ children }) {
-  if (!FEATURES.AUTH_ENABLED) {
-    // Show demo/guest experience
-    return <GuestExperience>{children}</GuestExperience>;
-  }
-
-  return <AuthenticatedWrapper>{children}</AuthenticatedWrapper>;
-}
+```dart
+GoRoute(
+  path: '/items/:id',
+  name: 'item-detail',
+  builder: (context, state) =>
+      ItemDetailScreen(id: state.pathParameters['id']!),
+),
 ```
 
-### Admin Verification
+## Networking (Dio)
 
-```typescript
-// app/admin/page.tsx
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+- Use the shared `apiClientProvider` (`core/network/api_client.dart`). Base URL
+  comes from `--dart-define=API_BASE_URL`.
+- Don't construct `Dio()` inline in features. Auth/headers/retry belong in
+  interceptors registered on the shared client.
 
-export const dynamic = "force-dynamic";
+## Theming & Design Tokens (NON-NEGOTIABLE)
 
-export default async function AdminPage() {
-  const { userId, orgId, orgRole } = await auth();
+- **Never hardcode** colors, spacing, radii, or text styles in a widget.
+- Tokens live in `packages/design_tokens`; `app_theme.dart` maps them to
+  `ThemeData`; widgets read `Theme.of(context)` (`colorScheme`, `textTheme`).
+- Tokens are Figma-generated — change values in Figma, regenerate, don't hand-edit.
 
-  if (!userId) {
-    redirect("/sign-in");
-  }
+```dart
+// ❌ DON'T
+Container(color: const Color(0xFF3D5AFE), padding: const EdgeInsets.all(16));
+Text('Hi', style: TextStyle(fontSize: 28));
 
-  // Verify admin role
-  const ADMIN_ORG_ID = process.env.CLERK_ADMIN_ORG_ID;
-  const ADMIN_ROLE = "org:admin";
-
-  if (orgId !== ADMIN_ORG_ID || orgRole !== ADMIN_ROLE) {
-    redirect("/admin-denied");
-  }
-
-  // Render admin content...
-}
+// ✅ DO
+Container(
+  color: Theme.of(context).colorScheme.primary,
+  padding: const EdgeInsets.all(AppSpacing.md),
+);
+Text('Hi', style: Theme.of(context).textTheme.headlineLarge);
 ```
 
-## shadcn/ui Component Patterns
+## Widget Conventions
 
-### Import Convention
+- `const` constructors wherever possible (lint enforces it).
+- `super.key` on every widget; trailing commas (auto-formats cleanly).
+- Compose small widgets; extract private `_Foo` widgets over giant `build`
+  methods or helper methods returning `Widget`.
+- Package imports only (`package:mobile_app/...`), not relative (`../..`).
 
-```typescript
-// Always use @/components/ui path alias
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-```
+## Accessibility
 
-### Form Pattern (React Hook Form + Zod)
+- [ ] Tap targets ≥ 48×48 dp
+- [ ] `Semantics` / `semanticLabel` on icon-only buttons and images
+- [ ] Text scales with the system (avoid fixed heights that clip large fonts)
+- [ ] Color contrast ≥ 4.5:1 (verify token choices)
+- [ ] Don't convey state by color alone
 
-```typescript
-"use client"
-
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-
-const FormSchema = z.object({
-  email: z.string().email('Invalid email'),
-  name: z.string().min(1, 'Name is required'),
-});
-
-type FormData = z.infer<typeof FormSchema>;
-
-export function MyForm() {
-  const form = useForm<FormData>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: { email: '', name: '' },
-  });
-
-  async function onSubmit(data: FormData) {
-    // Handle submission...
-  }
-
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
-  );
-}
-```
-
-### Button Variants
-
-```typescript
-// Primary action
-<Button>Save Changes</Button>
-
-// Secondary action
-<Button variant="secondary">Cancel</Button>
-
-// Destructive action
-<Button variant="destructive">Delete</Button>
-
-// Ghost/subtle
-<Button variant="ghost">Learn More</Button>
-
-// Link style
-<Button variant="link" asChild>
-  <Link href="/docs">Documentation</Link>
-</Button>
-
-// Loading state
-<Button disabled={isLoading}>
-  {isLoading ? 'Saving...' : 'Save'}
-</Button>
-```
-
-## PostHog Analytics Patterns
-
-### Event Naming Convention
-
-Use snake_case with category prefix:
-
-```typescript
-// User actions
-"user_signed_up";
-"user_signed_in";
-"user_profile_updated";
-
-// Feature usage
-"feature_dark_mode_toggled";
-"feature_export_clicked";
-
-// Payments
-"payment_checkout_started";
-"payment_completed";
-"subscription_upgraded";
-
-// Content
-"content_video_watched";
-"content_pdf_downloaded";
-
-// Navigation
-"page_viewed";
-"cta_clicked";
-```
-
-### Event Tracking
-
-```typescript
-"use client"
-
-import { usePostHog } from 'posthog-js/react';
-
-export function TrackableButton() {
-  const posthog = usePostHog();
-
-  function handleClick() {
-    posthog?.capture('cta_clicked', {
-      button_text: 'Get Started',
-      page: '/pricing',
-      variant: 'primary',
-    });
-  }
-
-  return <Button onClick={handleClick}>Get Started</Button>;
-}
-```
-
-### Page View Tracking
-
-```typescript
-// Automatic via PostHogProvider (already configured)
-// Manual tracking for SPAs:
-"use client";
-
-import { usePathname } from "next/navigation";
-import { usePostHog } from "posthog-js/react";
-import { useEffect } from "react";
-
-export function PageViewTracker() {
-  const pathname = usePathname();
-  const posthog = usePostHog();
-
-  useEffect(() => {
-    if (pathname && posthog) {
-      posthog.capture("$pageview", { path: pathname });
-    }
-  }, [pathname, posthog]);
-
-  return null;
-}
-```
-
-### Feature Flags
-
-```typescript
-"use client"
-
-import { useFeatureFlagEnabled } from 'posthog-js/react';
-
-export function FeatureFlaggedComponent() {
-  const showNewFeature = useFeatureFlagEnabled('new-checkout-flow');
-
-  if (showNewFeature) {
-    return <NewCheckoutFlow />;
-  }
-
-  return <LegacyCheckoutFlow />;
-}
-```
-
-## Accessibility Checklist
-
-### Required for All Components
-
-- [ ] **Keyboard Navigation**: All interactive elements focusable via Tab
-- [ ] **Focus Indicators**: Visible focus ring (Tailwind: `focus:ring-2`)
-- [ ] **Color Contrast**: 4.5:1 minimum for text
-- [ ] **Alt Text**: All images have descriptive alt text
-- [ ] **ARIA Labels**: Form inputs have labels or aria-label
-- [ ] **Error States**: Form errors announced to screen readers
-
-### Patterns
-
-```typescript
-// Accessible button
-<Button aria-label="Close dialog">
-  <X className="h-4 w-4" />
-</Button>
-
-// Accessible form field
-<FormItem>
-  <FormLabel htmlFor="email">Email</FormLabel>
-  <FormControl>
-    <Input id="email" type="email" aria-describedby="email-error" />
-  </FormControl>
-  <FormMessage id="email-error" />
-</FormItem>
-
-// Skip link for keyboard users
-<a href="#main-content" className="sr-only focus:not-sr-only">
-  Skip to main content
-</a>
-```
-
-## Responsive Design Patterns
-
-### Tailwind Breakpoints
-
-```typescript
-// Mobile-first approach
-<div className="
-  px-4           // Mobile: 16px padding
-  md:px-6        // Tablet: 24px padding
-  lg:px-8        // Desktop: 32px padding
-">
-
-// Responsive grid
-<div className="
-  grid
-  grid-cols-1    // Mobile: 1 column
-  md:grid-cols-2 // Tablet: 2 columns
-  lg:grid-cols-3 // Desktop: 3 columns
-  gap-4
-">
-
-// Hide/show at breakpoints
-<div className="hidden md:block">Desktop only</div>
-<div className="md:hidden">Mobile only</div>
-```
-
-### Container Pattern
-
-```typescript
-// Standard container
-<div className="container mx-auto px-4 md:px-6">
-  {/* Content */}
-</div>
-
-// Max-width constrained
-<div className="max-w-4xl mx-auto px-4">
-  {/* Narrower content like articles */}
-</div>
+```dart
+IconButton(
+  icon: const Icon(Icons.close),
+  tooltip: 'Close',            // also provides a semantic label
+  onPressed: () => Navigator.of(context).pop(),
+);
 ```
 
 ## Common Mistakes to Avoid
 
-### DON'T Do This
-
-```typescript
-// ❌ Missing 'use client' for interactive components
-import { useState } from 'react';  // Will error!
-
-// ❌ Using hooks in server components
-export default async function Page() {
-  const [state, setState] = useState();  // Will error!
-}
-
-// ❌ Missing force-dynamic on auth pages
-export default async function ProtectedPage() {
-  const { userId } = await auth();  // May fail at build!
-}
-
-// ❌ Direct DOM manipulation
-document.getElementById('foo');  // Use refs instead
-
-// ❌ Inline styles (use Tailwind)
-<div style={{ marginTop: '20px' }}>  // Use className="mt-5"
-```
-
-### DO This Instead
-
-```typescript
-// ✅ Proper client component
-"use client"
-import { useState } from 'react';
-
-// ✅ Server component with auth
-export const dynamic = 'force-dynamic';
-export default async function Page() {
-  const { userId } = await auth();
-}
-
-// ✅ Use refs for DOM access
-const inputRef = useRef<HTMLInputElement>(null);
-
-// ✅ Tailwind classes
-<div className="mt-5">
+```dart
+// ❌ Hardcoded style literals (use theme + design_tokens)
+// ❌ Business logic / API calls inside build()
+// ❌ setState for server data (use Riverpod AsyncNotifier)
+// ❌ Constructing Dio() per feature (use apiClientProvider)
+// ❌ Navigating by pushing widgets (use go_router named routes)
+// ❌ Forgetting to dispose TextEditingController / controllers
 ```
 
 ## Authoritative References
 
-- **UI Patterns**: `patterns_library/ui/`
-  - `authenticated-page.md` - Protected page pattern
-  - `form-with-validation.md` - React Hook Form + Zod
-  - `data-table.md` - Server-side paginated tables
-  - `marketing-page.md` - Public marketing pages
-- **Component Library**: `components/ui/` (shadcn/ui)
-- **PostHog Setup**: `lib/posthog/`
-- **Feature Flags**: `config/features.ts`
+- **UI patterns**: `patterns_library/ui/`
+  - `authenticated-page.md` — async data screen
+  - `data-table.md` — data list
+  - `form-with-validation.md` — validated form
+  - `riverpod-async-provider.md` — state + mutations
+- **Theme**: `app/lib/design_system/app_theme.dart`
+- **Tokens**: `packages/design_tokens/`
+- **Figma → code**: the `figma-devmode` skill
+- **Testing**: the `testing-patterns` skill (widget / golden / integration tests)

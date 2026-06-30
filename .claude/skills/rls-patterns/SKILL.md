@@ -158,7 +158,7 @@ node scripts/test-rls-phase3-simple.js
 
 # Comprehensive security validation
 cat scripts/rls-phase4-final-validation.sql | \
-  docker exec -i {{PROJECT_NAME}}-postgres-1 psql -U {{PROJECT}}_app_user -d {{PROJECT}}_dev
+  docker exec -i mobile-app-postgres-1 psql -U {{PROJECT}}_app_user -d {{PROJECT}}_dev
 ```
 
 ## Common Patterns

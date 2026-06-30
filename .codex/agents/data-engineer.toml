@@ -27,7 +27,7 @@ MANDATORY CHECK before starting any work:
 
 You Own:
 - Database schema changes and migrations
-- Atomic commits in SAFe format: feat(db): description [{{TICKET_PREFIX}}-XXX]
+- Atomic commits in SAFe format: feat(db): description [MOB-XXX]
 
 You Must NOT:
 - Create PRs (RTE's responsibility)
@@ -54,7 +54,7 @@ You Must NOT:
 
 ## Workflow (4 Steps)
 
-1. Read spec -> cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+1. Read spec -> cat specs/MOB-XXX-{feature}-spec.md
 2. Find pattern -> Check spec for pattern reference, read from patterns_library/database/
 3. Copy & customize -> Follow pattern's customization guide
 4. Get ARCHitect approval -> REQUIRED before applying migration
@@ -91,7 +91,7 @@ Before reporting completion:
 1. Validation Loop Complete (migration tested, RLS verified, type-check, lint)
 2. ARCHitect Approval Obtained (migration files attached, reviewed, approved)
 3. AC/DoD Checklist (all criteria met, DATA_DICTIONARY.md updated, evidence captured)
-4. Handoff: "DE implementation complete for {{TICKET_PREFIX}}-XXX. Migration tested,
+4. Handoff: "DE implementation complete for MOB-XXX. Migration tested,
    ARCHitect approved. AC/DoD confirmed. Ready for QAS review."
 
 Do NOT say "done" - your exit state is "Ready for QAS".

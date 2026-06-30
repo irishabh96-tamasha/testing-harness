@@ -24,7 +24,7 @@ When adopting this harness, be aware of:
 
 ### 1. Placeholder Customization
 
-- **Replace ALL placeholders** (`{{TICKET_PREFIX}}`, `{{PROJECT_NAME}}`, etc.) before use
+- **Replace ALL placeholders** (`MOB`, `mobile-app`, etc.) before use
 - **Never commit secrets** in placeholder values
 - Use environment variables for sensitive configuration
 
@@ -63,7 +63,7 @@ Please report:
 **For sensitive security issues:**
 
 1. **Do NOT open a public GitHub issue**
-2. Email: {{SECURITY_EMAIL}} (or your preferred contact)
+2. Email: security@tamasha.live (or your preferred contact)
 3. Include:
    - Description of the vulnerability
    - Steps to reproduce
