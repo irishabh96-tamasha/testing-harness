@@ -119,40 +119,84 @@ const CHAPTERS: SeedChapter[] = [
   ]),
 ];
 
-const WP_DEITIES = ["hanuman", "ram", "durga", "ganesh"];
-const WP_COLLECTIONS = ["live", "new", "trending"];
+// Wallpapers — real devotional art served from backend/public/media (see
+// Figma Wallpapers Home 704:5223). `image` maps to /media/wallpapers/<image>.jpg.
+// collection "live" => a live wallpaper (single "Set Wallpaper" button in the
+// app); other collections => static (Set Wallpaper + Set Lockscreen).
+interface SeedWallpaper {
+  image: string;
+  deityId: string;
+  collection: string;
+  likes: number;
+  shares: number;
+  setCount: number;
+}
 
-const WALLPAPERS = WP_DEITIES.flatMap((deityId) =>
-  WP_COLLECTIONS.flatMap((collection, ci) =>
-    [0, 1].map((n) => ({
-      id: `wp-${deityId}-${collection}-${n}`,
-      deityId,
-      imageUrl: `https://picsum.photos/seed/wp-${deityId}-${collection}-${n}/400/700`,
-      collection,
-      sort: ci * 2 + n,
-    })),
-  ),
-);
+const WALLPAPER_DATA: SeedWallpaper[] = [
+  { image: "shiva-lingam", deityId: "ganesh", collection: "live", likes: 12500, shares: 3200, setCount: 560678 },
+  { image: "krishna-radha", deityId: "ram", collection: "live", likes: 18900, shares: 4100, setCount: 723000 },
+  { image: "bal-krishna", deityId: "ram", collection: "live", likes: 9800, shares: 2600, setCount: 401200 },
+  { image: "durga", deityId: "durga", collection: "live", likes: 21300, shares: 5400, setCount: 812000 },
+  { image: "hanuman", deityId: "hanuman", collection: "new", likes: 15600, shares: 3900, setCount: 498000 },
+  { image: "vishnu", deityId: "ram", collection: "new", likes: 11200, shares: 2800, setCount: 356000 },
+  { image: "lakshmi", deityId: "durga", collection: "new", likes: 17400, shares: 4500, setCount: 634000 },
+  { image: "krishna", deityId: "ram", collection: "new", likes: 13100, shares: 3300, setCount: 421000 },
+  { image: "saraswati", deityId: "durga", collection: "trending", likes: 14800, shares: 3700, setCount: 512000 },
+  { image: "gayatri", deityId: "ganesh", collection: "trending", likes: 16200, shares: 4000, setCount: 588000 },
+  { image: "maha-mrityunjaya", deityId: "ganesh", collection: "trending", likes: 19500, shares: 4900, setCount: 701000 },
+  { image: "brahma", deityId: "ganesh", collection: "trending", likes: 8700, shares: 2200, setCount: 298000 },
+];
 
-const RINGTONE_TITLES: Record<string, string[]> = {
-  hanuman: ["Hanuman Chalisa", "Bajrang Baan", "Sankat Mochan"],
-  ram: ["Shri Ram Stuti", "Raghupati Raghav", "Ram Dhun"],
-  durga: ["Durga Saptashati", "Ambe Maa Aarti", "Mahishasura Mardini"],
-  ganesh: ["Ganesh Vandana", "Vakratunda Mahakaya", "Sukhkarta Dukhharta"],
-};
+const WALLPAPERS = WALLPAPER_DATA.map((w, i) => ({
+  id: `wp-${w.image}`,
+  deityId: w.deityId,
+  imageUrl: `/media/wallpapers/${w.image}.jpg`,
+  collection: w.collection,
+  likes: w.likes,
+  shares: w.shares,
+  setCount: w.setCount,
+  sort: i,
+}));
 
-const RINGTONES = WP_DEITIES.flatMap((deityId, di) =>
-  RINGTONE_TITLES[deityId].map((title, n) => ({
-    id: `rt-${deityId}-${n}`,
-    deityId,
-    title,
-    imageUrl: `https://picsum.photos/seed/rt-${deityId}-${n}/200`,
-    audioUrl: AUDIO[(di + n) % AUDIO.length],
-    plays: 100000 * (di + 1) + n * 23000,
-    downloads: 30000 * (di + 1) + n * 7000,
-    sort: n,
-  })),
-);
+// Ringtones — titles, covers and counts mirror Figma Ringtone Home 670:4481.
+// `cover` maps to /media/ringtones/<cover>.jpg. Audio is a SoundHelix placeholder
+// (NOT real recitation). plays/setCount taken from the design's stats.
+interface SeedRingtone {
+  cover: string;
+  title: string;
+  deityId: string;
+  plays: number;
+  setCount: number;
+}
+
+const RINGTONE_DATA: SeedRingtone[] = [
+  { cover: "gurur-brahma", title: "Gurur Brahma Mantra", deityId: "ganesh", plays: 580000, setCount: 150000 },
+  { cover: "shanti", title: "Shanti Mantra", deityId: "ganesh", plays: 600000, setCount: 200000 },
+  { cover: "maha-mrityunjaya", title: "Maha Mrityunjaya Mantra", deityId: "ganesh", plays: 350000, setCount: 99000 },
+  { cover: "gayatri", title: "Gayatri Mantra", deityId: "ganesh", plays: 740000, setCount: 330000 },
+  { cover: "saraswati", title: "Saraswati Vandana", deityId: "durga", plays: 290000, setCount: 80000 },
+  { cover: "vishnu-sahasranama", title: "Vishnu Sahasranama", deityId: "ram", plays: 910000, setCount: 500000 },
+  { cover: "durga-saptashati", title: "Durga Saptashati", deityId: "durga", plays: 360000, setCount: 110000 },
+  { cover: "hanuman-chalisa", title: "Hanuman Chalisa", deityId: "hanuman", plays: 800000, setCount: 250000 },
+  { cover: "lakshmi", title: "Lakshmi Ashtakshara Mantra", deityId: "durga", plays: 270000, setCount: 180000 },
+  { cover: "krishna-stotra", title: "Krishna Stotra", deityId: "ram", plays: 650000, setCount: 320000 },
+  { cover: "brahma-gayatri", title: "Brahma Gayatri Mantra", deityId: "ganesh", plays: 510000, setCount: 90000 },
+  { cover: "vishwakarma", title: "Vishwakarma Mantra", deityId: "ganesh", plays: 1020000, setCount: 400000 },
+];
+
+const RINGTONES = RINGTONE_DATA.map((r, i) => ({
+  id: `rt-${r.cover}`,
+  deityId: r.deityId,
+  title: r.title,
+  imageUrl: `/media/ringtones/${r.cover}.jpg`,
+  audioUrl: AUDIO[i % AUDIO.length],
+  plays: r.plays,
+  downloads: r.setCount,
+  likes: Math.round(r.plays * 0.3),
+  shares: Math.round(r.plays * 0.08),
+  setCount: r.setCount,
+  sort: i,
+}));
 
 async function main() {
   // Idempotent reseed.
@@ -204,7 +248,8 @@ async function main() {
     data: DEITIES.map((d) => ({
       id: d.id,
       name: d.name,
-      imageUrl: `https://picsum.photos/seed/${d.id}/120`,
+      // "all" uses the temple icon in the app (no face); real deities get a face.
+      imageUrl: d.id === "all" ? "" : `/media/deities/${d.id}.jpg`,
       sort: d.sort,
     })),
   });

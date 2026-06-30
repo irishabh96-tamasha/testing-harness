@@ -8,6 +8,18 @@ const String _apiBaseUrl = String.fromEnvironment(
   defaultValue: 'http://localhost:8080',
 );
 
+/// Resolve a media path returned by the backend to an absolute URL.
+///
+/// The API stores devotional images as root-relative paths (e.g.
+/// `/media/wallpapers/durga.jpg`) served by the backend's static handler.
+/// Absolute URLs (picsum, SoundHelix, …) are passed through unchanged. Use this
+/// for both `Image.network` and the native wallpaper/ringtone channels.
+String mediaUrl(String path) {
+  if (path.isEmpty) return path;
+  if (path.startsWith('/')) return '$_apiBaseUrl$path';
+  return path;
+}
+
 /// Shared Dio client for talking to the Express backend.
 final Provider<Dio> apiClientProvider = Provider<Dio>((ref) {
   return Dio(

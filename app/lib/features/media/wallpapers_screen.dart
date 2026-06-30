@@ -101,8 +101,7 @@ class _CollectionRow extends StatelessWidget {
             itemBuilder: (BuildContext context, int i) => GestureDetector(
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute<void>(
-                  builder: (_) =>
-                      WallpaperPreviewScreen(imageUrl: items[i].imageUrl),
+                  builder: (_) => WallpaperPreviewScreen(wallpaper: items[i]),
                 ),
               ),
               child: ClipRRect(

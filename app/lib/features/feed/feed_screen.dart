@@ -185,6 +185,7 @@ class _DeityAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
+    final bool isAll = deity.id == 'all';
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(40),
@@ -199,12 +200,18 @@ class _DeityAvatar extends StatelessWidget {
                 shape: BoxShape.circle,
                 border: selected ? Border.all(color: primary, width: 2) : null,
               ),
-              child: CircleAvatar(
-                radius: 28,
-                backgroundColor: AppColors.grey200,
-                backgroundImage: NetworkImage(deity.imageUrl),
-                onBackgroundImageError: (_, __) {},
-              ),
+              child: isAll
+                  ? CircleAvatar(
+                      radius: 28,
+                      backgroundColor: AppColors.brand100,
+                      child: Icon(Icons.temple_hindu, color: primary),
+                    )
+                  : CircleAvatar(
+                      radius: 28,
+                      backgroundColor: AppColors.grey200,
+                      backgroundImage: NetworkImage(deity.imageUrl),
+                      onBackgroundImageError: (_, __) {},
+                    ),
             ),
             const SizedBox(height: AppSpacing.xs),
             Text(

@@ -1,3 +1,5 @@
+import 'package:mobile_app/core/network/api_client.dart';
+
 /// A deity shown in the Status selector, returned by `GET /api/feed`.
 class Deity {
   const Deity({
@@ -9,7 +11,7 @@ class Deity {
   factory Deity.fromJson(Map<String, dynamic> json) => Deity(
         id: json['id'] as String,
         name: json['name'] as String,
-        imageUrl: json['imageUrl'] as String,
+        imageUrl: mediaUrl(json['imageUrl'] as String),
       );
 
   final String id;

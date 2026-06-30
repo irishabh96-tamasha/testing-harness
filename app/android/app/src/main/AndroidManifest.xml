@@ -1,7 +1,14 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Set the device wallpaper from the Wallpapers screen (async_wallpaper). -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- Set the device wallpaper from the Wallpapers screen (WallpaperManager). -->
     <uses-permission android:name="android.permission.SET_WALLPAPER"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Set the device ringtone from the Ringtone preview (RingtoneManager).
+         WRITE_SETTINGS is a special permission granted via system settings. -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"/>
     <application
         android:label="mobile_app"
         android:name="${applicationName}"

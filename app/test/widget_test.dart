@@ -13,17 +13,19 @@ void main() {
       ProviderScope(
         overrides: <Override>[
           homeFeedProvider.overrideWith(
-            (ref) async => <StatusPost>[
-              const StatusPost(
-                id: 'all-1',
-                deityId: 'all',
-                imageUrl: 'https://e.com/x.png',
-                authorName: 'Aditya Nath',
-                authorSubtitle: 'sub',
-                tagline: 'tag',
-                authorAvatarUrl: 'https://e.com/a.png',
-                likes: 24000,
-                views: 140000,
+            (ref) async => <HomeFeedItem>[
+              const StatusFeedItem(
+                StatusPost(
+                  id: 'all-1',
+                  deityId: 'all',
+                  imageUrl: 'https://e.com/x.png',
+                  authorName: 'Aditya Nath',
+                  authorSubtitle: 'sub',
+                  tagline: 'tag',
+                  authorAvatarUrl: 'https://e.com/a.png',
+                  likes: 24000,
+                  views: 140000,
+                ),
               ),
             ],
           ),

@@ -1,4 +1,5 @@
 import express, { type Express } from "express";
+import path from "node:path";
 import { healthRouter } from "./routes/health";
 import { feedRouter } from "./routes/feed";
 import { statusRouter } from "./routes/status";
@@ -26,6 +27,10 @@ export function createApp(): Express {
       next();
     });
   }
+
+  // Static devotional media (deity faces, wallpapers, ringtone covers),
+  // extracted from Figma and served from backend/public/media.
+  app.use("/media", express.static(path.join(process.cwd(), "public", "media")));
 
   // Routes
   app.use(healthRouter);

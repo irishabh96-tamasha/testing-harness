@@ -6,6 +6,7 @@ import 'package:mobile_app/core/format/count_format.dart';
 import 'package:mobile_app/features/feed/deity_filter_bar.dart';
 import 'package:mobile_app/features/media/media_controller.dart';
 import 'package:mobile_app/features/media/media_models.dart';
+import 'package:mobile_app/features/media/ringtone_preview_screen.dart';
 
 /// Ringtones gallery (Figma 670:4481): search + deity selector + playable grid.
 class RingtonesScreen extends ConsumerWidget {
@@ -87,9 +88,11 @@ class _RingtoneCard extends ConsumerWidget {
     final bool playing = audio.mediaId == ringtone.id && audio.playing;
     final TextTheme text = Theme.of(context).textTheme;
     return GestureDetector(
-      onTap: () => ref
-          .read(audioControllerProvider.notifier)
-          .toggle(ringtone.id, ringtone.audioUrl),
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => RingtonePreviewScreen(ringtone: ringtone),
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

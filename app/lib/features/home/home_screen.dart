@@ -1,21 +1,26 @@
 import 'package:design_tokens/design_tokens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_app/core/audio/audio_controller.dart';
 import 'package:mobile_app/core/format/count_format.dart';
+import 'package:mobile_app/core/network/api_client.dart';
 import 'package:mobile_app/features/feed/feed_controller.dart';
 import 'package:mobile_app/features/feed/feed_models.dart';
 import 'package:mobile_app/features/home/home_controller.dart';
+import 'package:mobile_app/features/media/media_models.dart';
+import 'package:mobile_app/features/media/ringtone_preview_screen.dart';
 import 'package:mobile_app/features/media/ringtones_screen.dart';
+import 'package:mobile_app/features/media/wallpaper_preview_screen.dart';
 import 'package:mobile_app/features/media/wallpapers_screen.dart';
 
 /// Home tab (Figma 285:3464): brand header, promo banner, feature grid, and a
-/// backend-driven "trending" feed of devotional cards.
+/// backend-driven "trending" feed mixing status, wallpaper and ringtone cards.
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<StatusPost>> feed = ref.watch(homeFeedProvider);
+    final AsyncValue<List<HomeFeedItem>> feed = ref.watch(homeFeedProvider);
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
@@ -27,7 +32,7 @@ class HomeScreen extends ConsumerWidget {
               child: const Text('Could not load Home — Retry'),
             ),
           ),
-          data: (List<StatusPost> items) => ListView(
+          data: (List<HomeFeedItem> items) => ListView(
             padding: const EdgeInsets.only(bottom: AppSpacing.xl),
             children: <Widget>[
               const _HomeHeader(),
@@ -45,7 +50,15 @@ class HomeScreen extends ConsumerWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              for (final StatusPost item in items) _HomeFeedCard(post: item),
+              for (final HomeFeedItem item in items)
+                switch (item) {
+                  StatusFeedItem(:final StatusPost post) =>
+                    _StatusFeedCard(post: post),
+                  WallpaperFeedItem(:final Wallpaper wallpaper) =>
+                    _WallpaperFeedCard(wallpaper: wallpaper),
+                  RingtoneFeedItem(:final Ringtone ringtone) =>
+                    _RingtoneFeedCard(ringtone: ringtone),
+                },
             ],
           ),
         ),
@@ -126,7 +139,20 @@ class _PromoBanner extends StatelessWidget {
               ],
             ),
           ),
-          const Icon(Icons.auto_awesome, color: AppColors.white, size: 40),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(
+              mediaUrl('/media/wallpapers/krishna-radha.jpg'),
+              width: 64,
+              height: 64,
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => const Icon(
+                Icons.auto_awesome,
+                color: AppColors.white,
+                size: 40,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -136,11 +162,13 @@ class _PromoBanner extends StatelessWidget {
 class _FeatureGrid extends StatelessWidget {
   const _FeatureGrid();
 
-  static const List<(IconData, String)> _items = <(IconData, String)>[
-    (Icons.music_note, 'Aarti & Bhajans'),
-    (Icons.menu_book, 'Mantras & Stuti'),
-    (Icons.ring_volume, 'Set Ringtones'),
-    (Icons.wallpaper, 'Set Wallpaper'),
+  // Gold illustrated icons extracted from Figma (icons/homescreen-feature-cards
+  // 767:6575), bundled under assets/home.
+  static const List<(String, String)> _items = <(String, String)>[
+    ('assets/home/aarti.png', 'Aarti & Bhajans'),
+    ('assets/home/mantra.png', 'Mantras & Stuti'),
+    ('assets/home/ringtone.png', 'Set Ringtones'),
+    ('assets/home/wallpaper.png', 'Set Wallpaper'),
   ];
 
   @override
@@ -158,10 +186,10 @@ class _FeatureGrid extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         mainAxisSpacing: AppSpacing.sm,
         crossAxisSpacing: AppSpacing.sm,
-        childAspectRatio: 2.6,
+        childAspectRatio: 2.4,
         children: <Widget>[
-          for (final (IconData icon, String label) in _items)
-            _FeatureTile(icon: icon, label: label),
+          for (final (String asset, String label) in _items)
+            _FeatureTile(asset: asset, label: label),
         ],
       ),
     );
@@ -169,14 +197,13 @@ class _FeatureGrid extends StatelessWidget {
 }
 
 class _FeatureTile extends StatelessWidget {
-  const _FeatureTile({required this.icon, required this.label});
+  const _FeatureTile({required this.asset, required this.label});
 
-  final IconData icon;
+  final String asset;
   final String label;
 
   @override
   Widget build(BuildContext context) {
-    final Color primary = Theme.of(context).colorScheme.primary;
     return Material(
       color: AppColors.brand100,
       borderRadius: BorderRadius.circular(12),
@@ -199,10 +226,13 @@ class _FeatureTile extends StatelessWidget {
           }
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+            vertical: AppSpacing.sm,
+          ),
           child: Row(
             children: <Widget>[
-              Icon(icon, color: primary, size: 22),
+              Image.asset(asset, width: 44, height: 44),
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
@@ -220,10 +250,35 @@ class _FeatureTile extends StatelessWidget {
   }
 }
 
-/// A Home feed card: image with advertiser overlay + a persisted engagement
-/// row (Like / views / Share). Likes persist via the shared [statusActionsProvider].
-class _HomeFeedCard extends ConsumerWidget {
-  const _HomeFeedCard({required this.post});
+/// "TRENDING" pill shown on featured feed cards.
+class _TrendingBadge extends StatelessWidget {
+  const _TrendingBadge();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding:
+          const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+      decoration: BoxDecoration(
+        color: AppColors.brand400,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: const Text(
+        'TRENDING',
+        style: TextStyle(
+          color: AppColors.white,
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.5,
+        ),
+      ),
+    );
+  }
+}
+
+/// A status (advertiser) card: image with author overlay + persisted Like/views.
+class _StatusFeedCard extends ConsumerWidget {
+  const _StatusFeedCard({required this.post});
 
   final StatusPost post;
 
@@ -318,6 +373,197 @@ class _HomeFeedCard extends ConsumerWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// A wallpaper promo card: devotional image, TRENDING badge, and a Set Wallpaper
+/// action that opens the full-screen preview (L2).
+class _WallpaperFeedCard extends StatelessWidget {
+  const _WallpaperFeedCard({required this.wallpaper});
+
+  final Wallpaper wallpaper;
+
+  void _open(BuildContext context) => Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => WallpaperPreviewScreen(wallpaper: wallpaper),
+        ),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.md,
+        AppSpacing.sm,
+        AppSpacing.md,
+        AppSpacing.sm,
+      ),
+      child: GestureDetector(
+        onTap: () => _open(context),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Stack(
+            children: <Widget>[
+              Image.network(
+                wallpaper.imageUrl,
+                height: 260,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => const SizedBox(
+                  height: 260,
+                  child: ColoredBox(color: AppColors.grey200),
+                ),
+              ),
+              const Positioned(
+                left: AppSpacing.sm,
+                top: AppSpacing.sm,
+                child: _TrendingBadge(),
+              ),
+              Positioned(
+                right: AppSpacing.sm,
+                bottom: AppSpacing.sm,
+                child: FilledButton.icon(
+                  onPressed: () => _open(context),
+                  icon: const Icon(Icons.wallpaper, size: 18),
+                  label: const Text('Set Wallpaper'),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.white,
+                    foregroundColor: AppColors.brand400,
+                    shape: const StadiumBorder(),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: AppSpacing.sm,
+                bottom: AppSpacing.sm,
+                child: Row(
+                  children: <Widget>[
+                    const Icon(
+                      Icons.favorite,
+                      color: AppColors.white,
+                      size: 16,
+                    ),
+                    const SizedBox(width: AppSpacing.xs),
+                    Text(
+                      formatCount(wallpaper.likes),
+                      style: const TextStyle(
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A ringtone promo card: cover + title + play + Set Ringtone, opening the
+/// ringtone preview (L2).
+class _RingtoneFeedCard extends ConsumerWidget {
+  const _RingtoneFeedCard({required this.ringtone});
+
+  final Ringtone ringtone;
+
+  void _open(BuildContext context) => Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => RingtonePreviewScreen(ringtone: ringtone),
+        ),
+      );
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final TextTheme text = Theme.of(context).textTheme;
+    final AudioState audio = ref.watch(audioControllerProvider);
+    final bool playing = audio.mediaId == ringtone.id && audio.playing;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.md,
+        AppSpacing.sm,
+        AppSpacing.md,
+        AppSpacing.sm,
+      ),
+      child: Material(
+        color: AppColors.brand100,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () => _open(context),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.sm),
+            child: Row(
+              children: <Widget>[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    ringtone.imageUrl,
+                    width: 72,
+                    height: 72,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => const SizedBox(
+                      width: 72,
+                      height: 72,
+                      child: ColoredBox(color: AppColors.grey200),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        ringtone.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: text.titleMedium,
+                      ),
+                      const SizedBox(height: 2),
+                      Row(
+                        children: <Widget>[
+                          const Icon(
+                            Icons.headphones,
+                            size: 13,
+                            color: AppColors.grey400,
+                          ),
+                          const SizedBox(width: 2),
+                          Text(
+                            formatCount(ringtone.plays),
+                            style: text.labelSmall,
+                          ),
+                          const SizedBox(width: AppSpacing.sm),
+                          Text(
+                            'Set Ringtone',
+                            style: text.labelSmall
+                                ?.copyWith(color: AppColors.brand400),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => ref
+                      .read(audioControllerProvider.notifier)
+                      .toggle(ringtone.id, ringtone.audioUrl),
+                  icon: CircleAvatar(
+                    backgroundColor: AppColors.brand400,
+                    child: Icon(
+                      playing ? Icons.pause : Icons.play_arrow,
+                      color: AppColors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

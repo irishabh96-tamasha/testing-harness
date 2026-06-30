@@ -73,6 +73,9 @@ model Wallpaper {
   deityId    String
   imageUrl   String
   collection String @default("new")
+  likes      Int    @default(0)
+  shares     Int    @default(0)
+  setCount   Int    @default(0)
   sort       Int    @default(0)
 
   @@index([deityId, collection, sort])
@@ -88,6 +91,9 @@ model Ringtone {
   audioUrl  String
   plays     Int    @default(0)
   downloads Int    @default(0)
+  likes     Int    @default(0)
+  shares    Int    @default(0)
+  setCount  Int    @default(0)
   sort      Int    @default(0)
 
   @@index([deityId, sort])

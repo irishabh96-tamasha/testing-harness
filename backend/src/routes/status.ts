@@ -3,6 +3,7 @@ import { z } from "zod";
 import type { Status } from "@prisma/client";
 import { prisma } from "../lib/prisma";
 import { withSystemContext } from "../lib/rls-context";
+import { serializeWallpaper, serializeRingtone } from "./media";
 
 export const statusRouter = Router();
 
@@ -21,13 +22,53 @@ function serialize(s: Status) {
   };
 }
 
-/** GET /api/home/feed — all statuses across deities (the Home feed). */
+/**
+ * GET /api/home/feed — the Home "Trending" feed: a typed, interleaved mix of
+ * status, wallpaper and ringtone cards (Figma Home 285:3464). Each item carries
+ * a `type` discriminator the app switches on to pick a card widget.
+ */
 statusRouter.get("/api/home/feed", async (_req: Request, res: Response) => {
   try {
-    const list = await withSystemContext(prisma, "home:feed", (db) =>
-      db.status.findMany({ orderBy: [{ deityId: "asc" }, { sort: "asc" }] }),
+    const [statuses, wallpapers, ringtones] = await withSystemContext(
+      prisma,
+      "home:feed",
+      (db) =>
+        Promise.all([
+          db.status.findMany({ orderBy: [{ deityId: "asc" }, { sort: "asc" }] }),
+          db.wallpaper.findMany({
+            where: { collection: "trending" },
+            orderBy: { sort: "asc" },
+          }),
+          db.ringtone.findMany({ orderBy: { plays: "desc" } }),
+        ]),
     );
-    res.json(list.map(serialize));
+
+    const statusItems = statuses.map((s) => ({
+      type: "status" as const,
+      ...serialize(s),
+    }));
+    const wallpaperItems = wallpapers.map((w) => ({
+      type: "wallpaper" as const,
+      ...serializeWallpaper(w),
+    }));
+    const ringtoneItems = ringtones.map((r) => ({
+      type: "ringtone" as const,
+      ...serializeRingtone(r),
+    }));
+
+    // Interleave for variety: status, wallpaper, ringtone, repeat. Leftovers of
+    // any list are appended in order so nothing is dropped.
+    const feed: Array<
+      | (typeof statusItems)[number]
+      | (typeof wallpaperItems)[number]
+      | (typeof ringtoneItems)[number]
+    > = [];
+    const lanes = [statusItems, wallpaperItems, ringtoneItems];
+    for (let i = 0; lanes.some((l) => i < l.length); i++) {
+      for (const lane of lanes) if (i < lane.length) feed.push(lane[i]);
+    }
+
+    res.json(feed);
   } catch {
     res.status(500).json({ error: "Failed to load home feed" });
   }
