@@ -96,4 +96,15 @@ describe("home feed", () => {
     expect(types.has("wallpaper")).toBe(true);
     expect(types.has("ringtone")).toBe(true);
   });
+
+  it("GET /api/home/banners returns banner image paths", async () => {
+    const res = await request(createApp()).get("/api/home/banners");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBeGreaterThan(0);
+    for (const p of res.body) {
+      expect(typeof p).toBe("string");
+      expect(p.startsWith("/media/banners/")).toBe(true);
+    }
+  });
 });

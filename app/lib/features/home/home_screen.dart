@@ -1,9 +1,9 @@
 import 'package:design_tokens/design_tokens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile_app/core/audio/audio_controller.dart';
 import 'package:mobile_app/core/format/count_format.dart';
-import 'package:mobile_app/core/network/api_client.dart';
 import 'package:mobile_app/features/feed/feed_controller.dart';
 import 'package:mobile_app/features/feed/feed_models.dart';
 import 'package:mobile_app/features/home/home_controller.dart';
@@ -36,6 +36,7 @@ class HomeScreen extends ConsumerWidget {
             padding: const EdgeInsets.only(bottom: AppSpacing.xl),
             children: <Widget>[
               const _HomeHeader(),
+              const _HomeSearchBar(),
               const _PromoBanner(),
               const _FeatureGrid(),
               Padding(
@@ -82,16 +83,23 @@ class _HomeHeader extends StatelessWidget {
       ),
       child: Row(
         children: <Widget>[
-          Icon(Icons.temple_hindu, color: primary),
-          const SizedBox(width: AppSpacing.sm),
-          Text(
-            'Prabhuji',
-            style: Theme.of(context)
-                .textTheme
-                .headlineLarge
-                ?.copyWith(color: primary),
+          SvgPicture.asset(
+            'assets/home/temple_logo.svg',
+            width: 36,
+            height: 36,
           ),
-          const Spacer(),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Text(
+              'Prabhuji',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineLarge
+                  ?.copyWith(color: primary),
+            ),
+          ),
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.notifications_none),
@@ -106,54 +114,139 @@ class _HomeHeader extends StatelessWidget {
   }
 }
 
-class _PromoBanner extends StatelessWidget {
-  const _PromoBanner();
+/// Decorative search field below the header (Figma Home 285:3499). Search is
+/// not wired yet; tapping shows a placeholder.
+class _HomeSearchBar extends StatelessWidget {
+  const _HomeSearchBar();
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme text = Theme.of(context).textTheme;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        gradient: const LinearGradient(
-          colors: <Color>[AppColors.brand400, AppColors.brand300],
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.md,
+        0,
+        AppSpacing.md,
+        AppSpacing.sm,
+      ),
+      child: Container(
+        height: 44,
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+        decoration: BoxDecoration(
+          color: AppColors.grey200,
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Row(
+          children: <Widget>[
+            const Icon(Icons.search, size: 20, color: AppColors.grey400),
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(
+              child: Text(
+                'Search bhajans, mantras, wallpapers…',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: AppColors.grey400),
+              ),
+            ),
+            const Icon(Icons.mic_none, size: 20, color: AppColors.grey400),
+          ],
         ),
       ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Bhakti Status',
-                  style: text.headlineLarge?.copyWith(color: AppColors.white),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                Text(
-                  'Share devotion every day',
-                  style: text.labelMedium?.copyWith(color: AppColors.white),
-                ),
-              ],
-            ),
+    );
+  }
+}
+
+/// Full-bleed promo banner carousel (Figma Home banners 285:3507): backend
+/// banner images in a swipeable PageView with page dots.
+class _PromoBanner extends ConsumerStatefulWidget {
+  const _PromoBanner();
+
+  @override
+  ConsumerState<_PromoBanner> createState() => _PromoBannerState();
+}
+
+class _PromoBannerState extends ConsumerState<_PromoBanner> {
+  final PageController _controller = PageController();
+  int _page = 0;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AsyncValue<List<String>> banners = ref.watch(homeBannersProvider);
+    return banners.maybeWhen(
+      data: (List<String> urls) {
+        if (urls.isEmpty) return const SizedBox.shrink();
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.md,
+            AppSpacing.xs,
+            AppSpacing.md,
+            AppSpacing.xs,
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.network(
-              mediaUrl('/media/wallpapers/krishna-radha.jpg'),
-              width: 64,
-              height: 64,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => const Icon(
-                Icons.auto_awesome,
-                color: AppColors.white,
-                size: 40,
+          child: AspectRatio(
+            aspectRatio: 328 / 150,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Stack(
+                children: <Widget>[
+                  PageView.builder(
+                    controller: _controller,
+                    itemCount: urls.length,
+                    onPageChanged: (int i) => setState(() => _page = i),
+                    itemBuilder: (_, int i) => Image.network(
+                      urls[i],
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) =>
+                          const ColoredBox(color: AppColors.brand100),
+                    ),
+                  ),
+                  Positioned(
+                    right: AppSpacing.sm,
+                    bottom: AppSpacing.sm,
+                    child: Row(
+                      children: <Widget>[
+                        for (int i = 0; i < urls.length; i++)
+                          Container(
+                            width: 8,
+                            height: 8,
+                            margin: const EdgeInsets.only(left: 4),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: i == _page
+                                  ? AppColors.white
+                                  : AppColors.white.withValues(alpha: 0.5),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-        ],
+        );
+      },
+      orElse: () => const Padding(
+        padding: EdgeInsets.fromLTRB(
+          AppSpacing.md,
+          AppSpacing.xs,
+          AppSpacing.md,
+          AppSpacing.xs,
+        ),
+        child: AspectRatio(
+          aspectRatio: 328 / 150,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: AppColors.brand100,
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -163,11 +256,11 @@ class _FeatureGrid extends StatelessWidget {
   const _FeatureGrid();
 
   // Gold illustrated icons extracted from Figma (icons/homescreen-feature-cards
-  // 767:6575), bundled under assets/home.
+  // 767:6575), bundled under assets/home. Labels match Figma exactly.
   static const List<(String, String)> _items = <(String, String)>[
     ('assets/home/aarti.png', 'Aarti & Bhajans'),
-    ('assets/home/mantra.png', 'Mantras & Stuti'),
-    ('assets/home/ringtone.png', 'Set Ringtones'),
+    ('assets/home/mantra.png', 'Mantras & Stutis'),
+    ('assets/home/ringtone.png', 'Set Ringtone'),
     ('assets/home/wallpaper.png', 'Set Wallpaper'),
   ];
 
@@ -176,7 +269,7 @@ class _FeatureGrid extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.md,
-        AppSpacing.md,
+        AppSpacing.sm,
         AppSpacing.md,
         0,
       ),
@@ -184,9 +277,9 @@ class _FeatureGrid extends StatelessWidget {
         crossAxisCount: 2,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        mainAxisSpacing: AppSpacing.sm,
-        crossAxisSpacing: AppSpacing.sm,
-        childAspectRatio: 2.4,
+        mainAxisSpacing: AppSpacing.md,
+        crossAxisSpacing: AppSpacing.md,
+        childAspectRatio: 159 / 117,
         children: <Widget>[
           for (final (String asset, String label) in _items)
             _FeatureTile(asset: asset, label: label),
@@ -196,6 +289,8 @@ class _FeatureGrid extends StatelessWidget {
   }
 }
 
+/// A home feature card (Figma 767:6580): cream→orange gradient, brand border,
+/// centered title on top, large gold illustration filling the card below.
 class _FeatureTile extends StatelessWidget {
   const _FeatureTile({required this.asset, required this.label});
 
@@ -204,45 +299,69 @@ class _FeatureTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.brand100,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        onTap: () {
-          final Widget? dest = switch (label) {
-            'Set Wallpaper' => const WallpapersScreen(),
-            'Set Ringtones' => const RingtonesScreen(),
-            _ => null,
-          };
-          if (dest != null) {
-            Navigator.of(context).push(
-              MaterialPageRoute<void>(builder: (_) => dest),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('$label — coming soon')),
-            );
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md,
-            vertical: AppSpacing.sm,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: AppColors.cardGradient,
+        ),
+        border: Border.all(color: AppColors.brand400),
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: const <BoxShadow>[
+          BoxShadow(
+            color: AppColors.shadowXs,
+            blurRadius: 2,
+            offset: Offset(0, 1),
           ),
-          child: Row(
-            children: <Widget>[
-              Image.asset(asset, width: 44, height: 44),
-              const SizedBox(width: AppSpacing.sm),
-              Expanded(
-                child: Text(
+        ],
+      ),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: () {
+            final Widget? dest = switch (label) {
+              'Set Wallpaper' => const WallpapersScreen(),
+              'Set Ringtone' => const RingtonesScreen(),
+              _ => null,
+            };
+            if (dest != null) {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(builder: (_) => dest),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('$label — coming soon')),
+              );
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.sm,
+              AppSpacing.sm,
+              AppSpacing.sm,
+              0,
+            ),
+            child: Column(
+              children: <Widget>[
+                Text(
                   label,
-                  maxLines: 2,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelMedium,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.grey500,
+                    letterSpacing: -0.5,
+                  ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: Image.asset(asset, fit: BoxFit.contain),
+                ),
+              ],
+            ),
           ),
         ),
       ),

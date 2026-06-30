@@ -29,6 +29,15 @@ abstract final class AppColors {
   static const List<Color> ctaGradient = <Color>[brand400, brand300];
   static const List<Color> backgroundGradient = <Color>[brand100, white];
 
+  // Feature-card gradient (Figma "Prabhuji-card-gradient", home cards 767:6580):
+  // cream → light orange, drawn with a brand400 border.
+  static const Color cardGradientTop = Color(0xFFFEFBF3);
+  static const Color cardGradientBottom = Color(0xFFFFBD6F);
+  static const List<Color> cardGradient = <Color>[
+    cardGradientTop,
+    cardGradientBottom,
+  ];
+
   // Effects
   static const Color shadowXs = Color(0x0D0A0D12); // shadow-xs (#0a0d12 @ 5%)
 }

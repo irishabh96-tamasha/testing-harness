@@ -9,9 +9,14 @@ void main() {
   testWidgets('HomeScreen renders brand header and trending feed', (
     WidgetTester tester,
   ) async {
+    // Use a phone-sized surface so the scrollable home content (header, search,
+    // feature grid, then the "Trending" feed) lays out as it would on device.
+    await tester.binding.setSurfaceSize(const Size(390, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(
       ProviderScope(
         overrides: <Override>[
+          homeBannersProvider.overrideWith((ref) async => <String>[]),
           homeFeedProvider.overrideWith(
             (ref) async => <HomeFeedItem>[
               const StatusFeedItem(

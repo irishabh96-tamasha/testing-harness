@@ -74,6 +74,22 @@ statusRouter.get("/api/home/feed", async (_req: Request, res: Response) => {
   }
 });
 
+/**
+ * GET /api/home/banners — promo banner carousel images for the Home top slot
+ * (Figma Home banners 285:3507). Served statically from /media/banners; the app
+ * resolves these relative paths to absolute URLs. No DB content here, but the
+ * list stays backend-driven so banners can change without an app release.
+ */
+const HOME_BANNERS = [
+  "/media/banners/banner-1.jpg",
+  "/media/banners/banner-2.jpg",
+  "/media/banners/banner-3.jpg",
+];
+
+statusRouter.get("/api/home/banners", (_req: Request, res: Response) => {
+  res.json(HOME_BANNERS);
+});
+
 /** GET /api/status?deity=<id> — that deity's statuses (ordered). */
 statusRouter.get("/api/status", async (req: Request, res: Response) => {
   try {

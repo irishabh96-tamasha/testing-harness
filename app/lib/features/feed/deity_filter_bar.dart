@@ -1,6 +1,7 @@
 import 'package:design_tokens/design_tokens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_app/features/feed/all_gods_avatar.dart';
 import 'package:mobile_app/features/feed/feed_controller.dart';
 import 'package:mobile_app/features/feed/feed_models.dart';
 
@@ -72,11 +73,7 @@ class _DeityAvatar extends StatelessWidget {
                 border: selected ? Border.all(color: primary, width: 2) : null,
               ),
               child: isAll
-                  ? CircleAvatar(
-                      radius: 26,
-                      backgroundColor: AppColors.brand100,
-                      child: Icon(Icons.temple_hindu, color: primary),
-                    )
+                  ? const AllGodsAvatar(radius: 26)
                   : CircleAvatar(
                       radius: 26,
                       backgroundColor: AppColors.grey200,

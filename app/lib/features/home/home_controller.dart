@@ -43,3 +43,15 @@ final homeFeedProvider = FutureProvider.autoDispose<List<HomeFeedItem>>(
     }).toList();
   },
 );
+
+/// Promo banner image URLs for the Home carousel (`GET /api/home/banners`),
+/// resolved to absolute URLs via [mediaUrl].
+final homeBannersProvider = FutureProvider.autoDispose<List<String>>(
+  (ref) async {
+    final dio = ref.watch(apiClientProvider);
+    final res = await dio.get<List<dynamic>>('/api/home/banners');
+    return (res.data ?? <dynamic>[])
+        .map((dynamic e) => mediaUrl(e as String))
+        .toList();
+  },
+);
