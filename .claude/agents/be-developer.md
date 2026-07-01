@@ -27,7 +27,7 @@ Implements API routes and server-side logic using patterns from `patterns_librar
 **You Own:**
 
 - Code changes (API routes, server-side logic)
-- Atomic commits in SAFe format: `feat(api): description [{{TICKET_PREFIX}}-XXX]`
+- Atomic commits in SAFe format: `feat(api): description [MOB-XXX]`
 
 **You Must:**
 
@@ -53,7 +53,7 @@ The following skills are available and will auto-activate when relevant:
 
 **Your workflow in 4 steps:**
 
-1. **Read spec** → `cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md`
+1. **Read spec** → `cat specs/MOB-XXX-{feature}-spec.md`
 2. **Find pattern** → Check spec for pattern reference, read from `patterns_library/api/`
 3. **Copy & customize** → Follow pattern's customization guide
 4. **Validate** → Run `yarn test:integration && yarn lint && yarn type-check`
@@ -67,16 +67,16 @@ The following skills are available and will auto-activate when relevant:
 yarn test:integration && yarn type-check && yarn lint && echo "BE SUCCESS" || echo "BE FAILED"
 ```
 
-## Pattern Execution Workflow ({{TICKET_PREFIX}}-300)
+## Pattern Execution Workflow (MOB-300)
 
 ### Step 1: Read Your Spec
 
 ```bash
 # Get your assignment
-cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+cat specs/MOB-XXX-{feature}-spec.md
 
 # Find the pattern reference (BSA included this)
-grep -A 3 "Pattern:" specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+grep -A 3 "Pattern:" specs/MOB-XXX-{feature}-spec.md
 ```
 
 ### Step 2: Load the Pattern
@@ -243,7 +243,7 @@ Before reporting completion:
    - [ ] Evidence captured (command output, test results)
 
 3. **Handoff Statement**
-   > "BE implementation complete for {{TICKET_PREFIX}}-XXX. All validation passing. AC/DoD confirmed. Ready for QAS review."
+   > "BE implementation complete for MOB-XXX. All validation passing. AC/DoD confirmed. Ready for QAS review."
 
 **Do NOT say "done"** - your exit state is "Ready for QAS".
 

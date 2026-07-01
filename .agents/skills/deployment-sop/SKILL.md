@@ -69,7 +69,7 @@ curl -s https://{{DOMAIN}}/api/health | jq .
 For ticket attachment:
 
 ```markdown
-## Deployment Evidence - {{TICKET_PREFIX}}-XXX
+## Deployment Evidence - MOB-XXX
 
 ### Environment
 - **Target**: Staging / Production
@@ -121,4 +121,4 @@ If deployment fails:
 | Branch            | Environment   | Auto-Deploy     |
 | ----------------- | ------------- | --------------- |
 | `dev`             | Staging       | {{STAGING_DEPLOY_MODE}} |
-| `{{MAIN_BRANCH}}` | Production   | {{PROD_DEPLOY_MODE}}    |
+| `main` | Production   | {{PROD_DEPLOY_MODE}}    |

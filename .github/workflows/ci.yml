@@ -1,12 +1,10 @@
-# CI Validation Workflow
-# Template for SAFe Agentic Workflow projects
+# CI Validation Workflow — mobile-app monorepo
 #
-# Customize placeholders:
-# - {{NODE_VERSION}}: Your Node.js version (e.g., "20", "18")
-# - {{PACKAGE_MANAGER}}: yarn or npm
-# - {{LINT_COMMAND}}: Your lint command (e.g., "yarn lint")
-# - {{TYPE_CHECK_COMMAND}}: Your type check command (e.g., "yarn type-check")
-# - {{TEST_COMMAND}}: Your test command (e.g., "yarn test")
+# Two independent lanes run in parallel:
+#   - backend: Express + TypeScript + Prisma (lint, typecheck, test, migrate check)
+#   - app:     Flutter (analyze, format, test, build)
+#
+# Branch protection should require both "Backend" and "App" checks.
 
 name: CI
 
@@ -21,9 +19,30 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  validate:
-    name: Validate
+  backend:
+    name: Backend
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: app_user
+          POSTGRES_PASSWORD: app_password
+          POSTGRES_DB: app_dev
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U app_user -d app_dev"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: "postgresql://app_user:app_password@localhost:5432/app_dev?schema=public"
 
     steps:
       - name: Checkout
@@ -32,39 +51,67 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "{{NODE_VERSION}}"
-          cache: "{{PACKAGE_MANAGER}}"
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: backend/package-lock.json
 
       - name: Install dependencies
-        run: {{PACKAGE_MANAGER}} install --frozen-lockfile
+        run: npm ci
 
-      - name: Lint
-        run: {{LINT_COMMAND}}
+      - name: Generate Prisma client
+        run: npx prisma generate
 
-      - name: Type Check
-        run: {{TYPE_CHECK_COMMAND}}
+      - name: Validate Prisma schema
+        run: npx prisma validate
+
+      - name: Lint (RLS-enforcing ESLint)
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Migrate check (applies migrations to a fresh DB)
+        run: npx prisma migrate deploy
 
       - name: Test
-        run: {{TEST_COMMAND}}
+        run: npm test
 
-  # Optional: Add build job for production builds
-  # build:
-  #   name: Build
-  #   runs-on: ubuntu-latest
-  #   needs: validate
-  #
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: "{{NODE_VERSION}}"
-  #         cache: "{{PACKAGE_MANAGER}}"
-  #
-  #     - name: Install dependencies
-  #       run: {{PACKAGE_MANAGER}} install --frozen-lockfile
-  #
-  #     - name: Build
-  #       run: {{PACKAGE_MANAGER}} run build
+      - name: Build
+        run: npm run build
+
+  app:
+    name: App
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Format check
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Test
+        run: flutter test
+
+      - name: Generate platform folders
+        # Source-only scaffold has no android/ios folders; create them for the
+        # build. No-op once platform folders are committed.
+        run: flutter create . --platforms=android --org live.tamasha
+
+      - name: Build (debug APK)
+        run: flutter build apk --debug

@@ -167,7 +167,7 @@ Before ANY production deployment:
 ## Security Audit Report Template
 
 ```markdown
-## Security Audit Report - {{TICKET_PREFIX}}-XXX
+## Security Audit Report - MOB-XXX
 
 ### Summary
 - **Date**: [date]

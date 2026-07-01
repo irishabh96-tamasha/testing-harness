@@ -19,8 +19,8 @@
 
 ```bash
 # Clone the template repository
-git clone {{GITHUB_REPO_URL}}
-cd {{PROJECT_NAME}}
+git clone https://github.com/tamasha-live/mobile-app
+cd mobile-app
 
 # Explore the structure
 ls -la
@@ -39,7 +39,7 @@ cat README.md
 
 **Option A: Use GitIngest** (Recommended)
 
-1. Visit: https://gitingest.com/{{GITHUB_ORG}}/{{GITHUB_REPO}}
+1. Visit: https://gitingest.com/tamasha-live/{{GITHUB_REPO}}
 2. Copy the generated context
 3. Paste into your AI assistant (Claude, ChatGPT, etc.)
 4. Ask: "Explain the SAFe multi-agent methodology in 3 paragraphs"
@@ -259,7 +259,7 @@ Use the BSA agent workflow from .claude/agents/bsa.md
 
 1. Go to Linear: https://linear.app
 2. Create new issue
-3. Title: `{{TICKET_PREFIX}}-1: Add Hello World endpoint for agent workflow validation`
+3. Title: `MOB-1: Add Hello World endpoint for agent workflow validation`
 4. Description: Paste BSA output
 5. Add acceptance criteria
 6. Add testing strategy
@@ -267,7 +267,7 @@ Use the BSA agent workflow from .claude/agents/bsa.md
 **Validation**:
 
 - [ ] Linear ticket created
-- [ ] Ticket has proper format ({{TICKET_PREFIX}}-1)
+- [ ] Ticket has proper format (MOB-1)
 - [ ] All BSA output included
 - [ ] Ticket is in "Backlog" or "Ready" state
 
@@ -278,7 +278,7 @@ Use the BSA agent workflow from .claude/agents/bsa.md
 **Invoke Backend Developer Agent**:
 
 ```
-I'm implementing Linear ticket {{TICKET_PREFIX}}-1: Add Hello World endpoint.
+I'm implementing Linear ticket MOB-1: Add Hello World endpoint.
 
 User Story:
 [PASTE USER STORY FROM BSA]
@@ -316,17 +316,17 @@ Use the BE Developer agent workflow from .claude/agents/be-developer.md
 **Create Feature Branch**:
 
 ```bash
-git checkout -b {{TICKET_PREFIX}}-1-hello-world-endpoint
+git checkout -b MOB-1-hello-world-endpoint
 git add .
-git commit -m "feat(api): add Hello World endpoint [{{TICKET_PREFIX}}-1]
+git commit -m "feat(api): add Hello World endpoint [MOB-1]
 
 - Add GET /api/hello endpoint
 - Return JSON with message and timestamp
 - Add unit and integration tests
 - Update API documentation
 
-Closes {{TICKET_PREFIX}}-1"
-git push origin {{TICKET_PREFIX}}-1-hello-world-endpoint
+Closes MOB-1"
+git push origin MOB-1-hello-world-endpoint
 ```
 
 **Create PR**:
@@ -334,8 +334,8 @@ git push origin {{TICKET_PREFIX}}-1-hello-world-endpoint
 ```bash
 # Using GitHub CLI
 gh pr create \
-  --title "feat(api): add Hello World endpoint [{{TICKET_PREFIX}}-1]" \
-  --body "Implements {{TICKET_PREFIX}}-1
+  --title "feat(api): add Hello World endpoint [MOB-1]" \
+  --body "Implements MOB-1
 
 ## Changes
 - Add GET /api/hello endpoint
@@ -348,7 +348,7 @@ gh pr create \
 - Manual testing completed
 
 ## Linear Ticket
-https://linear.app/your-team/issue/{{TICKET_PREFIX}}-1"
+https://linear.app/your-team/issue/MOB-1"
 ```
 
 **Validation**:
@@ -460,7 +460,7 @@ export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 ### Step 6.2: Verify Agent Teams Tools
 
 ```bash
-cd {{PROJECT_NAME}}
+cd mobile-app
 claude
 ```
 
@@ -519,7 +519,7 @@ gh --version     # GitHub CLI 2.0+
 ### Step 7.2: Run Factory Setup
 
 ```bash
-cd /path/to/{{PROJECT_NAME}}
+cd /path/to/mobile-app
 ./dark-factory/scripts/factory-setup.sh
 ```
 
@@ -538,9 +538,9 @@ nano ~/.dark-factory/env
 Fill in your project values:
 
 ```bash
-FACTORY_PROJECT_DIR="/path/to/{{PROJECT_NAME}}"
-FACTORY_MAIN_BRANCH="{{MAIN_BRANCH}}"
-FACTORY_TICKET_PREFIX="{{TICKET_PREFIX}}"
+FACTORY_PROJECT_DIR="/path/to/mobile-app"
+FACTORY_MAIN_BRANCH="main"
+FACTORY_TICKET_PREFIX="MOB"
 FACTORY_USE_WORKTREES=true
 FACTORY_AUTO_PERMISSIONS=true
 CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
@@ -550,7 +550,7 @@ CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 
 ```bash
 # Start a small story team
-./dark-factory/scripts/factory-start.sh story {{TICKET_PREFIX}}-TEST
+./dark-factory/scripts/factory-start.sh story MOB-TEST
 
 # Check status
 ./dark-factory/scripts/factory-status.sh
@@ -617,6 +617,6 @@ CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 
 **Questions?**
 
-- GitHub Discussions: {{GITHUB_REPO_URL}}/discussions
-- Email: {{AUTHOR_EMAIL}}
+- GitHub Discussions: https://github.com/tamasha-live/mobile-app/discussions
+- Email: ronak@tamasha.live
 - Documentation: See `docs/onboarding/` for more guides

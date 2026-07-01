@@ -96,7 +96,7 @@ Split-pane mode requirements:
 Launch Claude Code in your repository and confirm that Agent Teams is available.
 
 ```bash
-cd {{PROJECT_NAME}}
+cd mobile-app
 claude
 ```
 
@@ -127,15 +127,15 @@ This walkthrough demonstrates spawning a 3-teammate team to implement a feature 
 **Step 1: Start a Claude Code session as the team lead.**
 
 ```bash
-cd {{PROJECT_NAME}}
+cd mobile-app
 claude
 ```
 
 **Step 2: Instruct the lead to read the spec and form a team.**
 
 ```
-I need to implement {{TICKET_PREFIX}}-42 (User Profile Management).
-The spec is at specs/{{TICKET_PREFIX}}-42-user-profile-spec.md.
+I need to implement MOB-42 (User Profile Management).
+The spec is at specs/MOB-42-user-profile-spec.md.
 
 Please read the spec, then form an Agent Team with:
 1. A BE Developer teammate to implement the API endpoints
@@ -166,7 +166,7 @@ The lead will periodically check task statuses. Once QAS reports that all tests 
 Use Agent Teams to run multiple independent reviews simultaneously.
 
 ```
-I need a thorough review of the changes on branch {{TICKET_PREFIX}}-99-payment-flow.
+I need a thorough review of the changes on branch MOB-99-payment-flow.
 
 Please form an Agent Team with 3 reviewers:
 1. Security Engineer -- review for RLS enforcement, credential handling, injection risks
@@ -320,7 +320,7 @@ Choose team size based on the scope of work. Larger teams increase token cost an
 - Non-collapsible roles (QAS, Security Engineer) should always be separate teammates when quality gates apply. Never have the implementer self-verify.
 - If work items are truly independent with no shared state, prefer background agents over a team, as the coordination overhead is unnecessary.
 - Each teammate consumes a separate context window. Keep teammate prompts focused on their specific task to avoid wasting context on irrelevant information.
-- For Stories where the implementer can handle the PR (RTE role collapsed per {{TICKET_PREFIX}}-499), a team of 2 (implementer + QAS) is often sufficient.
+- For Stories where the implementer can handle the PR (RTE role collapsed per MOB-499), a team of 2 (implementer + QAS) is often sufficient.
 
 ---
 
@@ -346,7 +346,7 @@ TEAMMATE_ID="$2"
 # Example: Verify that QAS teammate ran tests before going idle
 if [ "$TEAMMATE_ROLE" = "qas" ]; then
   # Check if test results exist
-  if [ ! -f "test-results/{{TICKET_PREFIX}}-latest.json" ]; then
+  if [ ! -f "test-results/MOB-latest.json" ]; then
     echo "QAS must run tests before going idle. No test results found." >&2
     exit 2
   fi
@@ -548,7 +548,7 @@ For persistent, 24/7 agent teams on a headless remote machine, the harness inclu
 On your remote server:
 
 ```bash
-cd /path/to/{{PROJECT_NAME}}
+cd /path/to/mobile-app
 
 # One-time setup (checks prerequisites, creates config, validates merge queue)
 ./dark-factory/scripts/factory-setup.sh
@@ -557,7 +557,7 @@ cd /path/to/{{PROJECT_NAME}}
 nano ~/.dark-factory/env
 
 # Launch a feature team for a ticket
-./dark-factory/scripts/factory-start.sh feature {{TICKET_PREFIX}}-42
+./dark-factory/scripts/factory-start.sh feature MOB-42
 
 # Monitor from any terminal
 ./dark-factory/scripts/factory-status.sh

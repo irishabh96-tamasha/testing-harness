@@ -19,11 +19,11 @@ if [[ -f "$CONFIG_DIR/env" ]]; then
 fi
 
 # Resolve main branch: env config > placeholder fallback
-# Note: cannot use ${:-} syntax because {{MAIN_BRANCH}} contains } characters
+# Note: cannot use ${:-} syntax because main contains } characters
 if [[ -n "${FACTORY_MAIN_BRANCH:-}" ]]; then
     MAIN_BRANCH="$FACTORY_MAIN_BRANCH"
 else
-    MAIN_BRANCH="{{MAIN_BRANCH}}"
+    MAIN_BRANCH="main"
 fi
 
 # ── Step 1: Check prerequisites ──────────────────────────────────────────────

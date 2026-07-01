@@ -33,7 +33,7 @@ GitHub Merge Queue picks up PR
 CI runs on merge_group event    <-- required workflows must have this trigger
     |
     v
-Queue merges (squash) to {{MAIN_BRANCH}}
+Queue merges (squash) to main
 ```
 
 **There is no other path to trunk.** No direct push, no manual merge, no
@@ -52,7 +52,7 @@ dark-factory/templates/github/merge-queue-ruleset.json
 
 ### What the Ruleset Enforces
 
-1. **Merge queue required** on `{{MAIN_BRANCH}}`
+1. **Merge queue required** on `main`
    - Merge method: `squash`
    - Max entries: 5 (parallel queue groups)
    - Timeout: 30 minutes per check
@@ -71,7 +71,7 @@ If you cannot import the JSON ruleset:
 
 1. Go to **Settings > Rules > Rulesets > New ruleset**
 2. Name: `dark-factory-merge-queue`
-3. Target: Branch `{{MAIN_BRANCH}}`
+3. Target: Branch `main`
 4. Add rule: **Require merge queue**
    - Merge method: Squash
    - Min entries: 1
@@ -96,9 +96,9 @@ the merge queue cannot run CI on queued PRs.
 ```yaml
 on:
   pull_request:
-    branches: ["{{MAIN_BRANCH}}"]
+    branches: ["main"]
   merge_group:
-    branches: ["{{MAIN_BRANCH}}"]
+    branches: ["main"]
 ```
 
 Both triggers are required:
@@ -155,7 +155,7 @@ enabled, this creates unnecessary churn:
 
 **With merge queue**: `strict_required_status_checks_policy` is set to `false`
 in the ruleset. This means PRs do not need to be up-to-date with
-`{{MAIN_BRANCH}}` before entering the queue. The queue itself ensures
+`main` before entering the queue. The queue itself ensures
 consistency.
 
 **Without merge queue** (interactive workflow): the existing rebase-first policy
@@ -169,7 +169,7 @@ in `CONTRIBUTING.md` still applies. This policy change only affects queued merge
 
 Agents create PRs using:
 ```bash
-gh pr create --title "type(scope): description [{{TICKET_PREFIX}}-XXX]" --body "..."
+gh pr create --title "type(scope): description [MOB-XXX]" --body "..."
 ```
 
 ### Enqueuing for Merge
@@ -185,7 +185,7 @@ pass." The `--squash` flag is advisory -- the queue's configured merge method
 
 ### What Agents Must NOT Do
 
-- `git push origin {{MAIN_BRANCH}}` -- blocked by branch protection
+- `git push origin main` -- blocked by branch protection
 - `gh pr merge` without `--auto` -- blocked by merge queue requirement
 - `gh pr merge --merge` or `--rebase` -- queue enforces squash
 - Any form of direct merge bypass
@@ -205,7 +205,7 @@ This is a hard policy. The queue is the single source of truth for merging.
 
 With squash merge, the PR title becomes the commit message on trunk. Therefore:
 
-- PR titles MUST follow: `type(scope): description [{{TICKET_PREFIX}}-XXX]`
+- PR titles MUST follow: `type(scope): description [MOB-XXX]`
 - The PR body is preserved in the squash commit description
 - Linear auto-close works because the ticket reference is in the commit message
 

@@ -204,7 +204,7 @@ cd /path/to/project
 codex  # Starts interactive session with AGENTS.md context
 ```
 
-Since Codex uses natural language instead of slash commands, describe the SAFe workflow step you want to execute conversationally (e.g., "Start work on {{TICKET_PREFIX}}-42" instead of `/start-work {{TICKET_PREFIX}}-42`).
+Since Codex uses natural language instead of slash commands, describe the SAFe workflow step you want to execute conversationally (e.g., "Start work on MOB-42" instead of `/start-work MOB-42`).
 
 ## Troubleshooting
 

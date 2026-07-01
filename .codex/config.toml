@@ -62,15 +62,15 @@ project_doc_max_bytes = 65536
 # Configuration reference: https://developers.openai.com/codex/mcp
 #
 # Replace {{PLACEHOLDER}} tokens with your project-specific values:
-#   {{MCP_LINEAR_SERVER}}      -- Name for the Linear MCP server instance
-#   {{MCP_CONFLUENCE_SERVER}}  -- Name for the Confluence MCP server instance
+#   linear-mcp      -- Name for the Linear MCP server instance
+#   confluence-mcp  -- Name for the Confluence MCP server instance
 #
 # Environment variables referenced in env_vars must be set in the shell or
 # in the [shell_environment_policy] include_only list below.
 # -----------------------------------------------------------------------------
 
 # -- Linear: Ticket management (issues, comments, status updates) -------------
-[mcp_servers.{{MCP_LINEAR_SERVER}}]
+[mcp_servers.linear-mcp]
 command = "npx"
 args = ["-y", "@anthropic/linear-mcp-server"]
 env_vars = ["LINEAR_API_KEY"]
@@ -78,7 +78,7 @@ startup_timeout_sec = 15
 tool_timeout_sec = 60
 
 # -- Confluence: Documentation (pages, spaces, search) ------------------------
-[mcp_servers.{{MCP_CONFLUENCE_SERVER}}]
+[mcp_servers.confluence-mcp]
 command = "npx"
 args = ["-y", "@anthropic/confluence-mcp-server"]
 env_vars = ["ATLASSIAN_API_TOKEN", "ATLASSIAN_EMAIL", "CONFLUENCE_BASE_URL"]

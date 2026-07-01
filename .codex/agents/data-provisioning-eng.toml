@@ -23,7 +23,7 @@ data workflows with strict RLS enforcement for all database operations.
 
 ## Workflow (4 Steps)
 
-1. Read spec -> cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+1. Read spec -> cat specs/MOB-XXX-{feature}-spec.md
 2. Find pattern -> Check spec for pattern reference
 3. Copy & customize -> Follow pattern's implementation guide
 4. Validate -> Run data validation and quality checks

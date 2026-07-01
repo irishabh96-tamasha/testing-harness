@@ -80,12 +80,12 @@ const eslintConfig = [
         {
           selector: "CallExpression[callee.name='requireAuthWithContext']",
           message:
-            'requireAuthWithContext is deprecated - use withUserContext pattern instead [{{TICKET_PREFIX}}-207]',
+            'requireAuthWithContext is deprecated - use withUserContext pattern instead [MOB-207]',
         },
         {
           selector: "CallExpression[callee.name='getOptionalAuthWithContext']",
           message:
-            'getOptionalAuthWithContext is deprecated - use getOptionalAuth + withUserContext instead [{{TICKET_PREFIX}}-207]',
+            'getOptionalAuthWithContext is deprecated - use getOptionalAuth + withUserContext instead [MOB-207]',
         },
         {
           selector: "MemberExpression[property.name='setRLSContext']",

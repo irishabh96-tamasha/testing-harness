@@ -60,8 +60,8 @@ ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} \
 Check latest commit on your main branch:
 
 ```bash
-git fetch origin {{MAIN_BRANCH}}
-git log origin/{{MAIN_BRANCH}} -1 --format='%H %s'
+git fetch origin main
+git log origin/main -1 --format='%H %s'
 ```
 
 Check latest GitHub Actions build status:
@@ -175,7 +175,7 @@ To adapt this command for your infrastructure, replace these placeholders:
 | `{{PROJECT}}`        | Your project name              | `myapp`                     |
 | `{{CONTAINER_NAME}}` | Docker container name          | `myapp-staging`             |
 | `{{REGISTRY}}`       | Container registry URL         | `ghcr.io/myorg/myapp`       |
-| `{{MAIN_BRANCH}}`    | Your main branch name          | `main` or `dev`             |
+| `main`    | Your main branch name          | `main` or `dev`             |
 | `{{BUILD_WORKFLOW}}` | CI workflow that builds images | `build-image.yml`           |
 
 ## Success Criteria

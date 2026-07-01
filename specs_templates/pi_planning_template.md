@@ -1,4 +1,4 @@
-# PI Planning Template: {{PROJECT_NAME}}
+# PI Planning Template: mobile-app
 
 > **SAFe Program Increment Planning** — Use this template to plan a full PI
 > (typically 8-12 sprints). Copy this file, replace `{{placeholders}}`, and fill
@@ -10,7 +10,7 @@
 
 ## 1. Program Summary
 
-**Program**: {{PROJECT_NAME}}
+**Program**: mobile-app
 **PI Duration**: {{START_DATE}} — {{END_DATE}}
 **Sprint Cadence**: {{SPRINT_LENGTH}} (e.g., 2 weeks)
 **Sprint Count**: {{SPRINT_COUNT}}
@@ -20,9 +20,9 @@
 
 | Stream | Points | Tickets | Status | Sprint Range |
 | ------ | ------ | ------- | ------ | ------------ |
-| {{STREAM_1}} | {{PTS}} | {{TICKET_PREFIX}}-XXX–YYY | Not Started | S1-S3 |
-| {{STREAM_2}} | {{PTS}} | {{TICKET_PREFIX}}-XXX–YYY | Not Started | S4-S6 |
-| {{STREAM_3}} | {{PTS}} | {{TICKET_PREFIX}}-XXX–YYY | Not Started | S5-S8 |
+| {{STREAM_1}} | {{PTS}} | MOB-XXX–YYY | Not Started | S1-S3 |
+| {{STREAM_2}} | {{PTS}} | MOB-XXX–YYY | Not Started | S4-S6 |
+| {{STREAM_3}} | {{PTS}} | MOB-XXX–YYY | Not Started | S5-S8 |
 
 ### Program Totals
 
@@ -62,8 +62,8 @@ that stream in that sprint.
 
 | ID | Description | Pts | Team | Dependencies | Notes |
 | -- | ----------- | --- | ---- | ------------ | ----- |
-| {{TICKET_PREFIX}}-XXX | {{DESCRIPTION}} | {{PTS}} | {{TEAM}} | — | |
-| {{TICKET_PREFIX}}-XXX | {{DESCRIPTION}} | {{PTS}} | {{TEAM}} | {{DEP}} | |
+| MOB-XXX | {{DESCRIPTION}} | {{PTS}} | {{TEAM}} | — | |
+| MOB-XXX | {{DESCRIPTION}} | {{PTS}} | {{TEAM}} | {{DEP}} | |
 
 ### Sprint 2: {{SPRINT_2_DATES}}
 
@@ -71,7 +71,7 @@ that stream in that sprint.
 
 | ID | Description | Pts | Team | Dependencies | Notes |
 | -- | ----------- | --- | ---- | ------------ | ----- |
-| {{TICKET_PREFIX}}-XXX | {{DESCRIPTION}} | {{PTS}} | {{TEAM}} | — | |
+| MOB-XXX | {{DESCRIPTION}} | {{PTS}} | {{TEAM}} | — | |
 
 > **Pattern**: Copy the sprint table for each sprint in the PI. Include only
 > tickets committed to that sprint — backlog items stay in Section 5.
@@ -84,8 +84,8 @@ List all teams (human or agent) and their sprint allocations.
 
 | Team | Prefix | S1 Tickets | S1 Pts | Scope |
 | ---- | ------ | ---------- | ------ | ----- |
-| {{TEAM_1}} | {{PREFIX}} | {{TICKET_PREFIX}}-XXX/YYY | {{PTS}} | {{SCOPE}} |
-| {{TEAM_2}} | {{PREFIX}} | {{TICKET_PREFIX}}-XXX/YYY | {{PTS}} | {{SCOPE}} |
+| {{TEAM_1}} | {{PREFIX}} | MOB-XXX/YYY | {{PTS}} | {{SCOPE}} |
+| {{TEAM_2}} | {{PREFIX}} | MOB-XXX/YYY | {{PTS}} | {{SCOPE}} |
 
 ### Agent Team Mapping (if using agentic workflow)
 
@@ -117,14 +117,14 @@ acceptance criteria.
 
 | ID | Title | Pts | Phase | Sprint | Dependencies |
 | -- | ----- | --- | ----- | ------ | ------------ |
-| {{TICKET_PREFIX}}-XXX | {{TITLE}} | {{PTS}} | 1 | S4 | — |
-| {{TICKET_PREFIX}}-XXX | {{TITLE}} | {{PTS}} | 1 | S5 | {{DEP}} |
+| MOB-XXX | {{TITLE}} | {{PTS}} | 1 | S4 | — |
+| MOB-XXX | {{TITLE}} | {{PTS}} | 1 | S5 | {{DEP}} |
 
 ### {{SERVICE_2}} Enablers ({{COUNT}} stories, {{PTS}} pts)
 
 | ID | Title | Pts | Phase | Sprint | Dependencies |
 | -- | ----- | --- | ----- | ------ | ------------ |
-| {{TICKET_PREFIX}}-XXX | {{TITLE}} | {{PTS}} | 1-2 | S5-S6 | — |
+| MOB-XXX | {{TITLE}} | {{PTS}} | 1-2 | S5-S6 | — |
 
 > **Pattern**: Group enablers by service or package. Each enabler should
 > reference the ADR or architectural decision it implements.
@@ -250,7 +250,7 @@ Reference the original planning data so deltas are visible.
 
 | Stream | Points | Tickets | Phase |
 | ------ | ------ | ------- | ----- |
-| {{STREAM}} | {{PTS}} | {{TICKET_PREFIX}}-XXX–YYY | {{PHASE}} |
+| {{STREAM}} | {{PTS}} | MOB-XXX–YYY | {{PHASE}} |
 
 #### New Risks Added
 

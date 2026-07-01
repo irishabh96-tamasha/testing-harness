@@ -22,9 +22,9 @@ name: CI
 
 on:
   pull_request:
-    branches: [{{MAIN_BRANCH}}]
+    branches: [main]
   push:
-    branches: [{{MAIN_BRANCH}}]
+    branches: [main]
 
 # Cancel in-progress runs for the same PR/branch
 concurrency:
@@ -288,7 +288,7 @@ jobs:
 ## Customization Guide
 
 1. **Replace all template placeholders** with your project-specific values:
-   - `{{MAIN_BRANCH}}` - your primary branch (e.g., `main`, `master`, `develop`)
+   - `main` - your primary branch (e.g., `main`, `master`, `develop`)
    - `{{RUNTIME_SETUP_ACTION}}` - setup action for your language (e.g., `actions/setup-node@v4`, `actions/setup-python@v5`, `actions/setup-go@v5`)
    - `{{RUNTIME_VERSION_KEY}}` - version key (e.g., `node-version`, `python-version`, `go-version`)
    - `{{PACKAGE_MANAGER}}` - package manager for caching (e.g., `yarn`, `npm`, `pip`)

@@ -17,7 +17,7 @@ Then bump the minor version (or ask the user for major/minor/patch).
 
 ### 1.1 Verify Clean State
 - Working tree must be clean
-- Must be on {{MAIN_BRANCH}}
+- Must be on main
 - Must be in sync with remote
 
 ### 1.2 Check Open PRs
@@ -30,7 +30,7 @@ Then bump the minor version (or ask the user for major/minor/patch).
 
 ## Phase 2: Merge Open PRs (if any)
 
-- Squash merge each PR with proper commit message: type(scope): description [{{TICKET_PREFIX}}-XXX]
+- Squash merge each PR with proper commit message: type(scope): description [MOB-XXX]
 - Rebase dependent PRs after each merge
 - Wait for CI to re-run before merging next
 - Sync local after all merges
@@ -40,7 +40,7 @@ Then bump the minor version (or ask the user for major/minor/patch).
 - Find and update version references in README.md, badges, caveats section
 - Only update active references (not changelogs, upgrade guides, KT docs)
 - Commit: chore(release): bump version references to <VERSION>
-- Push to {{MAIN_BRANCH}}
+- Push to main
 
 ## Phase 4: Tag and Release
 

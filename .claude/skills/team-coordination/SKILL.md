@@ -54,7 +54,7 @@ Invoke this skill when:
 The TDM (Technical Delivery Manager) is the natural team lead in the 11-agent model:
 
 ```
-Create an agent team for {{TICKET_PREFIX}}-XXX implementation.
+Create an agent team for MOB-XXX implementation.
 
 Team lead (TDM) responsibilities:
 - Spawn teammates by role (BE, FE, QAS, etc.)
@@ -73,7 +73,7 @@ Spawn these teammates:
 Use `addBlockedBy` / `addBlocks` to enforce the SAFe pipeline:
 
 ```
-Task structure for {{TICKET_PREFIX}}-XXX:
+Task structure for MOB-XXX:
 
 1. "Implement API endpoint" (owner: be-developer)
 2. "Implement UI components" (owner: fe-developer)
@@ -93,7 +93,7 @@ Spawn teammates with role-specific prompts:
 
 BE Developer teammate:
 - Load: api-patterns, rls-patterns skills
-- Task: Implement endpoints per spec at specs/{{TICKET_PREFIX}}-XXX-spec.md
+- Task: Implement endpoints per spec at specs/MOB-XXX-spec.md
 - Constraint: All DB operations must use RLS context helpers
 
 FE Developer teammate:

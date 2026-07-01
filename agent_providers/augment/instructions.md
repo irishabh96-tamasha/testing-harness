@@ -1,4 +1,4 @@
-# Augment Instructions for {{PROJECT_SHORT}} SAFe-Agentic-Workflow
+# Augment Instructions for MOB SAFe-Agentic-Workflow
 
 ## Core Principles
 

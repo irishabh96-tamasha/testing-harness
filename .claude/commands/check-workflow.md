@@ -16,7 +16,7 @@ git branch --show-current
 
 Verify:
 
-- Current branch follows `{{TICKET_PREFIX}}-{number}-{description}` format
+- Current branch follows `MOB-{number}-{description}` format
 - No uncommitted changes (or document what's uncommitted)
 - Branch relationship to origin/dev
 
@@ -27,7 +27,7 @@ Extract WOR number from branch name.
 Check ticket status using Linear MCP:
 
 ```text
-mcp__{{MCP_LINEAR_SERVER}}__get_issue
+mcp__linear-mcp__get_issue
 ```
 
 Verify:
@@ -46,7 +46,7 @@ git log origin/dev..HEAD --oneline
 
 Verify:
 
-- All commits follow SAFe format: `type(scope): description [{{TICKET_PREFIX}}-XXX]`
+- All commits follow SAFe format: `type(scope): description [MOB-XXX]`
 - All commits reference correct Linear ticket
 - Commit messages are descriptive
 

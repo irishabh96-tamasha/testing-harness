@@ -28,7 +28,7 @@ If uncommitted changes:
 
 ```bash
 git add .
-git commit -m "type(scope): description [{{TICKET_PREFIX}}-XXX]"
+git commit -m "type(scope): description [MOB-XXX]"
 ```
 
 Verify all work committed:
@@ -48,7 +48,7 @@ Quick check:
 
 ### 4. Update Linear Ticket
 
-> **Note**: Tickets referenced in commit messages (e.g., `[{{TICKET_PREFIX}}-XXX]`) auto-sync to Done when the PR merges via the GitHub-Linear integration. Manually close any child stories not referenced in commits.
+> **Note**: Tickets referenced in commit messages (e.g., `[MOB-XXX]`) auto-sync to Done when the PR merges via the GitHub-Linear integration. Manually close any child stories not referenced in commits.
 
 Based on work status:
 
@@ -73,8 +73,8 @@ Based on work status:
 Use Linear MCP:
 
 ```text
-mcp__{{MCP_LINEAR_SERVER}}__update_issue
-mcp__{{MCP_LINEAR_SERVER}}__create_comment
+mcp__linear-mcp__update_issue
+mcp__linear-mcp__create_comment
 ```
 
 ### 5. Context Preservation

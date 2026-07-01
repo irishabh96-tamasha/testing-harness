@@ -11,7 +11,7 @@ model: opus
 
 Creates documentation using patterns from `patterns_library/documentation/`. Focus on execution with markdown quality validation.
 
-**NEW ({{TICKET_PREFIX}}-314): Data Governance Documentation Owner**
+**NEW (MOB-314): Data Governance Documentation Owner**
 
 - Maintain data dictionary (Confluence + `docs/database/DATA_DICTIONARY.md`)
 - Create integration architecture maps (Mermaid diagrams)
@@ -26,7 +26,7 @@ Creates documentation using patterns from `patterns_library/documentation/`. Foc
 
 **Your workflow in 4 steps:**
 
-1. **Read spec** → `cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md`
+1. **Read spec** → `cat specs/MOB-XXX-{feature}-spec.md`
 2. **Find pattern** → Check spec for documentation pattern reference
 3. **Copy & customize** → Follow pattern's documentation template
 4. **Validate** → Run `yarn lint:md && yarn type-check`
@@ -46,10 +46,10 @@ yarn lint:md && yarn type-check && echo "TW SUCCESS" || echo "TW FAILED"
 
 ```bash
 # Get your assignment
-cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+cat specs/MOB-XXX-{feature}-spec.md
 
 # Find the documentation pattern (BSA included this)
-grep -A 3 "Pattern:" specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+grep -A 3 "Pattern:" specs/MOB-XXX-{feature}-spec.md
 ```
 
 ### Step 2: Load the Pattern

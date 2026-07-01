@@ -4,13 +4,13 @@
 
 **Version**: 1.0
 **Last Updated**: 2025-10-03
-**Owner**: {{PROJECT_SHORT}} Development Team
+**Owner**: MOB Development Team
 
 ---
 
 ## Overview
 
-This SOP defines how to configure and maintain the 11-agent system for the {{PROJECT_SHORT}} application.
+This SOP defines how to configure and maintain the 11-agent system for the MOB application.
 All agent configurations use YAML frontmatter to specify tool restrictions and model selection.
 
 ## Agent Configuration Format
@@ -46,7 +46,7 @@ model: opus|sonnet
 ### BSA (Business Systems Analyst)
 
 ```yaml
-tools: [Read, Write, Edit, Bash, Grep, Glob, mcp__{{MCP_LINEAR_SERVER}}__*]
+tools: [Read, Write, Edit, Bash, Grep, Glob, mcp__linear-mcp__*]
 model: opus
 ```
 
@@ -115,9 +115,9 @@ tools:
     Read,
     Bash,
     Grep,
-    mcp__{{MCP_LINEAR_SERVER}}__create_comment,
-    mcp__{{MCP_LINEAR_SERVER}}__update_issue,
-    mcp__{{MCP_LINEAR_SERVER}}__list_comments,
+    mcp__linear-mcp__create_comment,
+    mcp__linear-mcp__update_issue,
+    mcp__linear-mcp__list_comments,
   ]
 model: sonnet
 ```
@@ -155,7 +155,7 @@ model: sonnet
 ### TDM (Technical Delivery Manager)
 
 ```yaml
-tools: [Read, Bash, mcp__{{MCP_LINEAR_SERVER}}__*, mcp__{{MCP_CONFLUENCE_SERVER}}__*]
+tools: [Read, Bash, mcp__linear-mcp__*, mcp__confluence-mcp__*]
 model: sonnet
 ```
 
@@ -172,7 +172,7 @@ model: sonnet
 - **Why Read/Bash/Grep**: Git/PR management via Bash (git commands, gh CLI)
 - **Why Sonnet**: Efficient release coordination
 - **Role (v1.4)**: PR Shepherd - creates PRs, monitors CI, but does NOT write product code or merge
-- **Boundaries**: {{AUTHOR_NAME}} (HITL) remains final merge authority. RTE shepherds PRs to "Ready for HITL Review"
+- **Boundaries**: Ronak (HITL) remains final merge authority. RTE shepherds PRs to "Ready for HITL Review"
 
 ---
 
@@ -212,14 +212,14 @@ model: sonnet
 
 ### Restricted Tools
 
-**Linear MCP** (`mcp__{{MCP_LINEAR_SERVER}}__*`):
+**Linear MCP** (`mcp__linear-mcp__*`):
 
 - ✅ BSA - Ticket analysis and spec creation
 - ✅ TDM - Orchestration and progress updates
 - ✅ QAS (v1.4) - Evidence posting and verdict (Gate Owner role - system of record)
 - ❌ Execution agents - No direct Linear access (reduces noise)
 
-**Confluence MCP** (`mcp__{{MCP_CONFLUENCE_SERVER}}__*`):
+**Confluence MCP** (`mcp__confluence-mcp__*`):
 
 - ✅ TDM - Documentation coordination
 - ❌ Others - Limited to essential use cases
@@ -264,7 +264,7 @@ model: opus|sonnet
 
 1. Does this agent need to create/modify code? → `Write`, `Edit`
 2. Does this agent need to run tests/validation? → `Bash`
-3. Does this agent need to update Linear? → `mcp__{{MCP_LINEAR_SERVER}}__*`
+3. Does this agent need to update Linear? → `mcp__linear-mcp__*`
 4. Does this agent need to search codebase? → `Grep`, `Glob`
 
 ### Step 4: Select Model
@@ -378,4 +378,4 @@ Before committing agent configuration changes:
 
 ---
 
-**Questions?** Contact {{PROJECT_SHORT}} Development Team or System Architect
+**Questions?** Contact MOB Development Team or System Architect

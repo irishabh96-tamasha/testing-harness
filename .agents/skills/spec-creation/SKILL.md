@@ -67,7 +67,7 @@ Looks good to reviewer.
 Every spec must include:
 
 ```markdown
-# SPEC-{{TICKET_PREFIX}}-{number}: {Feature Name}
+# SPEC-MOB-{number}: {Feature Name}
 
 ## Summary
 {One paragraph describing the feature}
@@ -96,10 +96,10 @@ As a [user type], I want [goal] so that [benefit].
 4. Verify {success indicator}
 
 ## Logical Commits
-1. `feat(scope): implement data model [{{TICKET_PREFIX}}-{number}]`
-2. `feat(scope): add API endpoint [{{TICKET_PREFIX}}-{number}]`
-3. `feat(scope): create UI component [{{TICKET_PREFIX}}-{number}]`
-4. `test(scope): add unit tests [{{TICKET_PREFIX}}-{number}]`
+1. `feat(scope): implement data model [MOB-{number}]`
+2. `feat(scope): add API endpoint [MOB-{number}]`
+3. `feat(scope): create UI component [MOB-{number}]`
+4. `test(scope): add unit tests [MOB-{number}]`
 ```
 
 ## Acceptance Criteria Patterns
@@ -158,8 +158,8 @@ Before submitting spec:
 
 | Output Type  | Location                                                  |
 | ------------ | --------------------------------------------------------- |
-| Impl specs   | `specs/SPEC-{{TICKET_PREFIX}}-{number}-{description}.md`  |
-| Requirements | `docs/agent-outputs/requirements/{{TICKET_PREFIX}}-*.md`  |
+| Impl specs   | `specs/SPEC-MOB-{number}-{description}.md`  |
+| Requirements | `docs/agent-outputs/requirements/MOB-*.md`  |
 | ADRs         | `docs/adr/ADR-{number}-{description}.md`                  |
 
 ## Evidence for Ticket System
@@ -169,7 +169,7 @@ After spec approval:
 ```markdown
 **BSA Spec Evidence**
 
-**Spec**: specs/SPEC-{{TICKET_PREFIX}}-{number}-{description}.md
+**Spec**: specs/SPEC-MOB-{number}-{description}.md
 **Status**: Approved by [reviewer]
 
 **Deliverables**:

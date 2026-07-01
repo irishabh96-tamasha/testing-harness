@@ -24,7 +24,7 @@ clone to first PR to running autonomous agent teams.
 
 Use the GitHub template to create a fresh repo:
 
-1. Click **"Use this template"** on the [template repository](https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}})
+1. Click **"Use this template"** on the [template repository](https://github.com/tamasha-live/mobile-app)
 2. Name your new repository
 3. Clone it locally:
 
@@ -41,11 +41,11 @@ instructions, but the quick version:
 
 ```bash
 # Add template as a remote
-git remote add harness https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}.git
+git remote add harness https://github.com/tamasha-live/mobile-app.git
 git fetch harness
 
 # Cherry-pick the harness directories into your repo
-git checkout harness/{{MAIN_BRANCH}} -- \
+git checkout harness/main -- \
   .claude/ .gemini/ .codex/ .cursor/ .agents/ \
   CLAUDE.md AGENTS.md CONTRIBUTING.md \
   patterns_library/ specs/ specs_templates/ scripts/ \
@@ -74,12 +74,12 @@ Replace placeholders across the repository. The essential ones:
 
 | Placeholder | What It Is | Example |
 |-------------|-----------|---------|
-| `{{PROJECT_NAME}}` | Your project name | `my-saas-app` |
-| `{{GITHUB_ORG}}` | GitHub org or username | `acme-corp` |
-| `{{TICKET_PREFIX}}` | Linear/issue prefix | `ACM` |
-| `{{MAIN_BRANCH}}` | Main branch name | `main` |
-| `{{AUTHOR_NAME}}` | Your name | `Jane Smith` |
-| `{{AUTHOR_HANDLE}}` | GitHub handle | `janesmith` |
+| `mobile-app` | Your project name | `my-saas-app` |
+| `tamasha-live` | GitHub org or username | `acme-corp` |
+| `MOB` | Linear/issue prefix | `ACM` |
+| `main` | Main branch name | `main` |
+| `Ronak` | Your name | `Jane Smith` |
+| `ronak` | GitHub handle | `janesmith` |
 
 See [TEMPLATE_SETUP.md](../../TEMPLATE_SETUP.md) for the full placeholder
 reference (50+ tokens).
@@ -146,7 +146,7 @@ ls .agents/skills/ | wc -l
 claude
 
 # Use the start-work skill
-/start-work {{TICKET_PREFIX}}-1
+/start-work MOB-1
 ```
 
 The TDM agent will:
@@ -167,7 +167,7 @@ Or use the agent config files:
 
 ```
 Read .claude/agents/be-developer.md and act as the Backend Developer.
-Implement the API endpoint for {{TICKET_PREFIX}}-1.
+Implement the API endpoint for MOB-1.
 ```
 
 ### Key Workflow Commands
@@ -186,7 +186,7 @@ Implement the API endpoint for {{TICKET_PREFIX}}-1.
 ### Create a Feature Branch
 
 ```bash
-git checkout -b {{TICKET_PREFIX}}-1-my-feature-description
+git checkout -b MOB-1-my-feature-description
 ```
 
 Branch naming follows: `{TICKET_PREFIX}-{number}-{description}`
@@ -195,7 +195,7 @@ Branch naming follows: `{TICKET_PREFIX}-{number}-{description}`
 
 ```bash
 git add src/path/to/changes.ts
-git commit -m "feat(scope): add feature description [{{TICKET_PREFIX}}-1]"
+git commit -m "feat(scope): add feature description [MOB-1]"
 ```
 
 Commit format: `type(scope): description [TICKET-XXX]`
@@ -210,9 +210,9 @@ Commit format: `type(scope): description [TICKET-XXX]`
 ### Create the PR
 
 ```bash
-git push -u origin {{TICKET_PREFIX}}-1-my-feature-description
+git push -u origin MOB-1-my-feature-description
 gh pr create \
-  --title "feat(scope): add feature description [{{TICKET_PREFIX}}-1]" \
+  --title "feat(scope): add feature description [MOB-1]" \
   --body "## Summary
 - What changed and why
 
@@ -247,7 +247,7 @@ For parallel multi-agent work on larger features:
 2. **Start a team session**:
 
 ```
-Create an agent team for {{TICKET_PREFIX}}-5. I need:
+Create an agent team for MOB-5. I need:
 - TDM as team lead
 - BE Developer for the API
 - FE Developer for the UI
@@ -272,7 +272,7 @@ For persistent autonomous agent teams on a remote server:
 
 ```bash
 # On the remote machine
-cd /path/to/{{PROJECT_NAME}}
+cd /path/to/mobile-app
 
 # One-time setup (validates merge queue enforcement)
 ./dark-factory/scripts/factory-setup.sh
@@ -281,7 +281,7 @@ cd /path/to/{{PROJECT_NAME}}
 nano ~/.dark-factory/env
 
 # Launch a feature team
-./dark-factory/scripts/factory-start.sh feature {{TICKET_PREFIX}}-10
+./dark-factory/scripts/factory-start.sh feature MOB-10
 
 # Monitor from your local machine (via Cursor SSH)
 ./dark-factory/scripts/factory-status.sh

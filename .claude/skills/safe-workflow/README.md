@@ -1,7 +1,7 @@
 # SAFe Workflow
 
 ![Status](https://img.shields.io/badge/status-production-green)
-![Harness](https://img.shields.io/badge/harness-{{HARNESS_VERSION}}-blue)
+![Harness](https://img.shields.io/badge/harness-v2.10.0-blue)
 
 > SAFe development workflow guidance including branch naming conventions, commit message format, rebase-first workflow, and CI validation.
 
@@ -13,21 +13,21 @@
 
 ## Intellectual Property
 
-The skill system architecture and {{PROJECT_SHORT}} harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
+The skill system architecture and MOB harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
 
 SAFe® is a registered trademark of Scaled Agile, Inc.
 
 ## Quick Start
 
 This skill activates automatically when you:
-- Start work on a Linear ticket (e.g., "I'm starting {{TICKET_PREFIX}}-447")
+- Start work on a Linear ticket (e.g., "I'm starting MOB-447")
 - Create a commit or branch
 - Ask about PR workflow or contribution guidelines
 - Reference CONTRIBUTING.md
 
 ## What This Skill Does
 
-Enforces SAFe-compliant development workflow with proper branch naming (`{{TICKET_PREFIX}}-{number}-{description}`), standardized commit messages (type, scope, description), and rebase-first git workflow. Ensures all work is traceable to Linear tickets.
+Enforces SAFe-compliant development workflow with proper branch naming (`MOB-{number}-{description}`), standardized commit messages (type, scope, description), and rebase-first git workflow. Ensures all work is traceable to Linear tickets.
 
 ## Trigger Keywords
 
@@ -48,7 +48,7 @@ Enforces SAFe-compliant development workflow with proper branch naming (`{{TICKE
 | Field | Value |
 |-------|-------|
 | Last Updated | 2026-01-04 |
-| Harness Version | {{HARNESS_VERSION}} |
+| Harness Version | v2.10.0 |
 
 ---
 

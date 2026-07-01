@@ -1,7 +1,7 @@
 # Security Audit
 
 ![Status](https://img.shields.io/badge/status-production-green)
-![Harness](https://img.shields.io/badge/harness-{{HARNESS_VERSION}}-blue)
+![Harness](https://img.shields.io/badge/harness-v2.10.0-blue)
 ![Provider](https://img.shields.io/badge/provider-Gemini_CLI-orange)
 
 > RLS validation, security audits, OWASP compliance, and vulnerability scanning. Use when validating RLS policies, auditing API routes, scanning for security issues, or reviewing code for vulnerabilities.
@@ -14,7 +14,7 @@
 
 ## Intellectual Property
 
-The skill system architecture and {{PROJECT_SHORT}} harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
+The skill system architecture and MOB harness methodology are the intellectual property of J. Scott Graham and ByBren, LLC.
 
 SAFe® is a registered trademark of Scaled Agile, Inc.
 
@@ -46,7 +46,7 @@ RLS validation, security audits, OWASP compliance, and vulnerability scanning pa
 | Field | Value |
 |-------|-------|
 | Last Updated | 2026-01-14 |
-| Harness Version | {{HARNESS_VERSION}} |
+| Harness Version | v2.10.0 |
 
 ---
 

@@ -29,7 +29,7 @@ Provide guidance for advanced git operations with safety considerations. This pr
 
 ```bash
 # FORBIDDEN: Force push to protected branches
-git push --force origin {{MAIN_BRANCH}}     # NEVER
+git push --force origin main     # NEVER
 git push --force origin master               # NEVER
 
 # FORBIDDEN: Merge commits on dev branch
@@ -46,13 +46,13 @@ git rebase -i HEAD~5 && git push --force     # If already pushed
 
 ```bash
 # SAFE: Force-with-lease on your feature branch
-git push --force-with-lease origin {{TICKET_PREFIX}}-XXX-feature
+git push --force-with-lease origin MOB-XXX-feature
 
 # SAFE: Interactive rebase before first push
-git rebase -i origin/{{MAIN_BRANCH}}
+git rebase -i origin/main
 
 # SAFE: Force push after conflict resolution on your own branch
-git rebase origin/{{MAIN_BRANCH}} && git push --force-with-lease origin {{TICKET_PREFIX}}-XXX-feature
+git rebase origin/main && git push --force-with-lease origin MOB-XXX-feature
 ```
 
 ## Rebase Workflow (Standard)
@@ -61,10 +61,10 @@ git rebase origin/{{MAIN_BRANCH}} && git push --force-with-lease origin {{TICKET
 
 ```bash
 # 1. Fetch latest changes
-git fetch origin {{MAIN_BRANCH}}
+git fetch origin main
 
 # 2. Rebase onto latest
-git rebase origin/{{MAIN_BRANCH}}
+git rebase origin/main
 
 # 3. If conflicts, resolve them
 git status                   # See conflicted files
@@ -73,21 +73,21 @@ git add <resolved-files>
 git rebase --continue
 
 # 4. Push with force-with-lease
-git push --force-with-lease origin {{TICKET_PREFIX}}-XXX-feature
+git push --force-with-lease origin MOB-XXX-feature
 ```
 
 ### During PR Review (After Feedback)
 
 ```bash
 # 1. Make requested changes
-git add . && git commit -m "fix: address PR feedback [{{TICKET_PREFIX}}-XXX]"
+git add . && git commit -m "fix: address PR feedback [MOB-XXX]"
 
 # 2. Fetch and rebase again
-git fetch origin {{MAIN_BRANCH}}
-git rebase origin/{{MAIN_BRANCH}}
+git fetch origin main
+git rebase origin/main
 
 # 3. Push update
-git push --force-with-lease origin {{TICKET_PREFIX}}-XXX-feature
+git push --force-with-lease origin MOB-XXX-feature
 ```
 
 ## Git Bisect (Finding Bugs)
@@ -204,11 +204,11 @@ git rebase --continue
 
 ```bash
 # Rebase frequently to avoid large conflicts
-git fetch origin {{MAIN_BRANCH}}
-git rebase origin/{{MAIN_BRANCH}}  # Do this daily during long features
+git fetch origin main
+git rebase origin/main  # Do this daily during long features
 
 # Check for potential conflicts before rebase
-git diff origin/{{MAIN_BRANCH}}...HEAD --stat
+git diff origin/main...HEAD --stat
 ```
 
 ## Recovery Commands
@@ -265,10 +265,10 @@ git cherry-pick <sha-from-reflog>
 git branch
 
 # 2. Verify what will be pushed
-git log origin/{{TICKET_PREFIX}}-XXX-feature..HEAD --oneline
+git log origin/MOB-XXX-feature..HEAD --oneline
 
 # 3. Use force-with-lease
-git push --force-with-lease origin {{TICKET_PREFIX}}-XXX-feature
+git push --force-with-lease origin MOB-XXX-feature
 ```
 
 ### Pre-Push Checklist

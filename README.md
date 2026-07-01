@@ -82,7 +82,7 @@ Includes:
 cp -r .claude/ /your-project/.claude/
 
 # Customize placeholders
-edit .claude/SETUP.md  # Replace {{TICKET_PREFIX}}, {{PROJECT_NAME}}
+edit .claude/SETUP.md  # Replace MOB, mobile-app
 
 # Start working
 /start-work TICKET-123
@@ -328,7 +328,7 @@ gemini
 
 | Action | Claude Code | Gemini CLI |
 |--------|-------------|------------|
-| Start work | `/start-work {{TICKET_PREFIX}}-123` | `/workflow:start-work {{TICKET_PREFIX}}-123` |
+| Start work | `/start-work MOB-123` | `/workflow:start-work MOB-123` |
 | Pre-PR check | `/pre-pr` | `/workflow:pre-pr` |
 | Local sync | `/local-sync` | `/local:sync` |
 | Remote deploy | `/remote-deploy` | `/remote:deploy` |
@@ -514,7 +514,7 @@ All work requires verifiable evidence. No "trust me, it works."
                     │           3-STAGE PR REVIEW                 │
                     │  Stage 1: System Architect (pattern)        │
                     │  Stage 2: ARCHitect-in-CLI (architecture)   │
-                    │  Stage 3: HITL ({{AUTHOR_NAME}}) → MERGE              │
+                    │  Stage 3: HITL (Ronak) → MERGE              │
                     └─────────────────────────────────────────────┘
 ```
 
@@ -544,11 +544,11 @@ All work requires verifiable evidence. No "trust me, it works."
 │ QAS Gate        │ QAS             │ YES - no approval = stop│
 │ Stage 1 Review  │ System Architect│ YES - pattern check     │
 │ Stage 2 Review  │ ARCHitect-CLI   │ YES - architecture check│
-│ HITL Merge      │ {{AUTHOR_NAME}}            │ YES - final authority   │
+│ HITL Merge      │ Ronak            │ YES - final authority   │
 └─────────────────┴─────────────────┴─────────────────────────┘
 ```
 
-### Role Collapsing ({{TICKET_PREFIX}}-499)
+### Role Collapsing (MOB-499)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -658,11 +658,11 @@ Note: Quality gates are immutable. QAS and SecEng cannot be collapsed.
                         │  • Final evidence to Linear     │
                         │                                 │
                         │  Tools (Linear MCP):            │
-                        │  • mcp__{{MCP_LINEAR_SERVER}}__            │
+                        │  • mcp__linear-mcp__            │
                         │      create_comment             │
-                        │  • mcp__{{MCP_LINEAR_SERVER}}__            │
+                        │  • mcp__linear-mcp__            │
                         │      update_issue               │
-                        │  • mcp__{{MCP_LINEAR_SERVER}}__            │
+                        │  • mcp__linear-mcp__            │
                         │      list_comments              │
                         └────────────┬────────────────────┘
                                      │
@@ -719,7 +719,7 @@ Note: Quality gates are immutable. QAS and SecEng cannot be collapsed.
                     │  └─────────────────┬───────────────────┘    │
                     │                    ▼                        │
                     │  ┌─────────────────────────────────────┐    │
-                    │  │ STAGE 3: HITL ({{AUTHOR_NAME}})               │    │
+                    │  │ STAGE 3: HITL (Ronak)               │    │
                     │  │  • Final human review               │    │
                     │  │  • Merge authority                  │    │
                     │  │  → Action: MERGE                    │    │
@@ -757,7 +757,7 @@ Note: Quality gates are immutable. QAS and SecEng cannot be collapsed.
   │             │         │             │       │             │
   │ "BE/FE/DE   │         │ "QAS valid- │       │ "PR #XXX    │
   │ impl done   │         │ ation done  │       │ ready for   │
-  │ for {{TICKET_PREFIX}}-X.  │         │ for {{TICKET_PREFIX}}-X.  │       │ HITL review.│
+  │ for MOB-X.  │         │ for MOB-X.  │       │ HITL review.│
   │ All valid-  │         │ All PASSED. │       │ CI green,   │
   │ ation pass. │         │ Approved    │       │ reviews     │
   │ AC/DoD      │         │ for RTE."   │       │ complete."  │
@@ -776,7 +776,7 @@ Note: Quality gates are immutable. QAS and SecEng cannot be collapsed.
 
                               ┌─────────────────┐
                               │  TICKET ARRIVES │
-                              │  (Linear {{TICKET_PREFIX}}-X) │
+                              │  (Linear MOB-X) │
                               └────────┬────────┘
                                        │
                                        ▼
@@ -917,7 +917,7 @@ Note: Quality gates are immutable. QAS and SecEng cannot be collapsed.
 │ System Architect│  Review   │    ✗      │  Stage 1  │    ✗      │  Review   │  Stage 1 │
 │ ARCHitect-CLI   │  Review   │    ✗      │  Stage 2  │    ✗      │  Review   │  Stage 2 │
 ├─────────────────┼───────────┼───────────┼───────────┼───────────┼───────────┼──────────┤
-│ HITL ({{AUTHOR_NAME}})    │  Review   │    ✗      │  Stage 3  │    ✓      │  Final    │  Stage 3 │
+│ HITL (Ronak)    │  Review   │    ✗      │  Stage 3  │    ✓      │  Final    │  Stage 3 │
 └─────────────────┴───────────┴───────────┴───────────┴───────────┴───────────┴──────────┘
 
 Legend:
@@ -956,7 +956,7 @@ Legend:
 │                                                                             │
 │  HANDOFF TEMPLATE:                                                          │
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │  "[BE/FE/DE] implementation complete for {{TICKET_PREFIX}}-XXX.                   │   │
+│  │  "[BE/FE/DE] implementation complete for MOB-XXX.                   │   │
 │  │   All validation passing. AC/DoD confirmed.                         │   │
 │  │   Ready for QAS review."                                            │   │
 │  └─────────────────────────────────────────────────────────────────────┘   │
@@ -983,9 +983,9 @@ Legend:
 │                                                                             │
 │  LINEAR MCP TOOLS:                                                          │
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │  • mcp__{{MCP_LINEAR_SERVER}}__create_comment  (post evidence)                 │   │
-│  │  • mcp__{{MCP_LINEAR_SERVER}}__update_issue    (update status)                 │   │
-│  │  • mcp__{{MCP_LINEAR_SERVER}}__list_comments   (read context)                  │   │
+│  │  • mcp__linear-mcp__create_comment  (post evidence)                 │   │
+│  │  • mcp__linear-mcp__update_issue    (update status)                 │   │
+│  │  • mcp__linear-mcp__list_comments   (read context)                  │   │
 │  └─────────────────────────────────────────────────────────────────────┘   │
 │                                                                             │
 │  ROUTING AUTHORITY:                                                         │
@@ -1003,7 +1003,7 @@ Legend:
 │                                                                             │
 │  HANDOFF TEMPLATE:                                                          │
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │  "QAS validation complete for {{TICKET_PREFIX}}-XXX.                              │   │
+│  │  "QAS validation complete for MOB-XXX.                              │   │
 │  │   All criteria PASSED. Evidence posted to Linear.                   │   │
 │  │   Approved for RTE."                                                │   │
 │  └─────────────────────────────────────────────────────────────────────┘   │
@@ -1045,9 +1045,9 @@ Legend:
 │                                                                             │
 │  HANDOFF TEMPLATE:                                                          │
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │  "PR #XXX for {{TICKET_PREFIX}}-YYY is Ready for HITL Review.                     │   │
+│  │  "PR #XXX for MOB-YYY is Ready for HITL Review.                     │   │
 │  │   All CI green, reviews complete, evidence attached.                │   │
-│  │   Awaiting final merge approval from {{AUTHOR_NAME}}."                        │   │
+│  │   Awaiting final merge approval from Ronak."                        │   │
 │  └─────────────────────────────────────────────────────────────────────┘   │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -1066,7 +1066,7 @@ Legend:
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
 │  │  Stage 1: System Architect (you) - Technical/pattern validation     │   │
 │  │  Stage 2: ARCHitect-in-CLI - Comprehensive review                   │   │
-│  │  Stage 3: HITL ({{AUTHOR_NAME}}) - Final merge authority                      │   │
+│  │  Stage 3: HITL (Ronak) - Final merge authority                      │   │
 │  └─────────────────────────────────────────────────────────────────────┘   │
 │                                                                             │
 │  OWNS:                                     MUST NOT:                        │
@@ -1089,7 +1089,7 @@ Legend:
 │                                                                             │
 │  HANDOFF TEMPLATE:                                                          │
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │  "Stage 1 review complete for PR #XXX ({{TICKET_PREFIX}}-YYY).                    │   │
+│  │  "Stage 1 review complete for PR #XXX (MOB-YYY).                    │   │
 │  │   Pattern compliance verified, RLS enforced.                        │   │
 │  │   Approved for ARCHitect-in-CLI review (Stage 2)."                  │   │
 │  └─────────────────────────────────────────────────────────────────────┘   │
@@ -1135,7 +1135,7 @@ accountable team members with clear boundaries, not autonomous actors.
 | Exit States     | Informal "done"        | Explicit states per role                     | Clear chain of custody                        |
 | Evidence        | Scattered              | **Linear as system of record**               | Auditable, traceable delivery                 |
 | PR Review       | Undefined stages       | **3-stage process**                          | Layered review with clear ownership           |
-| Role Collapsing | Not defined            | **{{TICKET_PREFIX}}-499**: RTE collapsible, QAS/SecEng not | Flexibility with safety                       |
+| Role Collapsing | Not defined            | **MOB-499**: RTE collapsible, QAS/SecEng not | Flexibility with safety                       |
 
 ### Detailed File Changes
 
@@ -1181,11 +1181,11 @@ accountable team members with clear boundaries, not autonomous actors.
 | 1.0 | 2025-12-23 | Claude Code (Opus 4.5) | Initial vNext contract (Phases 1-2) |
 | 1.1 | 2025-12-23 | Claude Code (Opus 4.5) | Phase 3 docs + errata |
 | 1.2 | 2025-12-23 | Claude Code (Opus 4.5) | Alignment fixes (TDM role, QAS write policy) |
-| 1.3 | 2025-12-23 | Claude Code (Opus 4.5) | {{TICKET_PREFIX}}-499: Role collapsing policy |
+| 1.3 | 2025-12-23 | Claude Code (Opus 4.5) | MOB-499: Role collapsing policy |
 
 ### Source Document
 
-Full knowledge transfer document: [{{TICKET_PREFIX}}-497-vnext-workflow-contract-kt.md](https://github.com/{{GITHUB_ORG}}/{{PROJECT_SHORT}}-app/blob/main/docs/agent-outputs/technical-docs/{{TICKET_PREFIX}}-497-vnext-workflow-contract-kt.md)
+Full knowledge transfer document: [MOB-497-vnext-workflow-contract-kt.md](https://github.com/tamasha-live/MOB-app/blob/main/docs/agent-outputs/technical-docs/MOB-497-vnext-workflow-contract-kt.md)
 
 </details>
 
@@ -1223,7 +1223,7 @@ Full knowledge transfer document: [{{TICKET_PREFIX}}-497-vnext-workflow-contract
 │ QAS Gate        │ QAS             │ YES - no approval = stop│
 │ Stage 1 Review  │ System Architect│ YES - pattern check     │
 │ Stage 2 Review  │ ARCHitect-CLI   │ YES - architecture check│
-│ HITL Merge      │ {{AUTHOR_NAME}}            │ YES - final authority   │
+│ HITL Merge      │ Ronak            │ YES - final authority   │
 └─────────────────┴─────────────────┴─────────────────────────┘
 ```
 
@@ -1312,9 +1312,9 @@ Download: [CITATION.bib](CITATION.bib) | [CITATION.cff](CITATION.cff)
 ### APA 7th Edition
 
 ```text
-{{AUTHOR_LAST_NAME}}, {{AUTHOR_INITIALS}}, & {{PROJECT_SHORT}} Development Team. (2025). Evidence-based multi-agent
+Tamasha, R. T., & MOB Development Team. (2025). Evidence-based multi-agent
 development: A SAFe framework implementation with Claude Code [White paper].
-https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}
+https://github.com/tamasha-live/mobile-app
 ```
 
 ---
@@ -1365,6 +1365,6 @@ See [NOTICE](NOTICE) for details.
 </p>
 
 <p align="center">
-  <strong>Version</strong>: {{HARNESS_VERSION}} (March 2026)<br>
+  <strong>Version</strong>: v2.10.0 (March 2026)<br>
   <strong>Status</strong>: Production-validated, multi-provider (Claude Code + Gemini CLI + Codex CLI + Cursor IDE)
 </p>

@@ -1,570 +1,145 @@
-# Form with Validation Pattern
+# Form with Validation Pattern (Flutter)
 
 ## What It Does
 
-Creates type-safe, validated forms using React Hook Form + Zod + shadcn/ui components. Provides automatic validation, error handling, and TypeScript type safety.
+Creates a validated Flutter form using `Form` + `TextFormField` validators, with
+submission routed through a Riverpod provider that calls the backend and exposes
+loading/error state. Styling comes from the theme; no hardcoded values.
 
 ## When to Use
 
-- Data entry forms
-- User settings/profile updates
-- Content creation/editing
-- Complex multi-field forms
-- Forms requiring runtime validation
+- Data entry / settings / profile editing
+- Sign-in / sign-up forms (once auth lands)
+- Any screen that collects + submits user input
 
 ## Code Pattern
 
-```typescript
-// app/{page}/_components/{resource}-form.tsx
-"use client"
+```dart
+// app/lib/features/{feature}/{feature}_form.dart
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_app/core/network/api_client.dart';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+// 1. Submit controller as an AsyncNotifier (idle → loading → data/error)
+class {Feature}Controller extends AutoDisposeAsyncNotifier<void> {
+  @override
+  Future<void> build() async {}
 
-// 1. Define Zod validation schema
-const FormSchema = z.object({
-  // Text inputs
-  name: z.string()
-    .min(1, "Name is required")
-    .max(255, "Name must be less than 255 characters"),
-
-  email: z.string()
-    .min(1, "Email is required")
-    .email("Invalid email address"),
-
-  // Textarea
-  description: z.string()
-    .max(1000, "Description must be less than 1000 characters")
-    .optional(),
-
-  // Select/dropdown
-  category: z.string()
-    .min(1, "Please select a category"),
-
-  // Number input
-  amount: z.string()
-    .min(1, "Amount is required")
-    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-      message: "Amount must be a positive number"
-    })
-    .refine((val) => Number(val) <= 1000, {
-      message: "Maximum amount is $1000"
-    }),
-
-  // Checkbox
-  terms: z.boolean()
-    .refine((val) => val === true, {
-      message: "You must accept the terms and conditions"
-    }),
-});
-
-// 2. Infer TypeScript types
-type FormData = z.infer<typeof FormSchema>;
-
-// 3. Component props
-interface {Resource}FormProps {
-  initialData?: Partial<FormData>;
-  userId: string;
-  onSuccess?: () => void;
+  Future<void> submit({required String name, required String email}) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final dio = ref.read(apiClientProvider);
+      await dio.post<void>('/api/{resource}', data: {'name': name, 'email': email});
+    });
+  }
 }
 
-export function {Resource}Form({
-  initialData,
-  userId,
-  onSuccess
-}: {Resource}FormProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState<{
-    type: 'success' | 'error';
-    text: string;
-  } | null>(null);
-  const router = useRouter();
-
-  // 4. Initialize form with react-hook-form + Zod
-  const form = useForm<FormData>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      name: initialData?.name || "",
-      email: initialData?.email || "",
-      description: initialData?.description || "",
-      category: initialData?.category || "",
-      amount: initialData?.amount || "",
-      terms: initialData?.terms || false,
-    }
-  });
-
-  // 5. Form submission handler
-  async function onSubmit(data: FormData) {
-    setIsLoading(true);
-    setMessage(null);
-
-    try {
-      // Call API
-      const response = await fetch('/api/{resource}', {
-        method: initialData ? 'PUT' : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to save');
-      }
-
-      setMessage({
-        type: 'success',
-        text: initialData
-          ? '{Resource} updated successfully'
-          : '{Resource} created successfully'
-      });
-
-      // Reset form or redirect
-      if (!initialData) {
-        form.reset();
-      }
-
-      // Call success callback
-      onSuccess?.();
-
-      // Optional: Redirect
-      // router.push('/dashboard/{resource}');
-      router.refresh();  // Refresh server components
-
-    } catch (error) {
-      console.error('Form submission error:', error);
-      setMessage({
-        type: 'error',
-        text: error instanceof Error ? error.message : 'An error occurred'
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {/* Text Input */}
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter name"
-                  {...field}
-                  disabled={isLoading}
-                />
-              </FormControl>
-              <FormDescription>
-                This will be displayed publicly
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Email Input */}
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder="you@example.com"
-                  {...field}
-                  disabled={isLoading}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Textarea */}
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Enter description"
-                  rows={4}
-                  {...field}
-                  disabled={isLoading}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Select Dropdown */}
-        <FormField
-          control={form.control}
-          name="category"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Category</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-                disabled={isLoading}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a category" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="option1">Option 1</SelectItem>
-                  <SelectItem value="option2">Option 2</SelectItem>
-                  <SelectItem value="option3">Option 3</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Number Input */}
-        <FormField
-          control={form.control}
-          name="amount"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Amount ($)</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  step="0.01"
-                  placeholder="0.00"
-                  {...field}
-                  disabled={isLoading}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Success/Error Message */}
-        {message && (
-          <div
-            className={`p-4 rounded-md ${
-              message.type === 'success'
-                ? 'bg-green-50 text-green-800'
-                : 'bg-red-50 text-red-800'
-            }`}
-          >
-            {message.text}
-          </div>
-        )}
-
-        {/* Submit Button */}
-        <div className="flex gap-4">
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? (
-              <>
-                <span className="mr-2">Saving...</span>
-                <span className="animate-spin">⏳</span>
-              </>
-            ) : (
-              initialData ? 'Update' : 'Create'
-            )}
-          </Button>
-
-          {initialData && (
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => router.back()}
-              disabled={isLoading}
-            >
-              Cancel
-            </Button>
-          )}
-        </div>
-      </form>
-    </Form>
-  );
-}
-```
-
-## Advanced Patterns
-
-### Conditional Fields
-
-```typescript
-const FormSchema = z.object({
-  accountType: z.enum(['personal', 'business']),
-  personalName: z.string().optional(),
-  businessName: z.string().optional(),
-  taxId: z.string().optional(),
-}).refine(
-  (data) => {
-    if (data.accountType === 'business') {
-      return !!data.businessName && !!data.taxId;
-    }
-    if (data.accountType === 'personal') {
-      return !!data.personalName;
-    }
-    return true;
-  },
-  {
-    message: 'Required fields missing for account type',
-    path: ['businessName']
-  }
+final {feature}ControllerProvider =
+    AutoDisposeAsyncNotifierProvider<{Feature}Controller, void>(
+  {Feature}Controller.new,
 );
 
-// In form
-const accountType = form.watch('accountType');
+// 2. The form widget
+class {Feature}Form extends ConsumerStatefulWidget {
+  const {Feature}Form({super.key});
 
-{accountType === 'business' && (
-  <>
-    <FormField name="businessName" ... />
-    <FormField name="taxId" ... />
-  </>
-)}
-```
+  @override
+  ConsumerState<{Feature}Form> createState() => _{Feature}FormState();
+}
 
-### Dynamic Field Arrays
+class _{Feature}FormState extends ConsumerState<{Feature}Form> {
+  final _formKey = GlobalKey<FormState>();
+  final _name = TextEditingController();
+  final _email = TextEditingController();
 
-```typescript
-import { useFieldArray } from "react-hook-form";
+  @override
+  void dispose() {
+    _name.dispose();
+    _email.dispose();
+    super.dispose();
+  }
 
-const FormSchema = z.object({
-  items: z.array(
-    z.object({
-      name: z.string().min(1),
-      quantity: z.number().min(1)
-    })
-  ).min(1, "At least one item required")
-});
+  Future<void> _onSubmit() async {
+    if (!_formKey.currentState!.validate()) return;
+    await ref
+        .read({feature}ControllerProvider.notifier)
+        .submit(name: _name.text.trim(), email: _email.text.trim());
+  }
 
-// In component
-const { fields, append, remove } = useFieldArray({
-  control: form.control,
-  name: "items"
-});
+  @override
+  Widget build(BuildContext context) {
+    // Surface submit errors via a listener (snackbar), keep build pure.
+    ref.listen({feature}ControllerProvider, (_, AsyncValue<void> next) {
+      if (next case AsyncError(:final Object error)) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Failed: $error')));
+      }
+    });
+    final bool submitting = ref.watch({feature}ControllerProvider).isLoading;
 
-{fields.map((field, index) => (
-  <div key={field.id}>
-    <FormField
-      name={`items.${index}.name`}
-      ...
-    />
-    <Button onClick={() => remove(index)}>Remove</Button>
-  </div>
-))}
-<Button onClick={() => append({ name: '', quantity: 1 })}>
-  Add Item
-</Button>
-```
-
-### File Upload
-
-```typescript
-const FormSchema = z.object({
-  file: z
-    .instanceof(FileList)
-    .refine((files) => files.length > 0, "File is required")
-    .refine(
-      (files) => files[0]?.size <= 5 * 1024 * 1024,
-      "Max file size is 5MB"
-    )
-});
-
-<FormField
-  name="file"
-  render={({ field: { onChange, value, ...field } }) => (
-    <FormItem>
-      <FormLabel>File</FormLabel>
-      <FormControl>
-        <Input
-          type="file"
-          onChange={(e) => onChange(e.target.files)}
-          {...field}
-        />
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          TextFormField(
+            controller: _name,
+            decoration: const InputDecoration(labelText: 'Name'),
+            validator: (String? v) =>
+                (v == null || v.trim().isEmpty) ? 'Name is required' : null,
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _email,
+            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(labelText: 'Email'),
+            validator: (String? v) =>
+                (v == null || !v.contains('@')) ? 'Enter a valid email' : null,
+          ),
+          const SizedBox(height: 24),
+          FilledButton(
+            onPressed: submitting ? null : _onSubmit,
+            child: submitting
+                ? const SizedBox(
+                    height: 18, width: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                : const Text('Submit'),
+          ),
+        ],
+      ),
+    );
+  }
+}
 ```
 
 ## Customization Guide
 
-1. **Replace placeholders**:
-   - `{Resource}` → Resource name (e.g., `Payment`, `Content`)
-   - `{resource}` → URL/path segment
+1. Replace `{Feature}`, `{feature}`, `{resource}` and the fields/endpoint.
+2. Add fields by adding a controller + `TextFormField` with a `validator`.
+3. For complex validation, extract validators into `core/validation/` and reuse.
+4. Use `InputDecorationTheme` in `AppTheme` to style all fields once.
 
-2. **Update schema**:
-   - Add fields specific to your form
-   - Define validation rules
-   - Add custom refinements
+## Checklist
 
-3. **Customize UI**:
-   - Use appropriate input components
-   - Add loading states
-   - Style error messages
+- [ ] Every field has a `validator`; submit is gated on `validate()`
+- [ ] Controllers disposed in `dispose()`
+- [ ] Submit disabled + spinner shown while `isLoading`
+- [ ] Errors surfaced via `ref.listen` (not in `build`)
+- [ ] No hardcoded colors/spacing (theme + `design_tokens`)
+- [ ] Widget test covers invalid + valid submit paths
 
-4. **Handle submission**:
-   - Call correct API endpoint
-   - Handle success/error states
-   - Redirect or refresh as needed
-
-## Security Checklist
-
-- [x] **Client Validation**: Zod schema validates on client
-- [x] **Server Validation**: API also validates (defense in depth)
-- [x] **Type Safety**: TypeScript types from Zod
-- [x] **Error Handling**: Show user-friendly errors
-- [x] **Loading States**: Disable inputs during submission
-
-## Validation Commands
+## Validation
 
 ```bash
-# Type checking
-yarn type-check
-
-# Linting
-yarn lint
-
-# Unit tests
-yarn test:unit
-
-# E2E tests
-yarn test:e2e
-```
-
-## Example: Simple Contact Form
-
-```typescript
-"use client"
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-
-const ContactSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email"),
-  message: z.string().min(10, "Message must be at least 10 characters")
-});
-
-type ContactFormData = z.infer<typeof ContactSchema>;
-
-export function ContactForm() {
-  const form = useForm<ContactFormData>({
-    resolver: zodResolver(ContactSchema),
-    defaultValues: { name: "", email: "", message: "" }
-  });
-
-  async function onSubmit(data: ContactFormData) {
-    const response = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    if (response.ok) {
-      alert('Message sent!');
-      form.reset();
-    }
-  }
-
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input type="email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="message"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Message</FormLabel>
-              <FormControl>
-                <Textarea {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Send Message</Button>
-      </form>
-    </Form>
-  );
-}
+cd app && flutter analyze && flutter test
 ```
 
 ## Related Patterns
 
-- [Zod Validation API](../api/zod-validation-api.md) - Server-side validation
-- [Authenticated Page](./authenticated-page.md) - Forms on auth pages
-- [User Context API](../api/user-context-api.md) - Submit to user API
+- [Riverpod Async Provider](./riverpod-async-provider.md)
+- [Zod Validation API](../api/zod-validation-api.md) - server-side validation (must mirror client)
+- [Async Data Screen](./authenticated-page.md)
 
 ---
 
-**Pattern Source**: `app/dashboard/finance/_components/finance-form.tsx`
-**Last Updated**: 2025-10-03
+**Last Updated**: 2026-06
 **Validated By**: System Architect

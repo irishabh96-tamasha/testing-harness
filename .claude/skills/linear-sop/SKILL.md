@@ -26,10 +26,10 @@ Invoke this skill when:
 
 ```text
 # Get issue by identifier
-mcp__{{MCP_LINEAR_SERVER}}__get_issue({ id: "{{TICKET_PREFIX}}-459" })
+mcp__linear-mcp__get_issue({ id: "MOB-459" })
 
 # List issues with filters
-mcp__{{MCP_LINEAR_SERVER}}__list_issues({
+mcp__linear-mcp__list_issues({
   team: "{{PROJECT_TEAM_NAME}}",
   state: "In Progress",
   assignee: "me",
@@ -39,7 +39,7 @@ mcp__{{MCP_LINEAR_SERVER}}__list_issues({
 ### Creating Issues
 
 ```text
-mcp__{{MCP_LINEAR_SERVER}}__create_issue({
+mcp__linear-mcp__create_issue({
   title: "feat(scope): description",
   team: "{{PROJECT_TEAM_NAME}}",
   description: "## Summary\n\n...",
@@ -51,8 +51,8 @@ mcp__{{MCP_LINEAR_SERVER}}__create_issue({
 ### Updating Issues
 
 ```text
-mcp__{{MCP_LINEAR_SERVER}}__update_issue({
-  id: "{{TICKET_PREFIX}}-459",
+mcp__linear-mcp__update_issue({
+  id: "MOB-459",
   state: "Done",
 })
 ```
@@ -60,8 +60,8 @@ mcp__{{MCP_LINEAR_SERVER}}__update_issue({
 ### Adding Comments
 
 ```text
-mcp__{{MCP_LINEAR_SERVER}}__create_comment({
-  issueId: "{{TICKET_PREFIX}}-459",
+mcp__linear-mcp__create_comment({
+  issueId: "MOB-459",
   body: "**Dev Evidence**\n\n...",
 })
 ```
@@ -85,7 +85,7 @@ Every issue requires evidence at each phase:
 
 **PR**: https://github.com/{{ORG_NAME}}/{{REPO_NAME}}/pull/XXX
 **Commit**: [short-hash]
-**Branch**: {{TICKET_PREFIX}}-XXX-description
+**Branch**: MOB-XXX-description
 
 **Implementation:**
 
@@ -167,7 +167,7 @@ Backlog -> Ready -> In Progress -> Testing -> Ready for Review -> Done
 
 ### GitHub-Linear Auto-Sync
 
-Tickets referenced in commit messages (e.g., `[{{TICKET_PREFIX}}-123]`) automatically move to **Done** when the PR merges. Child stories not referenced in any commit message must be manually closed after merge.
+Tickets referenced in commit messages (e.g., `[MOB-123]`) automatically move to **Done** when the PR merges. Child stories not referenced in any commit message must be manually closed after merge.
 
 **Best practice**: Reference Feature-level tickets in commit messages. After merge, manually close orphaned child stories that weren't referenced.
 
@@ -187,13 +187,13 @@ Linear uses UUIDs internally. When working with APIs:
 
 ```typescript
 // Issue identifiers (human-readable)
-const issueId = "{{TICKET_PREFIX}}-459";
+const issueId = "MOB-459";
 
 // UUIDs (API operations)
 const uuid = "ef6a5fa0-2b46-417f-8266-dea2d187b10a";
 
 // Get UUID from identifier via MCP tool
-// mcp__{{MCP_LINEAR_SERVER}}__get_issue({ id: "{{TICKET_PREFIX}}-459" })
+// mcp__linear-mcp__get_issue({ id: "MOB-459" })
 // Returns issue object with .id property containing UUID
 ```
 
@@ -203,13 +203,13 @@ const uuid = "ef6a5fa0-2b46-417f-8266-dea2d187b10a";
 
 PRs are automatically linked when:
 
-- Branch name contains `{{TICKET_PREFIX}}-XXX`
-- PR title contains `[{{TICKET_PREFIX}}-XXX]`
+- Branch name contains `MOB-XXX`
+- PR title contains `[MOB-XXX]`
 
 ### Create Sub-Issue
 
 ```text
-mcp__{{MCP_LINEAR_SERVER}}__create_issue({
+mcp__linear-mcp__create_issue({
   title: "Sub-task description",
   team: "{{PROJECT_TEAM_NAME}}",
   parentId: "parent-issue-uuid",
@@ -219,7 +219,7 @@ mcp__{{MCP_LINEAR_SERVER}}__create_issue({
 ### Query by Label
 
 ```text
-mcp__{{MCP_LINEAR_SERVER}}__list_issues({
+mcp__linear-mcp__list_issues({
   label: "sprint-1",
   team: "{{PROJECT_TEAM_NAME}}",
 })

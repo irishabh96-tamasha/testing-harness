@@ -1,7 +1,7 @@
 # Team Coordination
 
 ![Status](https://img.shields.io/badge/status-beta-yellow)
-![Harness](https://img.shields.io/badge/harness-{{HARNESS_VERSION}}-blue)
+![Harness](https://img.shields.io/badge/harness-v2.10.0-blue)
 
 > Agent Teams orchestration patterns for multi-agent SAFe workflows. Use when spawning agent teams, coordinating teammates, enforcing quality gates, or orchestrating the 11-agent SAFe pipeline.
 
@@ -10,7 +10,7 @@
 This skill is invoked manually with `/team-coordination`:
 
 ```
-/team-coordination Implement {{TICKET_PREFIX}}-XXX user profile feature
+/team-coordination Implement MOB-XXX user profile feature
 ```
 
 ## What This Skill Does
@@ -48,7 +48,7 @@ Agent Teams must be enabled (experimental):
 | Field | Value |
 |-------|-------|
 | Last Updated | 2026-03-05 |
-| Harness Version | {{HARNESS_VERSION}} |
+| Harness Version | v2.10.0 |
 
 ---
 

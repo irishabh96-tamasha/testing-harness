@@ -44,7 +44,7 @@ Create or update your project's `.claude/settings.local.json`:
         "hooks": [
           {
             "type": "command",
-            "command": "git branch --show-current 2>/dev/null | grep -q '^{{TICKET_PREFIX}}-[0-9]' || echo '⚠️ REMINDER: Branch should follow {{TICKET_PREFIX}}-{number}-{description} format.'",
+            "command": "git branch --show-current 2>/dev/null | grep -q '^MOB-[0-9]' || echo '⚠️ REMINDER: Branch should follow MOB-{number}-{description} format.'",
             "description": "Remind about branch naming convention"
           }
         ]
@@ -56,7 +56,7 @@ Create or update your project's `.claude/settings.local.json`:
         "hooks": [
           {
             "type": "command",
-            "command": "echo '📝 REMINDER: Commit message must follow SAFe format: type(scope): description [{{TICKET_PREFIX}}-XXX]'",
+            "command": "echo '📝 REMINDER: Commit message must follow SAFe format: type(scope): description [MOB-XXX]'",
             "description": "Remind about commit message format"
           }
         ]
@@ -88,7 +88,7 @@ Create or update your project's `.claude/settings.local.json`:
 }
 ```
 
-**Note**: Customize the ticket prefix (`{{TICKET_PREFIX}}-`) and branch names (`dev`/`master`) for your project.
+**Note**: Customize the ticket prefix (`MOB-`) and branch names (`dev`/`master`) for your project.
 
 ---
 
@@ -100,8 +100,8 @@ Search and replace in all copied files:
 
 | Find             | Replace With                       |
 | ---------------- | ---------------------------------- |
-| `{{TICKET_PREFIX}}-`           | Your ticket prefix (e.g., `PROJ-`) |
-| `{{PROJECT_NAME}}` | Your project name                  |
+| `MOB-`           | Your ticket prefix (e.g., `PROJ-`) |
+| `mobile-app` | Your project name                  |
 | `dev` branch     | Your main development branch       |
 
 ### Update Linear Workspace
@@ -217,7 +217,7 @@ After setup, your `.claude/` directory should look like:
 
 | Command                           | Purpose                       |
 | --------------------------------- | ----------------------------- |
-| `/start-work {{TICKET_PREFIX}}-123` | Begin work on a ticket        |
+| `/start-work MOB-123` | Begin work on a ticket        |
 | `/check-workflow`                 | Check current workflow status |
 | `/pre-pr`                         | Run validation before PR      |
 | `/end-work`                       | Complete work session         |

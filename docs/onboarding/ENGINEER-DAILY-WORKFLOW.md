@@ -22,12 +22,12 @@ Always start from the latest state of the primary development branch. The SAFe w
 
 ```bash
 # Fetch and pull the latest
-git checkout {{MAIN_BRANCH}}
-git pull origin {{MAIN_BRANCH}}
+git checkout main
+git pull origin main
 
 # If you have a feature branch in progress, rebase it
-git checkout {{TICKET_PREFIX}}-XXX-your-feature
-git rebase origin/{{MAIN_BRANCH}}
+git checkout MOB-XXX-your-feature
+git rebase origin/main
 ```
 
 ### Step 2: Check Linear for Assigned Tickets
@@ -36,8 +36,8 @@ Review your ticket queue in Linear. Focus on tickets in the **Ready** or **In Pr
 
 ```bash
 # Use Linear MCP tools to check your queue
-mcp__{{MCP_LINEAR_SERVER}}__search_issues "assignee:me state:Ready"
-mcp__{{MCP_LINEAR_SERVER}}__search_issues "assignee:me state:In Progress"
+mcp__linear-mcp__search_issues "assignee:me state:Ready"
+mcp__linear-mcp__search_issues "assignee:me state:In Progress"
 ```
 
 ### Step 3: Read the Spec for Your Ticket
@@ -46,16 +46,16 @@ Every ticket should have an associated spec created by the BSA. Read it before w
 
 ```bash
 # Find and read the spec
-cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+cat specs/MOB-XXX-{feature}-spec.md
 
 # Extract your implementation tasks
-grep -A 30 "Low-Level Tasks" specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+grep -A 30 "Low-Level Tasks" specs/MOB-XXX-{feature}-spec.md
 
 # Check for security-critical requirements
-grep "#EXPORT_CRITICAL" specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+grep "#EXPORT_CRITICAL" specs/MOB-XXX-{feature}-spec.md
 
 # Check for architectural decisions that affect your work
-grep "#PATH_DECISION" specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+grep "#PATH_DECISION" specs/MOB-XXX-{feature}-spec.md
 ```
 
 ---
@@ -65,7 +65,7 @@ grep "#PATH_DECISION" specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
 Use the `/start-work` command to begin working on a ticket. This initializes your session with the right context.
 
 ```
-/start-work {{TICKET_PREFIX}}-XXX
+/start-work MOB-XXX
 ```
 
 ### What Happens When You Start Work
@@ -75,7 +75,7 @@ Use the `/start-work` command to begin working on a ticket. This initializes you
 3. **Branch is created** (if one does not exist):
 
    ```bash
-   git checkout -b {{TICKET_PREFIX}}-XXX-short-description
+   git checkout -b MOB-XXX-short-description
    ```
 
 4. **Session tracking begins** - Your Claude Code session ID is recorded for evidence gathering
@@ -88,10 +88,10 @@ Verify you are on the correct branch and understand the scope:
 ```bash
 # Confirm branch
 git branch --show-current
-# Should show: {{TICKET_PREFIX}}-XXX-short-description
+# Should show: MOB-XXX-short-description
 
 # Confirm spec is available
-ls specs/{{TICKET_PREFIX}}-XXX-*-spec.md
+ls specs/MOB-XXX-*-spec.md
 ```
 
 ---
@@ -176,7 +176,7 @@ grep -r "similar_feature\|pattern_name" ~/.claude/todos/ 2>/dev/null
 If no existing pattern fits, or if you are creating a new architectural pattern:
 
 ```
-@system-architect I need to implement [feature] for {{TICKET_PREFIX}}-XXX.
+@system-architect I need to implement [feature] for MOB-XXX.
 I searched for existing patterns and found [results].
 I propose [approach]. Please validate before I proceed.
 ```
@@ -210,7 +210,7 @@ Follow the spec's low-level tasks as your implementation guide. The BSA has alre
 Every commit must follow the SAFe conventional commit format with a Linear ticket reference:
 
 ```
-type(scope): description [{{TICKET_PREFIX}}-XXX]
+type(scope): description [MOB-XXX]
 ```
 
 **Types**:
@@ -240,17 +240,17 @@ type(scope): description [{{TICKET_PREFIX}}-XXX]
 
 ```bash
 # Feature implementation
-git commit -m "feat(api): add user profile endpoint with RLS context [{{TICKET_PREFIX}}-123]"
+git commit -m "feat(api): add user profile endpoint with RLS context [MOB-123]"
 
 # Bug fix
-git commit -m "fix(ui): resolve login redirect loop on expired session [{{TICKET_PREFIX}}-456]"
+git commit -m "fix(ui): resolve login redirect loop on expired session [MOB-456]"
 
 # Test addition
-git commit -m "test(api): add integration tests for profile endpoint [{{TICKET_PREFIX}}-123]"
+git commit -m "test(api): add integration tests for profile endpoint [MOB-123]"
 
 # Multi-line commit for complex changes
 git commit -m "$(cat <<'EOF'
-feat(payments): add Stripe checkout flow with webhook handling [{{TICKET_PREFIX}}-789]
+feat(payments): add Stripe checkout flow with webhook handling [MOB-789]
 
 - Add POST /api/payments/checkout endpoint
 - Add webhook handler for payment events
@@ -299,7 +299,7 @@ The `/pre-pr` validation runs through the complete quality gate:
 ```bash
 # 1. Rebase onto latest main branch
 git fetch origin
-git rebase origin/{{MAIN_BRANCH}}
+git rebase origin/main
 
 # 2. Run the full CI validation suite
 {{CI_VALIDATE_COMMAND}}
@@ -315,7 +315,7 @@ git rebase origin/{{MAIN_BRANCH}}
 
 If `/pre-pr` is not available, run these steps manually:
 
-- [ ] **Rebase is clean**: `git rebase origin/{{MAIN_BRANCH}}` completes without conflicts
+- [ ] **Rebase is clean**: `git rebase origin/main` completes without conflicts
 - [ ] **Type checking passes**: `{{TYPE_CHECK_COMMAND}}`
 - [ ] **Linting passes**: `{{LINT_COMMAND}}`
 - [ ] **Unit tests pass**: `{{TEST_UNIT_COMMAND}}`
@@ -323,7 +323,7 @@ If `/pre-pr` is not available, run these steps manually:
 - [ ] **Formatting is correct**: `{{FORMAT_CHECK_COMMAND}}`
 - [ ] **Build succeeds**: `{{BUILD_COMMAND}}`
 - [ ] **All acceptance criteria are addressed** (review the spec one more time)
-- [ ] **Commit messages follow format**: `type(scope): description [{{TICKET_PREFIX}}-XXX]`
+- [ ] **Commit messages follow format**: `type(scope): description [MOB-XXX]`
 - [ ] **No secrets or credentials committed**: Check `.env` is in `.gitignore`
 
 ### Push and Set Exit State
@@ -332,16 +332,16 @@ After validation passes:
 
 ```bash
 # Push with force-with-lease (safe after rebase)
-git push --force-with-lease origin {{TICKET_PREFIX}}-XXX-your-feature
+git push --force-with-lease origin MOB-XXX-your-feature
 
 # Your exit state as an implementer is "Ready for QAS"
 # Update the Linear ticket
-mcp__{{MCP_LINEAR_SERVER}}__update_issue \
-  --issue_id "{{TICKET_PREFIX}}-XXX" \
+mcp__linear-mcp__update_issue \
+  --issue_id "MOB-XXX" \
   --state "Testing"
 
-mcp__{{MCP_LINEAR_SERVER}}__create_comment \
-  --issue_id "{{TICKET_PREFIX}}-XXX" \
+mcp__linear-mcp__create_comment \
+  --issue_id "MOB-XXX" \
   --body "Implementation complete. All validation checks passing. Exit State: Ready for QAS.\n\nSession ID: [session-id]"
 ```
 
@@ -362,8 +362,8 @@ mcp__{{MCP_LINEAR_SERVER}}__create_comment \
 - [ ] Linear ticket has a progress comment:
 
 ```bash
-mcp__{{MCP_LINEAR_SERVER}}__create_comment \
-  --issue_id "{{TICKET_PREFIX}}-XXX" \
+mcp__linear-mcp__create_comment \
+  --issue_id "MOB-XXX" \
   --body "End-of-day update: API endpoint implemented, unit tests written (6/6 passing). Integration tests pending. Will resume next session. Session ID: [session-id]"
 ```
 
@@ -436,7 +436,7 @@ Implementer (FE/BE) → "Ready for QAS" → QAS → "Approved for RTE" → RTE �
 
 ### Common Issues
 
-**Issue**: Rebase conflicts after `git rebase origin/{{MAIN_BRANCH}}`
+**Issue**: Rebase conflicts after `git rebase origin/main`
 
 - **Solution**: Resolve conflicts file by file, then `git rebase --continue`
 - **Prevention**: Rebase frequently (at least once per day) to minimize drift
@@ -448,7 +448,7 @@ Implementer (FE/BE) → "Ready for QAS" → QAS → "Approved for RTE" → RTE �
 
 **Issue**: RLS context errors in tests
 
-- **Solution**: Verify you are using the correct context helper and the test database user is `{{LINEAR_WORKSPACE}}_app_user`
+- **Solution**: Verify you are using the correct context helper and the test database user is `tamasha_app_user`
 - **Reference**: [RLS Implementation Guide](../database/RLS_IMPLEMENTATION_GUIDE.md)
 
 **Issue**: CI validation fails on push
@@ -491,5 +491,5 @@ Implementer (FE/BE) → "Ready for QAS" → QAS → "Approved for RTE" → RTE �
 
 **Questions?**
 
-- GitHub Discussions: {{GITHUB_REPO_URL}}/discussions
-- Email: {{AUTHOR_EMAIL}}
+- GitHub Discussions: https://github.com/tamasha-live/mobile-app/discussions
+- Email: ronak@tamasha.live

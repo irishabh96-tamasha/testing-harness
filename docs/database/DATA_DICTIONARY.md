@@ -1,8 +1,8 @@
-# 📊 {{PROJECT_NAME}} Database Data Dictionary
+# 📊 mobile-app Database Data Dictionary
 
 > **Single Source of Truth for AI Agents and Development Context**
 >
-> **Last Updated**: [DATE] ({{TICKET_PREFIX}}-XXX - [Description])
+> **Last Updated**: [DATE] (MOB-XXX - [Description])
 > **Schema Version**: [VERSION]
 > **Database**: PostgreSQL with Prisma ORM
 > **Total Tables**: [COUNT]
@@ -29,7 +29,7 @@ This document serves as the **single source of truth** for your database schema.
 1. Replace `[PLACEHOLDERS]` with your actual values
 2. Document each table as you create it
 3. Update RLS policies when adding user data tables
-4. Track changes with {{TICKET_PREFIX}}-XXX references
+4. Track changes with MOB-XXX references
 
 ### For AI Agents:
 
@@ -48,7 +48,7 @@ This document serves as the **single source of truth** for your database schema.
 | **System Tables**    | [COUNT]               | Global reference tables             |
 | **Admin Tables**     | [COUNT]               | Admin-only access                   |
 | **Core Entities**    | [COUNT]               | [List core tables]                  |
-| **Latest Additions** | {{TICKET_PREFIX}}-XXX | [Description]                       |
+| **Latest Additions** | MOB-XXX | [Description]                       |
 
 ---
 
@@ -56,8 +56,8 @@ This document serves as the **single source of truth** for your database schema.
 
 | Table            | Type   | Columns | RLS   | Purpose                        | Last Modified         |
 | ---------------- | ------ | ------- | ----- | ------------------------------ | --------------------- |
-| **user**         | Core   | [COUNT] | ✅    | User profiles & authentication | {{TICKET_PREFIX}}-XXX |
-| **[your_table]** | [Type] | [COUNT] | ✅/❌ | [Purpose]                      | {{TICKET_PREFIX}}-XXX |
+| **user**         | Core   | [COUNT] | ✅    | User profiles & authentication | MOB-XXX |
+| **[your_table]** | [Type] | [COUNT] | ✅/❌ | [Purpose]                      | MOB-XXX |
 
 **Table Types**:
 
@@ -89,7 +89,7 @@ This document serves as the **single source of truth** for your database schema.
 | `id`            | INT/UUID     | PK, AUTO_INCREMENT      | Primary key        | Core                  |
 | `created_at`    | TIMESTAMPTZ  | NOT NULL, DEFAULT NOW() | Creation timestamp | Core                  |
 | `user_id`       | VARCHAR(255) | FK, NOT NULL            | User reference     | Core                  |
-| `[column_name]` | [TYPE]       | [CONSTRAINTS]           | [PURPOSE]          | {{TICKET_PREFIX}}-XXX |
+| `[column_name]` | [TYPE]       | [CONSTRAINTS]           | [PURPOSE]          | MOB-XXX |
 
 **RLS Policies**:
 
@@ -114,7 +114,7 @@ This document serves as the **single source of truth** for your database schema.
 | `created_at`     | TIMESTAMPTZ  | NOT NULL, DEFAULT NOW() | Account creation timestamp               | Core                  |
 | `email`          | VARCHAR(255) | UNIQUE, NOT NULL        | User email address                       | Core                  |
 | `user_id`        | VARCHAR(255) | UNIQUE, NOT NULL        | Authentication provider ID (e.g., Clerk) | Core                  |
-| `[custom_field]` | [TYPE]       | [CONSTRAINTS]           | [YOUR CUSTOM FIELDS]                     | {{TICKET_PREFIX}}-XXX |
+| `[custom_field]` | [TYPE]       | [CONSTRAINTS]           | [YOUR CUSTOM FIELDS]                     | MOB-XXX |
 
 **RLS Policies**:
 
@@ -237,7 +237,7 @@ await withSystemContext(prisma, contextType, async (client) => {
 
 ## 🔄 Change History Template
 
-### **{{TICKET_PREFIX}}-XXX (YYYY-MM-DD) - [Feature Name]**
+### **MOB-XXX (YYYY-MM-DD) - [Feature Name]**
 
 - ✅ Added `[table_name]` table for [purpose]
 - ✅ Migration: `[migration_name]`
@@ -287,7 +287,7 @@ await withSystemContext(prisma, contextType, async (client) => {
 
 - ✅ Update this file for ANY schema changes
 - ✅ Document all RLS policies when adding user data tables
-- ✅ Include {{TICKET_PREFIX}}-XXX reference for all changes
+- ✅ Include MOB-XXX reference for all changes
 - ✅ Verify RLS compliance before production deployment
 - ✅ Get ARCHitect approval for schema changes
 

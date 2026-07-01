@@ -1,13 +1,13 @@
-> **📚 EXAMPLE**: This document is preserved as a learning example from the {{PROJECT_SHORT}} project. It demonstrates the pattern for executing a repository reorganization with atomic commits and systematic verification. When adopting this workflow, create your own version tailored to your project.
+> **📚 EXAMPLE**: This document is preserved as a learning example from the MOB project. It demonstrates the pattern for executing a repository reorganization with atomic commits and systematic verification. When adopting this workflow, create your own version tailored to your project.
 
 ---
 
 # Repository Reorganization - Execution Summary
 
 **Date**: 2025-10-08  
-**Ticket**: {{TICKET_PREFIX}}-326  
+**Ticket**: MOB-326  
 **Status**: ✅ COMPLETE  
-**PR**: https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}/pull/3
+**PR**: https://github.com/tamasha-live/mobile-app/pull/3
 
 ---
 
@@ -256,4 +256,4 @@ The repository now has a professional, organized structure that improves discove
 
 ---
 
-**Status**: ✅ COMPLETE - Ready for merge as part of {{TICKET_PREFIX}}-326 PR #3
+**Status**: ✅ COMPLETE - Ready for merge as part of MOB-326 PR #3

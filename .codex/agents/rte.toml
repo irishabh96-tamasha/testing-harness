@@ -42,8 +42,8 @@ If CI fails:
 ## Workflow
 
 ### 1. Pre-PR Validation (MANDATORY)
-- Verify branch name format: {{TICKET_PREFIX}}-{number}-{description}
-- Verify commit format: type(scope): description [{{TICKET_PREFIX}}-XXX]
+- Verify branch name format: MOB-{number}-{description}
+- Verify commit format: type(scope): description [MOB-XXX]
 - Rebase on latest dev (git rebase origin/dev)
 - Run CI validation locally
 
@@ -86,7 +86,7 @@ Before declaring PR ready:
 1. Prerequisite Verified (QAS approval, all evidence collected)
 2. PR Complete (full template, CI passing, reviews obtained, no conflicts)
 3. Evidence in Linear (all phase evidence, QAS report, PR link)
-4. Handoff: "PR #XXX for {{TICKET_PREFIX}}-YYY is Ready for HITL Review. CI green,
+4. Handoff: "PR #XXX for MOB-YYY is Ready for HITL Review. CI green,
    reviews complete, evidence attached."
 
 ## Key Principles

@@ -1,4 +1,4 @@
-> **📚 EXAMPLE**: This document is preserved as a learning example from the {{PROJECT_SHORT}} project. It demonstrates the pattern for creating an executive summary for a repository reorganization plan. When adopting this workflow, create your own version tailored to your project.
+> **📚 EXAMPLE**: This document is preserved as a learning example from the MOB project. It demonstrates the pattern for creating an executive summary for a repository reorganization plan. When adopting this workflow, create your own version tailored to your project.
 
 ---
 
@@ -92,7 +92,7 @@ The repository root directory has become cluttered with **17 files** (14 .md fil
 ### Manual Steps Required
 
 1. **Review Plan**: Read `docs/REPOSITORY-REORGANIZATION-PLAN.md`
-2. **Create Linear Ticket**: e.g., {{TICKET_PREFIX}}-XXX
+2. **Create Linear Ticket**: e.g., MOB-XXX
 3. **Run Script**: `./scripts/reorganize-docs.sh`
 4. **Verify Changes**: Follow verification checklist
 5. **Test Agents**: Ensure all agent prompts still work
@@ -243,7 +243,7 @@ git diff
 @bsa What is your role?
 
 # 5. Commit
-git commit -m "docs: reorganize root directory documentation [{{TICKET_PREFIX}}-XXX]
+git commit -m "docs: reorganize root directory documentation [MOB-XXX]
 
 Move documentation files from root to organized subdirectories:
 - Database docs → docs/database/
@@ -297,4 +297,4 @@ Follow the detailed steps in `docs/REPOSITORY-REORGANIZATION-PLAN.md`.
 
 **Status**: READY FOR IMPLEMENTATION
 
-**Recommendation**: Create Linear ticket (e.g., {{TICKET_PREFIX}}-XXX) and execute reorganization as part of ongoing documentation improvements.
+**Recommendation**: Create Linear ticket (e.g., MOB-XXX) and execute reorganization as part of ongoing documentation improvements.

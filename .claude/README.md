@@ -1,12 +1,12 @@
 # Claude Code Configuration
 
-This directory contains the {{PROJECT_SHORT}} Claude Code harness: hooks, slash commands, and (coming soon) skills for workflow automation.
+This directory contains the MOB Claude Code harness: hooks, slash commands, and (coming soon) skills for workflow automation.
 
 ## Harness Architecture
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────┐
-│                      {{PROJECT_SHORT}} Claude Code Harness                         │
+│                      MOB Claude Code Harness                         │
 ├──────────────────────────────────────────────────────────────────────┤
 │                                                                       │
 │  HOOKS (Guardrails)              SLASH COMMANDS (User-Invoked)        │
@@ -34,11 +34,11 @@ This directory contains the {{PROJECT_SHORT}} Claude Code harness: hooks, slash 
 This harness is designed to help every teammate (human + AI) uphold:
 
 - **SAFe Pillars**: Alignment, Built-in Quality, Program Execution, Transparency
-- **{{PROJECT_SHORT}} Round Table**: humans + AI agents are peers; Stop-the-Line authority is encouraged
+- **MOB Round Table**: humans + AI agents are peers; Stop-the-Line authority is encouraged
 
 Canonical reference: `.cursor/rules/06-team-culture.mdc`
 
-## Role Execution Modes ({{TICKET_PREFIX}}-499)
+## Role Execution Modes (MOB-499)
 
 ### Collapsed vs Separated Roles
 
@@ -54,7 +54,7 @@ The vNext workflow defines role separation (Implementation → QAS → RTE → H
 | RTE                       | Coordination/Automation | ✅ Yes          | PR creation, CI shepherding          |
 | QAS                       | Independence Gate       | ❌ No\*         | \*See Self-QA exception below        |
 | SecEng                    | Independence Gate       | ❌ No\*         | Security audit requires independence |
-| HITL                      | Final Authority         | ❌ Never        | {{AUTHOR_NAME}} merges                         |
+| HITL                      | Final Authority         | ❌ Never        | Ronak merges                         |
 
 ### Collapsed Roles (In-Flow with HITL)
 
@@ -131,11 +131,11 @@ These commands are thin wrappers pointing to canonical `/remote-*` commands. **U
 
 | Command                | Alias For          | Note                   |
 | ---------------------- | ------------------ | ---------------------- |
-| `/check-docker-status` | `/remote-status`   | Deprecated per {{TICKET_PREFIX}}-445 |
-| `/deploy-dev`          | `/remote-deploy`   | Deprecated per {{TICKET_PREFIX}}-445 |
-| `/dev-health`          | `/remote-health`   | Deprecated per {{TICKET_PREFIX}}-445 |
-| `/dev-logs`            | `/remote-logs`     | Deprecated per {{TICKET_PREFIX}}-445 |
-| `/rollback-dev`        | `/remote-rollback` | Deprecated per {{TICKET_PREFIX}}-445 |
+| `/check-docker-status` | `/remote-status`   | Deprecated per MOB-445 |
+| `/deploy-dev`          | `/remote-deploy`   | Deprecated per MOB-445 |
+| `/dev-health`          | `/remote-health`   | Deprecated per MOB-445 |
+| `/dev-logs`            | `/remote-logs`     | Deprecated per MOB-445 |
+| `/rollback-dev`        | `/remote-rollback` | Deprecated per MOB-445 |
 
 ### Other Commands
 
@@ -145,14 +145,14 @@ These commands are thin wrappers pointing to canonical `/remote-*` commands. **U
 | `/audit-deps`     | Run comprehensive dependency audit | `/audit-deps`         |
 | `/search-pattern` | Search for code patterns           | `/search-pattern`     |
 
-## Dual-Mode Deployment ({{TICKET_PREFIX}}-445 Terminology Contract)
+## Dual-Mode Deployment (MOB-445 Terminology Contract)
 
 Pop OS supports two deployment modes. **Use canonical terminology:**
 
 | Mode        | Container Name     | Port | Use Case                     |
 | ----------- | ------------------ | ---- | ---------------------------- |
-| **Dev**     | `{{DEV_CONTAINER}}`     | 3000 | Daily development (STANDARD) |
-| **Staging** | `{{STAGING_CONTAINER}}` | 3001 | Release validation/UAT       |
+| **Dev**     | `mobile-app-dev`     | 3000 | Daily development (STANDARD) |
+| **Staging** | `mobile-app-staging` | 3001 | Release validation/UAT       |
 
 **Important:**
 
@@ -171,7 +171,7 @@ See: `docs/agent-outputs/workflow-analysis/HARNESS_AND_SKILLS_AUDIT_2025-12-18.m
 /start-work 347
 
 # 2. Make changes, commit work...
-# git add . && git commit -m "feat(scope): description [{{TICKET_PREFIX}}-347]"
+# git add . && git commit -m "feat(scope): description [MOB-347]"
 
 # 3. Check status periodically
 /check-workflow
@@ -183,9 +183,9 @@ See: `docs/agent-outputs/workflow-analysis/HARNESS_AND_SKILLS_AUDIT_2025-12-18.m
 /pre-pr
 
 # 6. Create PR (if validation passes)
-# git push --force-with-lease origin {{TICKET_PREFIX}}-347-branch
+# git push --force-with-lease origin MOB-347-branch
 # # Use the PR template as your PR body baseline:
-# # gh pr create --title "feat(scope): description [{{TICKET_PREFIX}}-347]" --body "$(cat .github/pull_request_template.md)"
+# # gh pr create --title "feat(scope): description [MOB-347]" --body "$(cat .github/pull_request_template.md)"
 # gh pr create ...
 
 # 7. End session cleanly
@@ -210,7 +210,7 @@ Configuration is in `hooks-config.json`.
 
 | Trigger               | Behavior                                                                      |
 | --------------------- | ----------------------------------------------------------------------------- |
-| On prompt submit      | Reminds about `{{TICKET_PREFIX}}-{number}` branch naming convention                         |
+| On prompt submit      | Reminds about `MOB-{number}` branch naming convention                         |
 | Before `git commit`   | Reminds about SAFe commit format                                              |
 | Before `git push`     | ❌ **BLOCKS** if on dev/master; ❌ **BLOCKS** if uncommitted; warns if behind |
 | Before `gh pr create` | Reminds to run `/pre-pr` validation first                                     |
@@ -375,4 +375,4 @@ These configurations are part of the project and should be:
 ---
 
 **Last Updated**: 2026-01-04
-**Maintained by**: {{PROJECT_SHORT}} Development Team + ARCHitect-in-the-IDE (Auggie)
+**Maintained by**: MOB Development Team + ARCHitect-in-the-IDE (Auggie)

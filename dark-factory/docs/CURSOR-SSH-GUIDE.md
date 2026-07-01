@@ -69,10 +69,10 @@ Open a terminal in Cursor (Ctrl+\`), then:
 ./dark-factory/scripts/factory-status.sh
 
 # Attach to a session (read-only mode recommended)
-tmux attach -t factory-{{TICKET_PREFIX}}-123 -r
+tmux attach -t factory-MOB-123 -r
 
 # Attach to observe a specific agent
-./dark-factory/scripts/factory-attach.sh factory-{{TICKET_PREFIX}}-123 2
+./dark-factory/scripts/factory-attach.sh factory-MOB-123 2
 ```
 
 **Tip**: Use Cursor's terminal split (Ctrl+Shift+5) to watch multiple agents:
@@ -106,7 +106,7 @@ If you need to send input to an agent:
 
 1. Attach to the session (without `-r` flag):
    ```bash
-   tmux attach -t factory-{{TICKET_PREFIX}}-123
+   tmux attach -t factory-MOB-123
    ```
 2. Navigate to the target pane (Alt+Arrow or Prefix+q then pane number)
 3. Type your input
@@ -129,7 +129,7 @@ SSH connections can drop over time. Use `mosh` for a persistent connection:
 mosh {{REMOTE_USER}}@{{REMOTE_HOST}}
 
 # Then attach to tmux inside mosh
-tmux attach -t factory-{{TICKET_PREFIX}}-123 -r
+tmux attach -t factory-MOB-123 -r
 ```
 
 mosh survives network changes, laptop sleep, and temporary disconnects.
@@ -158,7 +158,7 @@ panes for each teammate within the session. This means:
 ssh {{REMOTE_USER}}@{{REMOTE_HOST}}
 
 # See the full session with all agent panes
-tmux attach -t factory-{{TICKET_PREFIX}}-42 -r
+tmux attach -t factory-MOB-42 -r
 
 # Navigate between panes:
 #   Prefix + q     → show pane numbers (click to select)
@@ -174,7 +174,7 @@ tmux attach -t factory-{{TICKET_PREFIX}}-42 -r
 watch -n 5 ./dark-factory/scripts/factory-status.sh
 
 # Tail logs from all agents simultaneously
-tail -f ~/.dark-factory/logs/factory-{{TICKET_PREFIX}}-42/*.log
+tail -f ~/.dark-factory/logs/factory-MOB-42/*.log
 ```
 
 ---

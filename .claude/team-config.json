@@ -2,28 +2,28 @@
   "_comment": "SAFe Agentic Workflow team configuration. Placeholders ({{...}}) are replaced by scripts/setup-template.sh during project initialization. Agents read this file to understand team structure, quality gates, and workflow settings.",
 
   "project": {
-    "name": "{{PROJECT_NAME}}",
-    "short_name": "{{PROJECT_SHORT}}",
-    "repo": "{{PROJECT_REPO}}",
-    "domain": "{{PROJECT_DOMAIN}}",
-    "github_org": "{{GITHUB_ORG}}",
-    "company": "{{COMPANY_NAME}}"
+    "name": "mobile-app",
+    "short_name": "MOB",
+    "repo": "mobile-app",
+    "domain": "example.com",
+    "github_org": "tamasha-live",
+    "company": "Tamasha"
   },
 
   "workflow": {
-    "ticket_prefix": "{{TICKET_PREFIX}}",
-    "ticket_prefix_lower": "{{TICKET_PREFIX_LOWER}}",
-    "main_branch": "{{MAIN_BRANCH}}",
-    "linear_workspace": "{{LINEAR_WORKSPACE}}",
-    "branch_format": "{{TICKET_PREFIX}}-{number}-{description}",
-    "commit_format": "type(scope): description [{{TICKET_PREFIX}}-XXX]",
+    "ticket_prefix": "MOB",
+    "ticket_prefix_lower": "mob",
+    "main_branch": "main",
+    "linear_workspace": "tamasha",
+    "branch_format": "MOB-{number}-{description}",
+    "commit_format": "type(scope): description [MOB-XXX]",
     "merge_strategy": "rebase-and-merge"
   },
 
   "mcp_servers": {
     "_comment": "MCP server names used for tool invocations like mcp__<server>__<method>.",
-    "linear": "{{MCP_LINEAR_SERVER}}",
-    "confluence": "{{MCP_CONFLUENCE_SERVER}}"
+    "linear": "linear-mcp",
+    "confluence": "confluence-mcp"
   },
 
   "agents": {
@@ -146,13 +146,13 @@
     },
     "stage_2": {
       "name": "ARCHitect-in-CLI",
-      "reviewer": "{{ARCHITECT_GITHUB_HANDLE}}",
+      "reviewer": "ronak",
       "focus": "Comprehensive architectural review",
       "blocking": true
     },
     "stage_3": {
       "name": "HITL",
-      "reviewer": "{{AUTHOR_HANDLE}}",
+      "reviewer": "ronak",
       "focus": "Final merge authority",
       "blocking": true
     }
@@ -234,7 +234,7 @@
       "description": "Comprehensive architecture review"
     },
     "hitl_merge": {
-      "owner": "{{AUTHOR_HANDLE}}",
+      "owner": "ronak",
       "blocking": true,
       "description": "Final human merge authority"
     }

@@ -4,8 +4,8 @@
 
 v2.5.0 is the largest feature release since the harness was open-sourced. It modernizes all 18 skills with Claude Code Skills 2.0 frontmatter, introduces Agent Teams for real-time multi-agent orchestration, and adds comprehensive documentation for GitHub-Linear auto-sync behavior.
 
-**PR**: [#22](https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}/pull/22) (27 files, +1,194 lines)
-**Epic**: [WOR-540](https://linear.app/{{LINEAR_WORKSPACE}}/issue/WOR-540) (16 tickets, all completed)
+**PR**: [#22](https://github.com/tamasha-live/mobile-app/pull/22) (27 files, +1,194 lines)
+**Epic**: [WOR-540](https://linear.app/tamasha/issue/WOR-540) (16 tickets, all completed)
 **Release**: v2.5.0 (March 2026)
 
 ## Context
@@ -152,4 +152,4 @@ test -f docs/releases/v2.5.0-UPGRADE.md && echo "Upgrade Guide: EXISTS"
 
 ---
 
-*This KT document is part of the [{{PROJECT_SHORT}} SAFe Agentic Workflow](https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}) harness. For upgrade instructions, see [v2.5.0-UPGRADE.md](../releases/v2.5.0-UPGRADE.md).*
+*This KT document is part of the [MOB SAFe Agentic Workflow](https://github.com/tamasha-live/mobile-app) harness. For upgrade instructions, see [v2.5.0-UPGRADE.md](../releases/v2.5.0-UPGRADE.md).*

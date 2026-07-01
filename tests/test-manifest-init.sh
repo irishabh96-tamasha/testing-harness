@@ -145,26 +145,26 @@ create_team_config_template() {
     cat > "$proj_dir/.claude/team-config.json" <<'JSON'
 {
   "project": {
-    "name": "{{PROJECT_NAME}}",
-    "short_name": "{{PROJECT_SHORT}}",
-    "repo": "{{PROJECT_REPO}}",
-    "domain": "{{PROJECT_DOMAIN}}",
-    "github_org": "{{GITHUB_ORG}}",
-    "company": "{{COMPANY_NAME}}"
+    "name": "mobile-app",
+    "short_name": "MOB",
+    "repo": "mobile-app",
+    "domain": "example.com",
+    "github_org": "tamasha-live",
+    "company": "Tamasha"
   },
   "workflow": {
-    "ticket_prefix": "{{TICKET_PREFIX}}",
-    "ticket_prefix_lower": "{{TICKET_PREFIX_LOWER}}",
-    "main_branch": "{{MAIN_BRANCH}}",
-    "linear_workspace": "{{LINEAR_WORKSPACE}}"
+    "ticket_prefix": "MOB",
+    "ticket_prefix_lower": "mob",
+    "main_branch": "main",
+    "linear_workspace": "tamasha"
   },
   "mcp_servers": {
-    "linear": "{{MCP_LINEAR_SERVER}}",
-    "confluence": "{{MCP_CONFLUENCE_SERVER}}"
+    "linear": "linear-mcp",
+    "confluence": "confluence-mcp"
   },
   "review_stages": {
-    "stage_2": { "reviewer": "{{ARCHITECT_GITHUB_HANDLE}}" },
-    "stage_3": { "reviewer": "{{AUTHOR_HANDLE}}" }
+    "stage_2": { "reviewer": "ronak" },
+    "stage_3": { "reviewer": "ronak" }
   }
 }
 JSON
@@ -247,8 +247,8 @@ create_team_config_template "$PROJ"
 
 output=$("$PROJ/scripts/sync-claude-harness.sh" manifest init --dry-run 2>&1)
 # With unreplaced placeholders, identity values should still be {{...}} placeholders
-assert_contains "$output" '{{PROJECT_NAME}}' "unreplaced PROJECT_NAME kept as placeholder"
-assert_contains "$output" '{{TICKET_PREFIX}}' "unreplaced TICKET_PREFIX kept as placeholder"
+assert_contains "$output" 'mobile-app' "unreplaced PROJECT_NAME kept as placeholder"
+assert_contains "$output" 'MOB' "unreplaced TICKET_PREFIX kept as placeholder"
 assert_contains "$output" "incomplete fields" "warns about incomplete fields"
 
 # =============================================================================
@@ -373,22 +373,22 @@ cat > "$PROJ/.claude/team-config.json" <<'JSON'
     "name": "MyProject",
     "short_name": "MYP",
     "repo": "my-project",
-    "domain": "{{PROJECT_DOMAIN}}",
+    "domain": "example.com",
     "github_org": "my-org",
-    "company": "{{COMPANY_NAME}}"
+    "company": "Tamasha"
   },
   "workflow": {
     "ticket_prefix": "MYP",
     "main_branch": "main",
-    "linear_workspace": "{{LINEAR_WORKSPACE}}"
+    "linear_workspace": "tamasha"
   },
   "mcp_servers": {
-    "linear": "{{MCP_LINEAR_SERVER}}",
-    "confluence": "{{MCP_CONFLUENCE_SERVER}}"
+    "linear": "linear-mcp",
+    "confluence": "confluence-mcp"
   },
   "review_stages": {
-    "stage_2": { "reviewer": "{{ARCHITECT_GITHUB_HANDLE}}" },
-    "stage_3": { "reviewer": "{{AUTHOR_HANDLE}}" }
+    "stage_2": { "reviewer": "ronak" },
+    "stage_3": { "reviewer": "ronak" }
   }
 }
 JSON
@@ -398,8 +398,8 @@ output=$("$PROJ/scripts/sync-claude-harness.sh" manifest init --dry-run 2>&1)
 assert_contains "$output" 'PROJECT_NAME: "MyProject"' "detected replaced PROJECT_NAME"
 assert_contains "$output" 'TICKET_PREFIX: "MYP"' "detected replaced TICKET_PREFIX"
 # Unreplaced values should remain as placeholders
-assert_contains "$output" '{{PROJECT_DOMAIN}}' "unreplaced PROJECT_DOMAIN kept as placeholder"
-assert_contains "$output" '{{COMPANY_NAME}}' "unreplaced COMPANY_NAME kept as placeholder"
+assert_contains "$output" 'example.com' "unreplaced PROJECT_DOMAIN kept as placeholder"
+assert_contains "$output" 'Tamasha' "unreplaced COMPANY_NAME kept as placeholder"
 
 # =============================================================================
 echo -e "\n${CYAN}=== Test 14: MCP server names detected ===${NC}\n"

@@ -6,7 +6,7 @@
 **Prerequisites**:
 
 - Claude Code or Augment Code installed and configured
-- Access to Linear workspace with `mcp__{{MCP_LINEAR_SERVER}}__*` tools available
+- Access to Linear workspace with `mcp__linear-mcp__*` tools available
 - Repository cloned with agent system verified (see [AGENT-SETUP-GUIDE.md](./AGENT-SETUP-GUIDE.md))
 - Familiarity with the 11-agent team structure (see [AGENTS.md](../../AGENTS.md))
 
@@ -22,10 +22,10 @@ Start every day by reviewing what is waiting for you. QAS is a **gate owner** in
 
 ```bash
 # Use Linear MCP tools to find tickets assigned to QAS in the Testing swimlane
-mcp__{{MCP_LINEAR_SERVER}}__search_issues "assignee:me state:Testing"
+mcp__linear-mcp__search_issues "assignee:me state:Testing"
 
 # Alternatively, review tickets moved to Testing since last session
-mcp__{{MCP_LINEAR_SERVER}}__search_issues "state:Testing updated:>yesterday"
+mcp__linear-mcp__search_issues "state:Testing updated:>yesterday"
 ```
 
 ### Step 2: Prioritize Your Queue
@@ -42,13 +42,13 @@ For each ticket in your queue:
 
 ```bash
 # Read the implementation spec
-cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+cat specs/MOB-XXX-{feature}-spec.md
 
 # Extract acceptance criteria
-grep -A 20 "Acceptance Criteria" specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+grep -A 20 "Acceptance Criteria" specs/MOB-XXX-{feature}-spec.md
 
 # Check for security-critical requirements
-grep "#EXPORT_CRITICAL" specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+grep "#EXPORT_CRITICAL" specs/MOB-XXX-{feature}-spec.md
 ```
 
 ---
@@ -60,7 +60,7 @@ grep "#EXPORT_CRITICAL" specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
 Use the `/start-work` command to initialize your session context:
 
 ```
-/start-work {{TICKET_PREFIX}}-XXX
+/start-work MOB-XXX
 ```
 
 This command:
@@ -93,7 +93,7 @@ ls {{TESTS_DIR}}/fixtures/ 2>/dev/null
 Use `/check-workflow` to see where things stand:
 
 ```
-/check-workflow {{TICKET_PREFIX}}-XXX
+/check-workflow MOB-XXX
 ```
 
 This shows:
@@ -180,11 +180,11 @@ Evidence is required for every ticket before it can move to "Ready for Review." 
 Structure your evidence as a Linear comment:
 
 ```markdown
-## QAS Validation Report - {{TICKET_PREFIX}}-XXX
+## QAS Validation Report - MOB-XXX
 
 **Session ID**: [Claude Code session ID]
 **Date**: [YYYY-MM-DD]
-**Spec**: specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+**Spec**: specs/MOB-XXX-{feature}-spec.md
 
 ### Acceptance Criteria Validation
 
@@ -219,19 +219,19 @@ Use Linear MCP tools to post evidence directly to the ticket:
 
 ```bash
 # Add QAS validation report as a comment on the Linear ticket
-mcp__{{MCP_LINEAR_SERVER}}__create_comment \
-  --issue_id "{{TICKET_PREFIX}}-XXX" \
+mcp__linear-mcp__create_comment \
+  --issue_id "MOB-XXX" \
   --body "## QAS Validation Report\n\n[Full evidence report here]"
 
 # Update ticket state based on result
 # If APPROVED:
-mcp__{{MCP_LINEAR_SERVER}}__update_issue \
-  --issue_id "{{TICKET_PREFIX}}-XXX" \
+mcp__linear-mcp__update_issue \
+  --issue_id "MOB-XXX" \
   --state "Ready for Review"
 
 # If REJECTED:
-mcp__{{MCP_LINEAR_SERVER}}__update_issue \
-  --issue_id "{{TICKET_PREFIX}}-XXX" \
+mcp__linear-mcp__update_issue \
+  --issue_id "MOB-XXX" \
   --state "In Progress"
 ```
 
@@ -239,32 +239,32 @@ mcp__{{MCP_LINEAR_SERVER}}__update_issue \
 
 ## Interaction with Linear MCP Tools
 
-QAS uses `mcp__{{MCP_LINEAR_SERVER}}__*` tools throughout the workflow. Here are the key interactions:
+QAS uses `mcp__linear-mcp__*` tools throughout the workflow. Here are the key interactions:
 
 ### Reading Ticket Context
 
 ```bash
 # Get full ticket details
-mcp__{{MCP_LINEAR_SERVER}}__get_issue "{{TICKET_PREFIX}}-XXX"
+mcp__linear-mcp__get_issue "MOB-XXX"
 
 # Read comments from implementers
-mcp__{{MCP_LINEAR_SERVER}}__get_issue_comments "{{TICKET_PREFIX}}-XXX"
+mcp__linear-mcp__get_issue_comments "MOB-XXX"
 
 # Check ticket history for context
-mcp__{{MCP_LINEAR_SERVER}}__get_issue_history "{{TICKET_PREFIX}}-XXX"
+mcp__linear-mcp__get_issue_history "MOB-XXX"
 ```
 
 ### Posting Updates
 
 ```bash
 # Post progress update
-mcp__{{MCP_LINEAR_SERVER}}__create_comment \
-  --issue_id "{{TICKET_PREFIX}}-XXX" \
+mcp__linear-mcp__create_comment \
+  --issue_id "MOB-XXX" \
   --body "QAS testing in progress. Unit tests complete (12/12 passing). Starting integration tests."
 
 # Post final approval
-mcp__{{MCP_LINEAR_SERVER}}__create_comment \
-  --issue_id "{{TICKET_PREFIX}}-XXX" \
+mcp__linear-mcp__create_comment \
+  --issue_id "MOB-XXX" \
   --body "## QAS Gate: APPROVED\n\nAll ACs validated. Exit State: Approved for RTE.\n\nSession ID: [session-id]"
 ```
 
@@ -272,13 +272,13 @@ mcp__{{MCP_LINEAR_SERVER}}__create_comment \
 
 ```bash
 # Testing complete, approved → move to Ready for Review
-mcp__{{MCP_LINEAR_SERVER}}__update_issue \
-  --issue_id "{{TICKET_PREFIX}}-XXX" \
+mcp__linear-mcp__update_issue \
+  --issue_id "MOB-XXX" \
   --state "Ready for Review"
 
 # Testing failed → return to In Progress with explanation
-mcp__{{MCP_LINEAR_SERVER}}__update_issue \
-  --issue_id "{{TICKET_PREFIX}}-XXX" \
+mcp__linear-mcp__update_issue \
+  --issue_id "MOB-XXX" \
   --state "In Progress"
 ```
 
@@ -306,8 +306,8 @@ Before ending your session, run through this checklist:
 Post a summary comment on any ticket still in progress:
 
 ```bash
-mcp__{{MCP_LINEAR_SERVER}}__create_comment \
-  --issue_id "{{TICKET_PREFIX}}-XXX" \
+mcp__linear-mcp__create_comment \
+  --issue_id "MOB-XXX" \
   --body "QAS end-of-day update: Integration tests complete (8/8 passing). E2E tests pending - will resume next session. Session ID: [session-id]"
 ```
 
@@ -378,7 +378,7 @@ QAS should halt progress when:
 **Issue**: Cannot find the spec for a ticket
 
 - **Solution**: Ask BSA to create the spec or check `specs/` directory naming
-- **Action**: `ls specs/ | grep "{{TICKET_PREFIX}}-XXX"` or ask `@bsa`
+- **Action**: `ls specs/ | grep "MOB-XXX"` or ask `@bsa`
 
 **Issue**: Acceptance criteria are ambiguous
 
@@ -387,7 +387,7 @@ QAS should halt progress when:
 
 **Issue**: RLS tests fail unexpectedly
 
-- **Solution**: Verify test database user is `{{LINEAR_WORKSPACE}}_app_user`, not the superuser
+- **Solution**: Verify test database user is `tamasha_app_user`, not the superuser
 - **Action**: See [RLS Implementation Guide](../database/RLS_IMPLEMENTATION_GUIDE.md)
 
 ---
@@ -413,5 +413,5 @@ QAS should halt progress when:
 
 **Questions?**
 
-- GitHub Discussions: {{GITHUB_REPO_URL}}/discussions
-- Email: {{AUTHOR_EMAIL}}
+- GitHub Discussions: https://github.com/tamasha-live/mobile-app/discussions
+- Email: ronak@tamasha.live

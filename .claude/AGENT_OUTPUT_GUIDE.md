@@ -12,12 +12,12 @@
 
 | Agent                                  | Output Directory                        | Naming Convention                 |
 | -------------------------------------- | --------------------------------------- | --------------------------------- |
-| **QAS** (Quality Assurance Specialist) | `/docs/agent-outputs/qa-validations/`   | `{{TICKET_PREFIX}}-{number}-qa-validation.md`   |
-| **BSA** (Business Systems Analyst)     | `/docs/agent-outputs/requirements/`     | `{{TICKET_PREFIX}}-{number}-requirements.md`    |
+| **QAS** (Quality Assurance Specialist) | `/docs/agent-outputs/qa-validations/`   | `MOB-{number}-qa-validation.md`   |
+| **BSA** (Business Systems Analyst)     | `/docs/agent-outputs/requirements/`     | `MOB-{number}-requirements.md`    |
 | **System Architect**                   | `/docs/adr/`                            | `ADR-{number}-{title}.md`         |
-| **Tech Writer**                        | `/docs/agent-outputs/technical-docs/`   | `{{TICKET_PREFIX}}-{number}-technical-docs.md`  |
-| **Data Engineer**                      | `/docs/agent-outputs/technical-docs/`   | `{{TICKET_PREFIX}}-{number}-migration-plan.md`  |
-| **TDM** (Technical Delivery Manager)   | `/docs/agent-outputs/delivery-reports/` | `{{TICKET_PREFIX}}-{number}-delivery-report.md` |
+| **Tech Writer**                        | `/docs/agent-outputs/technical-docs/`   | `MOB-{number}-technical-docs.md`  |
+| **Data Engineer**                      | `/docs/agent-outputs/technical-docs/`   | `MOB-{number}-migration-plan.md`  |
+| **TDM** (Technical Delivery Manager)   | `/docs/agent-outputs/delivery-reports/` | `MOB-{number}-delivery-report.md` |
 
 ---
 
@@ -91,7 +91,7 @@ These paths are hardcoded across 80+ files. **DO NOT MODIFY THESE LOCATIONS**:
 
 ### QAS (Quality Assurance Specialist)
 
-**Output Location**: `/docs/agent-outputs/qa-validations/{{TICKET_PREFIX}}-{number}-qa-validation.md`
+**Output Location**: `/docs/agent-outputs/qa-validations/MOB-{number}-qa-validation.md`
 
 **What to Include**:
 
@@ -104,7 +104,7 @@ These paths are hardcoded across 80+ files. **DO NOT MODIFY THESE LOCATIONS**:
 
 ### BSA (Business Systems Analyst)
 
-**Output Location**: `/docs/agent-outputs/requirements/{{TICKET_PREFIX}}-{number}-requirements.md`
+**Output Location**: `/docs/agent-outputs/requirements/MOB-{number}-requirements.md`
 
 **What to Include**:
 
@@ -132,7 +132,7 @@ These paths are hardcoded across 80+ files. **DO NOT MODIFY THESE LOCATIONS**:
 
 ### Tech Writer
 
-**Output Location**: `/docs/agent-outputs/technical-docs/{{TICKET_PREFIX}}-{number}-technical-docs.md`
+**Output Location**: `/docs/agent-outputs/technical-docs/MOB-{number}-technical-docs.md`
 
 **What to Include**:
 
@@ -145,7 +145,7 @@ These paths are hardcoded across 80+ files. **DO NOT MODIFY THESE LOCATIONS**:
 
 ### Data Engineer
 
-**Output Location**: `/docs/agent-outputs/technical-docs/{{TICKET_PREFIX}}-{number}-migration-plan.md`
+**Output Location**: `/docs/agent-outputs/technical-docs/MOB-{number}-migration-plan.md`
 
 **What to Include**:
 
@@ -164,8 +164,8 @@ These paths are hardcoded across 80+ files. **DO NOT MODIFY THESE LOCATIONS**:
 
 ```bash
 # QAS agent writes validation report
-cat > /docs/agent-outputs/qa-validations/{{TICKET_PREFIX}}-334-qa-validation.md <<EOF
-## QA Validation Report - {{TICKET_PREFIX}}-334
+cat > /docs/agent-outputs/qa-validations/MOB-334-qa-validation.md <<EOF
+## QA Validation Report - MOB-334
 
 **Tests Executed**: 5/5 (100% pass)
 **Acceptance Criteria Met**: 6/6 (100%)
@@ -182,8 +182,8 @@ EOF
 
 ```bash
 # BSA agent writes requirements
-cat > /docs/agent-outputs/requirements/{{TICKET_PREFIX}}-335-requirements.md <<EOF
-## Requirements - {{TICKET_PREFIX}}-335
+cat > /docs/agent-outputs/requirements/MOB-335-requirements.md <<EOF
+## Requirements - MOB-335
 
 **User Story**: As a user, I want to...
 
@@ -202,8 +202,8 @@ EOF
 
 ```bash
 # Tech Writer creates migration guide
-cat > /docs/agent-outputs/technical-docs/{{TICKET_PREFIX}}-336-migration-guide.md <<EOF
-## Migration Guide - {{TICKET_PREFIX}}-336
+cat > /docs/agent-outputs/technical-docs/MOB-336-migration-guide.md <<EOF
+## Migration Guide - MOB-336
 
 **What Changed**: Database schema update
 
@@ -219,7 +219,7 @@ EOF
 
 ## 🔄 File Lifecycle
 
-1. **During Work**: Agents write to `/docs/agent-outputs/{category}/{{TICKET_PREFIX}}-{number}-*.md`
+1. **During Work**: Agents write to `/docs/agent-outputs/{category}/MOB-{number}-*.md`
 2. **PR Review**: Files attached to Linear ticket for evidence
 3. **After Merge**: Files remain in agent-outputs for audit trail
 4. **Quarterly Archive**: Old files moved to `/docs/archive/20XX-QX/` if desired
@@ -230,7 +230,7 @@ EOF
 
 ### DO
 
-✅ Use Linear ticket number in filename (`{{TICKET_PREFIX}}-{number}-*`)
+✅ Use Linear ticket number in filename (`MOB-{number}-*`)
 ✅ Write to designated agent output directory
 ✅ Keep critical docs in their current locations
 ✅ Read mandatory docs before starting work

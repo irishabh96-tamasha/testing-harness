@@ -40,7 +40,7 @@ ssh -i {{SSH_KEY_PATH}} {{REMOTE_USER}}@{{REMOTE_HOST}} "docker images {{REGISTR
 Cross-reference with git commits to show messages:
 
 ```bash
-git log origin/{{MAIN_BRANCH}} -10 --oneline
+git log origin/main -10 --oneline
 ```
 
 ### 3. Select Rollback Target
@@ -150,7 +150,7 @@ Provide comprehensive rollback summary:
 Problem Detected
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Version:  3a49b85 - feat(ci): add Slack notifications [{{TICKET_PREFIX}}-350]
+Version:  3a49b85 - feat(ci): add Slack notifications [MOB-350]
 Issue:    Health check failing / Services crashing
 Time:     Deployed 5 minutes ago
 
@@ -158,7 +158,7 @@ Time:     Deployed 5 minutes ago
 Rollback Target
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Selected: e9722d4 - style(docs): apply markdown linting fixes [{{TICKET_PREFIX}}-347]
+Selected: e9722d4 - style(docs): apply markdown linting fixes [MOB-347]
 Reason:   Last known stable version
 Age:      7 hours ago
 
@@ -176,7 +176,7 @@ Rollback Progress
 Post-Rollback Status
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Running:  e9722d4 - style(docs): apply markdown linting fixes [{{TICKET_PREFIX}}-347]
+Running:  e9722d4 - style(docs): apply markdown linting fixes [MOB-347]
 Status:   ✅ Healthy
 URL:      http://{{REMOTE_HOST}}:{{DEV_PORT}}
 Duration: 1m 23s
@@ -275,8 +275,8 @@ Document issue in Linear to prevent recurrence:
 | `{{APP_CONTAINER_DEV}}`     | Dev app container name           | `myapp-dev`                 |
 | `{{APP_CONTAINER_STAGING}}` | Staging app container name       | `myapp-staging`             |
 | `{{DEV_PORT}}`              | Port your dev app runs on        | `3000`                      |
-| `{{MAIN_BRANCH}}`           | Main git branch name             | `main`                      |
-| `{{TICKET_PREFIX}}`         | Linear/Jira ticket prefix        | `WOR`, `PROJ`, `FEAT`       |
+| `main`           | Main git branch name             | `main`                      |
+| `MOB`         | Linear/Jira ticket prefix        | `WOR`, `PROJ`, `FEAT`       |
 
 ### Example Configuration
 

@@ -58,8 +58,8 @@ The `factory-setup.sh` script validates all prerequisites automatically.
 
 ```bash
 # Clone the repo on your remote server
-git clone git@github.com:{{GITHUB_ORG}}/{{PROJECT_REPO}}.git
-cd {{PROJECT_REPO}}
+git clone git@github.com:tamasha-live/mobile-app.git
+cd mobile-app
 
 # Run one-time setup
 ./dark-factory/scripts/factory-setup.sh
@@ -69,7 +69,7 @@ Setup performs:
 1. Checks all prerequisites are installed
 2. Creates `~/.dark-factory/` config directory with `logs/` and `worktrees/`
 3. Copies `env.template` to `~/.dark-factory/env`
-4. **Readiness gate**: verifies merge queue enforcement on `{{MAIN_BRANCH}}`
+4. **Readiness gate**: verifies merge queue enforcement on `main`
 5. Checks `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` env var
 
 **Edit your config** after setup:
@@ -86,16 +86,16 @@ Replace all `{{...}}` placeholders with your actual values.
 
 ```bash
 # Story-level work (2-3 agents: TDM + BE + QAS)
-./dark-factory/scripts/factory-start.sh story {{TICKET_PREFIX}}-456
+./dark-factory/scripts/factory-start.sh story MOB-456
 
 # Feature-level work (4-5 agents: TDM + BE + FE + QAS + RTE)
-./dark-factory/scripts/factory-start.sh feature {{TICKET_PREFIX}}-123
+./dark-factory/scripts/factory-start.sh feature MOB-123
 
 # Epic-level work (6-8 agents: full SAFe team)
-./dark-factory/scripts/factory-start.sh epic {{TICKET_PREFIX}}-789
+./dark-factory/scripts/factory-start.sh epic MOB-789
 ```
 
-The session name follows the pattern `factory-{{TICKET_PREFIX}}-XXX` (or
+The session name follows the pattern `factory-MOB-XXX` (or
 `factory-YYYYMMDD-HHMMSS` if no ticket is provided).
 
 ### Team Layouts
@@ -152,7 +152,7 @@ The status dashboard is your primary monitoring tool:
   Dark Factory Status Dashboard
 ========================================
 
-Session: factory-{{TICKET_PREFIX}}-42
+Session: factory-MOB-42
   Created: 2026-03-06 09:15:00
   Panes:
     [1] TDM (lead)           active
@@ -188,7 +188,7 @@ This updates every 5 seconds so you can leave it visible while doing other work.
 **Agent is "dead":**
 ```bash
 # 1. Attach to the dead pane to see what happened
-./dark-factory/scripts/factory-attach.sh factory-{{TICKET_PREFIX}}-123 4
+./dark-factory/scripts/factory-attach.sh factory-MOB-123 4
 
 # 2. In the pane, check the last output (scroll up with Prefix+[)
 
@@ -199,19 +199,19 @@ claude --dangerously-skip-permissions
 **Agent is "idle" for a long time:**
 ```bash
 # Check the agent's log for what it last did
-tail -20 ~/.dark-factory/logs/factory-{{TICKET_PREFIX}}-123/qas.log
+tail -20 ~/.dark-factory/logs/factory-MOB-123/qas.log
 
 # If stuck, attach and provide guidance
-./dark-factory/scripts/factory-attach.sh factory-{{TICKET_PREFIX}}-123 4
+./dark-factory/scripts/factory-attach.sh factory-MOB-123 4
 ```
 
 **All agents dead (session crashed):**
 ```bash
 # Stop the session cleanly
-./dark-factory/scripts/factory-stop.sh factory-{{TICKET_PREFIX}}-123
+./dark-factory/scripts/factory-stop.sh factory-MOB-123
 
 # Restart with the same ticket
-./dark-factory/scripts/factory-start.sh feature {{TICKET_PREFIX}}-123
+./dark-factory/scripts/factory-start.sh feature MOB-123
 ```
 
 ### Live Log Monitoring
@@ -220,13 +220,13 @@ Every agent's terminal output is captured to log files:
 
 ```bash
 # Tail all agents simultaneously
-tail -f ~/.dark-factory/logs/factory-{{TICKET_PREFIX}}-123/*.log
+tail -f ~/.dark-factory/logs/factory-MOB-123/*.log
 
 # Tail a specific agent
-tail -f ~/.dark-factory/logs/factory-{{TICKET_PREFIX}}-123/be-developer.log
+tail -f ~/.dark-factory/logs/factory-MOB-123/be-developer.log
 
 # Search logs for errors
-grep -i "error\|fail\|blocked" ~/.dark-factory/logs/factory-{{TICKET_PREFIX}}-123/*.log
+grep -i "error\|fail\|blocked" ~/.dark-factory/logs/factory-MOB-123/*.log
 ```
 
 ### Attach to a Session
@@ -236,10 +236,10 @@ grep -i "error\|fail\|blocked" ~/.dark-factory/logs/factory-{{TICKET_PREFIX}}-12
 ./dark-factory/scripts/factory-attach.sh
 
 # Attach to a specific session
-./dark-factory/scripts/factory-attach.sh factory-{{TICKET_PREFIX}}-123
+./dark-factory/scripts/factory-attach.sh factory-MOB-123
 
 # Attach with a specific pane selected (e.g., pane 2 = BE Developer)
-./dark-factory/scripts/factory-attach.sh factory-{{TICKET_PREFIX}}-123 2
+./dark-factory/scripts/factory-attach.sh factory-MOB-123 2
 ```
 
 ### Read-Only Observation
@@ -248,7 +248,7 @@ Use the `-r` flag to prevent accidental keystrokes from interfering with agents:
 
 ```bash
 # Read-only mode (recommended for observation)
-tmux attach -t factory-{{TICKET_PREFIX}}-123 -r
+tmux attach -t factory-MOB-123 -r
 ```
 
 ### Quick Navigation (Inside tmux)
@@ -275,7 +275,7 @@ change this, so your standard tmux muscle memory works.
 ./dark-factory/scripts/factory-stop.sh
 
 # Direct -- stop specific session
-./dark-factory/scripts/factory-stop.sh factory-{{TICKET_PREFIX}}-123
+./dark-factory/scripts/factory-stop.sh factory-MOB-123
 ```
 
 Stop performs:
@@ -322,7 +322,7 @@ On session stop, logs move to `~/.dark-factory/logs/archive/`.
 
 **Tail live logs:**
 ```bash
-tail -f ~/.dark-factory/logs/factory-{{TICKET_PREFIX}}-123/*.log
+tail -f ~/.dark-factory/logs/factory-MOB-123/*.log
 ```
 
 ---
@@ -347,12 +347,12 @@ If a session crashes or an agent pane dies:
 ./dark-factory/scripts/factory-status.sh
 
 # For a single dead pane, re-attach and manually restart
-./dark-factory/scripts/factory-attach.sh factory-{{TICKET_PREFIX}}-123 3
+./dark-factory/scripts/factory-attach.sh factory-MOB-123 3
 # Then in the pane: claude --dangerously-skip-permissions
 
 # For a full session restart
-./dark-factory/scripts/factory-stop.sh factory-{{TICKET_PREFIX}}-123
-./dark-factory/scripts/factory-start.sh feature {{TICKET_PREFIX}}-123
+./dark-factory/scripts/factory-stop.sh factory-MOB-123
+./dark-factory/scripts/factory-start.sh feature MOB-123
 ```
 
 ### Recommendations for 24/7 Operation
@@ -377,7 +377,7 @@ command, write any file, and make network requests without confirmation.
 - Use dedicated SSH keys with limited scope
 - Network-level isolation (firewall rules)
 - Per-agent git worktrees prevent cross-contamination
-- Merge queue prevents direct pushes to `{{MAIN_BRANCH}}`
+- Merge queue prevents direct pushes to `main`
 - All PRs still require CI checks and review stages
 
 ### Environment Variables
@@ -403,7 +403,7 @@ Dark Factory agents follow the same workflow as interactive sessions:
 
 Agents use the standard commit format:
 ```
-type(scope): description [{{TICKET_PREFIX}}-XXX]
+type(scope): description [MOB-XXX]
 ```
 
 ### PR Flow
@@ -412,7 +412,7 @@ type(scope): description [{{TICKET_PREFIX}}-XXX]
 Agent creates PR --> CI runs --> QAS validates --> HITL reviews --> Merge queue
 ```
 
-No agent ever runs `git push` to `{{MAIN_BRANCH}}` or `gh pr merge` without
+No agent ever runs `git push` to `main` or `gh pr merge` without
 `--auto --squash`. The merge queue is the single point of entry to trunk.
 
 ---

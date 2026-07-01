@@ -17,7 +17,7 @@ This command calls `/remote-health` which is the canonical command for {{DEV_MAC
 
 ## Why Deprecated?
 
-Per {{TICKET_PREFIX}}-445, we canonicalized around `/remote-*` and `/local-*` naming:
+Per MOB-445, we canonicalized around `/remote-*` and `/local-*` naming:
 
 - `/remote-*` = {{DEV_MACHINE}} operations (staging-first, then dev)
 - `/local-*` = Local machine operations
@@ -35,5 +35,5 @@ To adapt this command for your infrastructure, replace these placeholders:
 
 | Placeholder       | Description                  | Example                           |
 | ----------------- | ---------------------------- | --------------------------------- |
-| `{{TICKET_PREFIX}}` | Your Linear ticket prefix    | `WOR`, `PROJ`, `TASK`             |
+| `MOB` | Your Linear ticket prefix    | `WOR`, `PROJ`, `TASK`             |
 | `{{DEV_MACHINE}}`   | Your remote dev machine name | `Pop OS`, `staging`, `dev-server` |

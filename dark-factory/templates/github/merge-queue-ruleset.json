@@ -5,7 +5,7 @@
   "enforcement": "active",
   "conditions": {
     "ref_name": {
-      "include": ["refs/heads/{{MAIN_BRANCH}}"],
+      "include": ["refs/heads/main"],
       "exclude": []
     }
   },

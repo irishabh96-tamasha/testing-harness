@@ -189,14 +189,14 @@ setup_mock_upstream() {
     # Create upstream files that use {{PLACEHOLDER}} tokens
     # (simulating the raw upstream template state)
     cat > "$upstream_dir/README.md" <<'UPSTREAM'
-# Claude Harness - {{PROJECT_NAME}}
+# Claude Harness - mobile-app
 
-This is the {{PROJECT_NAME}} harness directory.
-Project: {{PROJECT_NAME}} | Prefix: {{TICKET_PREFIX}} | Branch: {{MAIN_BRANCH}}
+This is the mobile-app harness directory.
+Project: mobile-app | Prefix: MOB | Branch: main
 UPSTREAM
 
     cat > "$upstream_dir/AGENT_OUTPUT_GUIDE.md" <<'UPSTREAM'
-# {{PROJECT_NAME}} Agent Output Guide
+# mobile-app Agent Output Guide
 
 Standard upstream output guide template.
 UPSTREAM
@@ -204,9 +204,9 @@ UPSTREAM
     cat > "$upstream_dir/agents/be-developer.md" <<'UPSTREAM'
 # Backend Developer
 
-Project: {{PROJECT_NAME}}
-Ticket prefix: {{TICKET_PREFIX}}
-Main branch: {{MAIN_BRANCH}}
+Project: mobile-app
+Ticket prefix: MOB
+Main branch: main
 
 Standard upstream BE developer agent.
 UPSTREAM
@@ -214,9 +214,9 @@ UPSTREAM
     cat > "$upstream_dir/agents/fe-developer.md" <<'UPSTREAM'
 # Frontend Developer
 
-Project: {{PROJECT_NAME}}
-Ticket prefix: {{TICKET_PREFIX}}
-Main branch: {{MAIN_BRANCH}}
+Project: mobile-app
+Ticket prefix: MOB
+Main branch: main
 
 Standard upstream FE developer agent.
 UPSTREAM
@@ -224,8 +224,8 @@ UPSTREAM
     cat > "$upstream_dir/agents/data-engineer.md" <<'UPSTREAM'
 # Data Engineer
 
-Project: {{PROJECT_NAME}}
-Ticket prefix: {{TICKET_PREFIX}}
+Project: mobile-app
+Ticket prefix: MOB
 
 Standard upstream data engineer agent.
 UPSTREAM
@@ -233,7 +233,7 @@ UPSTREAM
     cat > "$upstream_dir/agents/system-architect.md" <<'UPSTREAM'
 # System Architect
 
-Project: {{PROJECT_NAME}}
+Project: mobile-app
 
 Standard upstream system architect agent.
 UPSTREAM
@@ -241,7 +241,7 @@ UPSTREAM
     cat > "$upstream_dir/agents/qas.md" <<'UPSTREAM'
 # QA Specialist
 
-Project: {{PROJECT_NAME}}
+Project: mobile-app
 
 Standard upstream QAS agent.
 UPSTREAM
@@ -261,16 +261,16 @@ UPSTREAM
     cat > "$upstream_dir/team-config.json" <<'UPSTREAM'
 {
   "description": "Upstream team config template",
-  "team_name": "{{PROJECT_NAME}} Team",
-  "ticket_prefix": "{{TICKET_PREFIX}}",
-  "main_branch": "{{MAIN_BRANCH}}"
+  "team_name": "mobile-app Team",
+  "ticket_prefix": "MOB",
+  "main_branch": "main"
 }
 UPSTREAM
 
     cat > "$upstream_dir/skills/stripe-patterns/SKILL.md" <<'UPSTREAM'
 # Stripe Patterns Skill
 
-Project: {{PROJECT_NAME}}
+Project: mobile-app
 
 Standard upstream stripe patterns skill.
 UPSTREAM
@@ -278,7 +278,7 @@ UPSTREAM
     cat > "$upstream_dir/commands/start-work.md" <<'UPSTREAM'
 # Start Work
 
-Begin a new {{TICKET_PREFIX}} ticket.
+Begin a new MOB ticket.
 UPSTREAM
 
     echo "$upstream_dir"
@@ -484,13 +484,13 @@ output=$("$STUBBED" sync --skip-preflight 2>&1) || true
 
 # Verify substitutions were applied to newly synced files
 assert_file_contains "$PROJ/.claude/agents/qas.md" "RenderTrust" \
-    "{{PROJECT_NAME}} replaced with RenderTrust in qas.md"
-assert_file_not_contains "$PROJ/.claude/agents/qas.md" "{{PROJECT_NAME}}" \
-    "no unreplaced {{PROJECT_NAME}} tokens in qas.md"
+    "mobile-app replaced with RenderTrust in qas.md"
+assert_file_not_contains "$PROJ/.claude/agents/qas.md" "mobile-app" \
+    "no unreplaced mobile-app tokens in qas.md"
 
 if [ -f "$PROJ/.claude/commands/start-work.md" ]; then
     assert_file_contains "$PROJ/.claude/commands/start-work.md" "REN" \
-        "{{TICKET_PREFIX}} replaced with REN in start-work.md"
+        "MOB replaced with REN in start-work.md"
 fi
 
 
@@ -657,9 +657,9 @@ output=$("$STUBBED" sync --skip-preflight 2>&1) || true
 # Verify Keryk AI identity values were substituted
 if [ -f "$PROJ/.claude/agents/qas.md" ]; then
     assert_file_contains "$PROJ/.claude/agents/qas.md" "ScaleForge" \
-        "{{PROJECT_NAME}} replaced with ScaleForge in qas.md"
-    assert_file_not_contains "$PROJ/.claude/agents/qas.md" "{{PROJECT_NAME}}" \
-        "no unreplaced {{PROJECT_NAME}} tokens in qas.md (keryk-ai)"
+        "mobile-app replaced with ScaleForge in qas.md"
+    assert_file_not_contains "$PROJ/.claude/agents/qas.md" "mobile-app" \
+        "no unreplaced mobile-app tokens in qas.md (keryk-ai)"
 fi
 
 

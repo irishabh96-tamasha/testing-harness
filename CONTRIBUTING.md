@@ -34,8 +34,8 @@ Welcome to Claude Code Harness for Multi-Agent Team Workflows! This guide covers
 2. **Clone and Setup**:
 
    ```bash
-   git clone https://github.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-app.git
-   cd {{PROJECT_NAME}}-app
+   git clone https://github.com/tamasha-live/mobile-app-app.git
+   cd mobile-app-app
    yarn install
    ```
 
@@ -75,7 +75,7 @@ AI agents (Claude Code, Augment agents) should:
 
 **✅ MUST DO**:
 
-- Follow the exact branch naming convention: `{{TICKET_PREFIX}}-{number}-{description}`
+- Follow the exact branch naming convention: `MOB-{number}-{description}`
 - Use SAFe commit message format with Linear ticket references
 - Run `yarn ci:validate` before pushing any code
 - Use the comprehensive PR template completely
@@ -102,17 +102,17 @@ Agent Teams is an experimental feature for real-time multi-agent orchestration. 
 ```bash
 # 1. Start work (always from latest dev)
 git checkout dev && git pull origin dev
-git checkout -b {{TICKET_PREFIX}}-123-implement-feature
+git checkout -b MOB-123-implement-feature
 
 # 2. Make changes and commit with SAFe format
-git commit -m "feat(scope): implement feature [{{TICKET_PREFIX}}-123]"
+git commit -m "feat(scope): implement feature [MOB-123]"
 
 # 3. Before pushing - ALWAYS validate locally
 yarn ci:validate
 
 # 4. Rebase and push
 git fetch origin && git rebase origin/dev
-git push --force-with-lease origin {{TICKET_PREFIX}}-123-implement-feature
+git push --force-with-lease origin MOB-123-implement-feature
 
 # 5. Create PR using template at .github/pull_request_template.md
 ```
@@ -139,13 +139,13 @@ git push --force-with-lease origin {{TICKET_PREFIX}}-123-implement-feature
 
 ## Branch Naming Conventions
 
-**REQUIRED FORMAT**: `{{TICKET_PREFIX}}-{number}-{short-description}`
+**REQUIRED FORMAT**: `MOB-{number}-{short-description}`
 
 ### ✅ Correct Examples
 
-- `{{TICKET_PREFIX}}-42-add-user-authentication`
-- `{{TICKET_PREFIX}}-57-fix-profile-image-upload`
-- `{{TICKET_PREFIX}}-123-implement-stripe-checkout`
+- `MOB-42-add-user-authentication`
+- `MOB-57-fix-profile-image-upload`
+- `MOB-123-implement-stripe-checkout`
 
 ### ❌ Incorrect Examples
 
@@ -156,7 +156,7 @@ git push --force-with-lease origin {{TICKET_PREFIX}}-123-implement-feature
 
 ### Branch Naming Rules
 
-1. **MUST** start with `{{TICKET_PREFIX}}-{number}` (Linear ticket reference)
+1. **MUST** start with `MOB-{number}` (Linear ticket reference)
 2. Use lowercase letters and hyphens for description
 3. Keep description short but descriptive (max 50 chars total)
 4. Never include personal names or dates
@@ -169,7 +169,7 @@ git push --force-with-lease origin {{TICKET_PREFIX}}-123-implement-feature
 **REQUIRED FORMAT**: SAFe methodology with Linear ticket reference
 
 ```
-type(scope): description [{{TICKET_PREFIX}}-XXX]
+type(scope): description [MOB-XXX]
 ```
 
 ### Types (Required)
@@ -196,9 +196,9 @@ type(scope): description [{{TICKET_PREFIX}}-XXX]
 ✅ **Correct**:
 
 ```
-feat(payments): add Stripe checkout integration [{{TICKET_PREFIX}}-42]
-fix(auth): resolve login redirect issue [{{TICKET_PREFIX}}-57]
-docs: update API documentation [{{TICKET_PREFIX}}-123]
+feat(payments): add Stripe checkout integration [MOB-42]
+fix(auth): resolve login redirect issue [MOB-57]
+docs: update API documentation [MOB-123]
 ```
 
 ❌ **Incorrect**:
@@ -223,7 +223,7 @@ git checkout dev
 git pull origin dev
 
 # Create feature branch with Linear ticket number
-git checkout -b {{TICKET_PREFIX}}-{number}-{description}
+git checkout -b MOB-{number}-{description}
 ```
 
 ### 2. During Development
@@ -231,7 +231,7 @@ git checkout -b {{TICKET_PREFIX}}-{number}-{description}
 ```bash
 # Make changes and commit with SAFe format
 git add .
-git commit -m "feat(scope): description [{{TICKET_PREFIX}}-XXX]"
+git commit -m "feat(scope): description [MOB-XXX]"
 
 # Keep branch updated (rebase, never merge)
 git fetch origin
@@ -257,14 +257,14 @@ yarn ci:validate
 
 ```bash
 # ALWAYS use force-with-lease after rebase
-git push --force-with-lease origin {{TICKET_PREFIX}}-{number}-{description}
+git push --force-with-lease origin MOB-{number}-{description}
 ```
 
 ### 5. Create Pull Request
 
 - **Use the template** at `.github/pull_request_template.md`
 - **Fill out ALL sections** completely
-- **Reference Linear ticket** in title: `feat(scope): description [{{TICKET_PREFIX}}-XXX]`
+- **Reference Linear ticket** in title: `feat(scope): description [MOB-XXX]`
 - **Request appropriate reviewers** (auto-assigned via CODEOWNERS)
 
 ### 6. Respond to CI/CD Feedback
@@ -314,11 +314,11 @@ Each agent role has explicit exit states that define handoff points in the workf
 │ QAS Gate        │ QAS             │ YES - no approval = stop│
 │ Stage 1 Review  │ System Architect│ YES - pattern check     │
 │ Stage 2 Review  │ ARCHitect-CLI   │ YES - architecture check│
-│ HITL Merge      │ {{AUTHOR_NAME}}            │ YES - final authority   │
+│ HITL Merge      │ Ronak            │ YES - final authority   │
 └─────────────────┴─────────────────┴─────────────────────────┘
 ```
 
-### Role Collapsing ({{TICKET_PREFIX}}-499)
+### Role Collapsing (MOB-499)
 
 - **RTE**: Collapsible (PR creation can be done by implementer)
 - **QAS**: NOT collapsible (independence gate - spawn subagent)
@@ -346,8 +346,8 @@ See [Agent Workflow SOP v1.4](./docs/sop/AGENT_WORKFLOW_SOP.md) for complete det
 The CI/CD pipeline automatically validates:
 
 1. **Structure Validation** 🔍
-   - Branch naming: `{{TICKET_PREFIX}}-{number}-{description}`
-   - PR title includes Linear ticket: `[{{TICKET_PREFIX}}-XXX]`
+   - Branch naming: `MOB-{number}-{description}`
+   - PR title includes Linear ticket: `[MOB-XXX]`
    - Linear ticket exists and is valid
 
 2. **Rebase Status Check** 🔄
@@ -379,10 +379,10 @@ The CI/CD pipeline automatically validates:
 
 **Automatic Assignment**: Based on CODEOWNERS file
 
-- Core config files → {{ARCHITECT_GITHUB_HANDLE}} (ARCHitect-in-the-IDE)
-- Payment features → @payments-team {{ARCHITECT_GITHUB_HANDLE}}
-- Authentication → @auth-team {{ARCHITECT_GITHUB_HANDLE}}
-- Database schema → @backend-team {{ARCHITECT_GITHUB_HANDLE}}
+- Core config files → ronak (ARCHitect-in-the-IDE)
+- Payment features → @payments-team ronak
+- Authentication → @auth-team ronak
+- Database schema → @backend-team ronak
 
 **Review Requirements**:
 
@@ -412,14 +412,14 @@ yarn ci:validate
 
 # Individual checks
 yarn type-check      # TypeScript validation
-yarn lint           # ESLint validation (uses eslint.config.mjs flat config - {{TICKET_PREFIX}}-290)
+yarn lint           # ESLint validation (uses eslint.config.mjs flat config - MOB-290)
 yarn test:unit      # Unit tests
 yarn test:integration # Integration tests
 yarn format:check   # Prettier formatting
 yarn build          # Production build test
 ```
 
-**Note ({{TICKET_PREFIX}}-290)**: Linting now uses ESLint CLI directly instead of `next lint`. Configuration is in `eslint.config.mjs` (flat config format). The legacy `.eslintrc.json` has been removed.
+**Note (MOB-290)**: Linting now uses ESLint CLI directly instead of `next lint`. Configuration is in `eslint.config.mjs` (flat config format). The legacy `.eslintrc.json` has been removed.
 
 ### Pipeline Stages
 
@@ -455,7 +455,7 @@ npx prisma generate
 
 # RLS Security Setup (Important!)
 # The database now uses Row Level Security for data protection
-# Use {{LINEAR_WORKSPACE}}_app_user for proper RLS enforcement in development
+# Use tamasha_app_user for proper RLS enforcement in development
 # See docs/database/RLS_IMPLEMENTATION_GUIDE.md for details
 ```
 
@@ -476,7 +476,7 @@ yarn test:integration      # Integration tests
 yarn test:e2e             # E2E tests (requires running server)
 
 # Code quality
-yarn lint                  # ESLint (migrated from 'next lint' - {{TICKET_PREFIX}}-290)
+yarn lint                  # ESLint (migrated from 'next lint' - MOB-290)
 yarn lint:fix             # Auto-fix ESLint issues
 yarn format               # Format with Prettier
 yarn type-check           # TypeScript validation
@@ -484,14 +484,14 @@ yarn type-check           # TypeScript validation
 # RLS Security Testing
 node scripts/test-rls-phase3-simple.js  # Basic RLS functionality test
 # Run comprehensive security validation:
-# cat scripts/rls-phase4-final-validation.sql | docker exec -i {{LINEAR_WORKSPACE}}-team-postgres-1 psql -U {{LINEAR_WORKSPACE}}_app_user -d {{DB_NAME}}
+# cat scripts/rls-phase4-final-validation.sql | docker exec -i tamasha-team-postgres-1 psql -U tamasha_app_user -d app_dev
 ```
 
 ## Row Level Security (RLS) Development
 
 ### 🔒 Security Implementation
 
-The {{PROJECT_NAME}} application uses **Row Level Security (RLS)** for database-level data protection. This is critical for preventing cross-user data access.
+The mobile-app application uses **Row Level Security (RLS)** for database-level data protection. This is critical for preventing cross-user data access.
 
 ### RLS Development Guidelines
 
@@ -503,14 +503,14 @@ The {{PROJECT_NAME}} application uses **Row Level Security (RLS)** for database-
 **✅ MUST DO when working with database operations:**
 
 - Use `withUserContext()`, `withAdminContext()`, or `withSystemContext()` helpers
-- Test with `{{LINEAR_WORKSPACE}}_app_user` role (not `{{DB_USER}}` superuser)
+- Test with `tamasha_app_user` role (not `app_user` superuser)
 - Validate user data isolation in your tests
 - Check RLS context is properly set before database queries
 
 **❌ NEVER DO:**
 
 - Bypass RLS context setting for user operations
-- Use `{{DB_USER}}` (superuser) for application testing
+- Use `app_user` (superuser) for application testing
 - Trust session variables for role validation
 - Assume users can access data without proper context
 
@@ -521,10 +521,10 @@ The {{PROJECT_NAME}} application uses **Row Level Security (RLS)** for database-
 node scripts/test-rls-phase3-simple.js
 
 # Run comprehensive security validation
-cat scripts/rls-phase4-final-validation.sql | docker exec -i {{LINEAR_WORKSPACE}}-team-postgres-1 psql -U {{LINEAR_WORKSPACE}}_app_user -d {{DB_NAME}}
+cat scripts/rls-phase4-final-validation.sql | docker exec -i tamasha-team-postgres-1 psql -U tamasha_app_user -d app_dev
 
 # Test user isolation manually
-docker exec {{LINEAR_WORKSPACE}}-team-postgres-1 psql -U {{LINEAR_WORKSPACE}}_app_user -d {{DB_NAME}} -c "
+docker exec tamasha-team-postgres-1 psql -U tamasha_app_user -d app_dev -c "
   SET app.current_user_id = 'your_test_user';
   SELECT COUNT(*) FROM user; -- Should see only your test user's data
 "
@@ -569,8 +569,8 @@ const systemData = await withSystemContext(
 
 ```bash
 # Rename branch to correct format
-git branch -m {{TICKET_PREFIX}}-{number}-{description}
-git push origin -u {{TICKET_PREFIX}}-{number}-{description}
+git branch -m MOB-{number}-{description}
+git push origin -u MOB-{number}-{description}
 git push origin --delete old-branch-name
 ```
 
@@ -587,7 +587,7 @@ git push --force-with-lease origin your-branch
 
 ```bash
 # Amend last commit message
-git commit --amend -m "feat(scope): description [{{TICKET_PREFIX}}-XXX]"
+git commit --amend -m "feat(scope): description [MOB-XXX]"
 git push --force-with-lease origin your-branch
 ```
 
@@ -599,14 +599,14 @@ yarn ci:validate
 
 # Fix issues and commit
 git add .
-git commit -m "fix: resolve CI validation issues [{{TICKET_PREFIX}}-XXX]"
+git commit -m "fix: resolve CI validation issues [MOB-XXX]"
 ```
 
 ### Getting Help
 
 - **Documentation**: [CI/CD Pipeline Guide](docs/ci-cd/CI-CD-Pipeline-Guide.md)
 - **Implementation Guide**: `docs/CI-CD-Pipeline-Guide.md`
-- **Team Workflow**: `docs/{{PROJECT_NAME}}-Multi-Team-Git-Workflow-Guide.md`
+- **Team Workflow**: `docs/mobile-app-Multi-Team-Git-Workflow-Guide.md`
 - **Quick Setup**: `docs/ci-cd-implementation-checklist.md`
 
 ## Additional Resources
@@ -621,10 +621,10 @@ git commit -m "fix: resolve CI validation issues [{{TICKET_PREFIX}}-XXX]"
 - **Redis Implementation Contract**: `docs/contracts/REDIS_IMPLEMENTATION_CONTRACT.md` (Infrastructure team agreement)
 - **CI/CD Setup**: `scripts/setup-ci-cd.sh`
 - **Pipeline Guide**: `docs/CI-CD-Pipeline-Guide.md`
-- **Team Workflow**: `docs/{{PROJECT_NAME}}-Multi-Team-Git-Workflow-Guide.md`
+- **Team Workflow**: `docs/mobile-app-Multi-Team-Git-Workflow-Guide.md`
 - **Implementation Checklist**: `docs/ci-cd-implementation-checklist.md`
 - **Payment Test Status**: `__tests__/PAYMENT_TESTS_STATUS.md`
-- **TypeScript Cleanup**: `docs/archive/{{TICKET_PREFIX_LOWER}}-139-typescript-cleanup-status.md` ({{TICKET_PREFIX}}-139)
+- **TypeScript Cleanup**: `docs/archive/mob-139-typescript-cleanup-status.md` (MOB-139)
 
 ### Confluence Documentation
 
@@ -632,8 +632,8 @@ git commit -m "fix: resolve CI validation issues [{{TICKET_PREFIX}}-XXX]"
 
 ---
 
-**This document is maintained by the {{PROJECT_NAME}} development team and reflects our current CI/CD pipeline implementation.**
+**This document is maintained by the mobile-app development team and reflects our current CI/CD pipeline implementation.**
 
 **Last Updated**: 2025-12-23
-**Version**: 2.1 (vNext Workflow Contract - {{TICKET_PREFIX}}-497/499)
-**Maintained by**: {{PROJECT_NAME}} Development Team + ARCHitect-in-the-IDE (Auggie)
+**Version**: 2.1 (vNext Workflow Contract - MOB-497/499)
+**Maintained by**: mobile-app Development Team + ARCHitect-in-the-IDE (Auggie)

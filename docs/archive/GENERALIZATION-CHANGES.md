@@ -28,19 +28,19 @@ If you need to make changes manually, here are the specific updates required:
 
 ### Changes to Apply
 
-#### 1. Replace "{{PROJECT_SHORT}} SAFe" with "SAFe"
+#### 1. Replace "MOB SAFe" with "SAFe"
 
 **Find:**
 
-- `{{PROJECT_SHORT}} SAFe Multi-Agent Development` → `SAFe Multi-Agent Development`
-- `{{PROJECT_SHORT}} SAFe methodology` → `SAFe multi-agent methodology`
-- `the {{PROJECT_SHORT}} methodology` → `the SAFe methodology`
-- `{{PROJECT_SHORT}} SAFe` → `SAFe multi-agent` (general references)
+- `MOB SAFe Multi-Agent Development` → `SAFe Multi-Agent Development`
+- `MOB SAFe methodology` → `SAFe multi-agent methodology`
+- `the MOB methodology` → `the SAFe methodology`
+- `MOB SAFe` → `SAFe multi-agent` (general references)
 
 #### 2. Generalize GitHub URLs
 
-**Find:** `https://github.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-Agentic-Workflow`
-**Replace:** `{{GITHUB_REPO_URL}}`
+**Find:** `https://github.com/tamasha-live/mobile-app-Agentic-Workflow`
+**Replace:** `https://github.com/tamasha-live/mobile-app`
 
 **Locations:**
 
@@ -51,21 +51,21 @@ If you need to make changes manually, here are the specific updates required:
 
 #### 3. Generalize GitIngest URLs
 
-**Find:** `https://gitingest.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-Agentic-Workflow`
-**Replace:** `https://gitingest.com/{{GITHUB_ORG}}/{{GITHUB_REPO}}`
+**Find:** `https://gitingest.com/tamasha-live/mobile-app-Agentic-Workflow`
+**Replace:** `https://gitingest.com/tamasha-live/{{GITHUB_REPO}}`
 
 #### 4. Generalize Project Name
 
-**Find:** `cd {{PROJECT_NAME}}-Agentic-Workflow`
-**Replace:** `cd {{PROJECT_NAME}}`
+**Find:** `cd mobile-app-Agentic-Workflow`
+**Replace:** `cd mobile-app`
 
 #### 5. Generalize Ticket Prefixes
 
-**Find:** `{{TICKET_PREFIX}}-{number}` (e.g., `{{TICKET_PREFIX}}-326`, `{{TICKET_PREFIX}}-123`)
-**Replace:** `{{TICKET_PREFIX}}-{number}`
+**Find:** `MOB-{number}` (e.g., `MOB-326`, `MOB-123`)
+**Replace:** `MOB-{number}`
 
 **Find:** `PROJ-{number}` (example tickets)
-**Replace:** `{{TICKET_PREFIX}}-{number}`
+**Replace:** `MOB-{number}`
 
 #### 6. Keep Generic Examples
 
@@ -80,139 +80,139 @@ If you need to make changes manually, here are the specific updates required:
 ### DAY-1-CHECKLIST.md
 
 ```diff
-- # Day 1 Checklist: {{PROJECT_SHORT}} SAFe Multi-Agent Development
+- # Day 1 Checklist: MOB SAFe Multi-Agent Development
 + # Day 1 Checklist: SAFe Multi-Agent Development
 
-- **Purpose**: Your first day with the {{PROJECT_SHORT}} SAFe methodology
+- **Purpose**: Your first day with the MOB SAFe methodology
 + **Purpose**: Your first day with the SAFe multi-agent methodology
 
-- git clone https://github.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-Agentic-Workflow
-- cd {{PROJECT_NAME}}-Agentic-Workflow
-+ git clone {{GITHUB_REPO_URL}}
-+ cd {{PROJECT_NAME}}
+- git clone https://github.com/tamasha-live/mobile-app-Agentic-Workflow
+- cd mobile-app-Agentic-Workflow
++ git clone https://github.com/tamasha-live/mobile-app
++ cd mobile-app
 
-- Visit: https://gitingest.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-Agentic-Workflow
-+ Visit: https://gitingest.com/{{GITHUB_ORG}}/{{GITHUB_REPO}}
+- Visit: https://gitingest.com/tamasha-live/mobile-app-Agentic-Workflow
++ Visit: https://gitingest.com/tamasha-live/{{GITHUB_REPO}}
 
-- I want to create a test Linear ticket to validate my {{PROJECT_SHORT}} SAFe setup.
+- I want to create a test Linear ticket to validate my MOB SAFe setup.
 + I want to create a test Linear ticket to validate my SAFe multi-agent setup.
 
 - Title: `PROJ-1: Add Hello World endpoint...`
-+ Title: `{{TICKET_PREFIX}}-1: Add Hello World endpoint...`
++ Title: `MOB-1: Add Hello World endpoint...`
 
-- **Congratulations!** You've completed Day 1 of the {{PROJECT_SHORT}} SAFe Multi-Agent Development methodology.
+- **Congratulations!** You've completed Day 1 of the MOB SAFe Multi-Agent Development methodology.
 + **Congratulations!** You've completed Day 1 of the SAFe Multi-Agent Development methodology.
 
-- GitHub Discussions: https://github.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-Agentic-Workflow/discussions
+- GitHub Discussions: https://github.com/tamasha-live/mobile-app-Agentic-Workflow/discussions
 + GitHub Discussions: See your repository's discussions page
 
-- Email: {{AUTHOR_EMAIL}}
+- Email: ronak@tamasha.live
 + (Remove or replace with your contact)
 ```
 
 ### SOCIAL-MEDIA-SETUP.md
 
 ```diff
-- How to configure social sharing for the {{PROJECT_SHORT}} SAFe Multi-Agent Development repository.
+- How to configure social sharing for the MOB SAFe Multi-Agent Development repository.
 + How to configure social sharing for the SAFe Multi-Agent Development repository.
 
-- 1. Go to: https://github.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-Agentic-Workflow
-+ 1. Go to: {{GITHUB_REPO_URL}}
+- 1. Go to: https://github.com/tamasha-live/mobile-app-Agentic-Workflow
++ 1. Go to: https://github.com/tamasha-live/mobile-app
 
-- **Project Name**: "{{PROJECT_SHORT}} SAFe Multi-Agent Development"
-+ **Project Name**: "{{PROJECT_NAME}} SAFe Multi-Agent Development"
+- **Project Name**: "MOB SAFe Multi-Agent Development"
++ **Project Name**: "mobile-app SAFe Multi-Agent Development"
 
-- content="https://{{GITHUB_ORG}}.github.io/{{PROJECT_NAME}}-Agentic-Workflow/"
-+ content="https://{{GITHUB_ORG}}.github.io/{{GITHUB_REPO}}/"
+- content="https://tamasha-live.github.io/mobile-app-Agentic-Workflow/"
++ content="https://tamasha-live.github.io/{{GITHUB_REPO}}/"
 ```
 
 ### AGENT-SETUP-GUIDE.md
 
 ```diff
-- ## Installing and Using the 11-Agent {{PROJECT_SHORT}} SAFe System
+- ## Installing and Using the 11-Agent MOB SAFe System
 + ## Installing and Using the 11-Agent SAFe System
 
-- The {{PROJECT_SHORT}} SAFe methodology uses **11 specialized AI agents**
+- The MOB SAFe methodology uses **11 specialized AI agents**
 + The SAFe multi-agent methodology uses **11 specialized AI agents**
 
-- git clone https://github.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-Agentic-Workflow
-- cd {{PROJECT_NAME}}-Agentic-Workflow
-+ git clone {{GITHUB_REPO_URL}}
-+ cd {{PROJECT_NAME}}
+- git clone https://github.com/tamasha-live/mobile-app-Agentic-Workflow
+- cd mobile-app-Agentic-Workflow
++ git clone https://github.com/tamasha-live/mobile-app
++ cd mobile-app
 
-- Create spec for {{TICKET_PREFIX}}-123
-+ Create spec for {{TICKET_PREFIX}}-123
+- Create spec for MOB-123
++ Create spec for MOB-123
 
-- I need to implement {{TICKET_PREFIX}}-123 (user profile feature).
-+ I need to implement {{TICKET_PREFIX}}-123 (user profile feature).
+- I need to implement MOB-123 (user profile feature).
++ I need to implement MOB-123 (user profile feature).
 
-- You've successfully set up the {{PROJECT_SHORT}} SAFe 11-agent system.
+- You've successfully set up the MOB SAFe 11-agent system.
 + You've successfully set up the SAFe 11-agent system.
 ```
 
 ### META-PROMPTS-FOR-USERS.md
 
 ```diff
-- # Meta-Prompts for {{PROJECT_SHORT}} SAFe Multi-Agent Development
+- # Meta-Prompts for MOB SAFe Multi-Agent Development
 + # Meta-Prompts for SAFe Multi-Agent Development
 
-- **Repository**: https://github.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-Agentic-Workflow
-+ **Repository**: {{GITHUB_REPO_URL}}
+- **Repository**: https://github.com/tamasha-live/mobile-app-Agentic-Workflow
++ **Repository**: https://github.com/tamasha-live/mobile-app
 
-- I want to set up the {{PROJECT_SHORT}} SAFe Multi-Agent Development methodology
+- I want to set up the MOB SAFe Multi-Agent Development methodology
 + I want to set up the SAFe Multi-Agent Development methodology
 
-- I've cloned the repository from https://github.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-Agentic-Workflow
-+ I've cloned the repository from {{GITHUB_REPO_URL}}
+- I've cloned the repository from https://github.com/tamasha-live/mobile-app-Agentic-Workflow
++ I've cloned the repository from https://github.com/tamasha-live/mobile-app
 
-- I'm working on a task and need to know which {{PROJECT_SHORT}} SAFe agent to invoke.
+- I'm working on a task and need to know which MOB SAFe agent to invoke.
 + I'm working on a task and need to know which SAFe agent to invoke.
 
-- Based on the {{PROJECT_SHORT}} SAFe methodology with 11 agent roles:
+- Based on the MOB SAFe methodology with 11 agent roles:
 + Based on the SAFe multi-agent methodology with 11 agent roles:
 
-- I've cloned the {{PROJECT_SHORT}} SAFe Agentic Workflow repository
+- I've cloned the MOB SAFe Agentic Workflow repository
 + I've cloned the SAFe Agentic Workflow repository
 
-- I want to integrate the {{PROJECT_SHORT}} SAFe multi-agent workflow
+- I want to integrate the MOB SAFe multi-agent workflow
 + I want to integrate the SAFe multi-agent workflow
 
-- I've just set up the {{PROJECT_SHORT}} SAFe Multi-Agent Development methodology.
+- I've just set up the MOB SAFe Multi-Agent Development methodology.
 + I've just set up the SAFe Multi-Agent Development methodology.
 
-- Repository cloned: `git clone https://github.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-Agentic-Workflow`
-+ Repository cloned: `git clone {{GITHUB_REPO_URL}}`
+- Repository cloned: `git clone https://github.com/tamasha-live/mobile-app-Agentic-Workflow`
++ Repository cloned: `git clone https://github.com/tamasha-live/mobile-app`
 
-- I'm having trouble with the {{PROJECT_SHORT}} SAFe Multi-Agent Development setup.
+- I'm having trouble with the MOB SAFe Multi-Agent Development setup.
 + I'm having trouble with the SAFe Multi-Agent Development setup.
 
-- **GitIngest Link**: https://gitingest.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-Agentic-Workflow
-+ **GitIngest Link**: https://gitingest.com/{{GITHUB_ORG}}/{{GITHUB_REPO}}
+- **GitIngest Link**: https://gitingest.com/tamasha-live/mobile-app-Agentic-Workflow
++ **GitIngest Link**: https://gitingest.com/tamasha-live/{{GITHUB_REPO}}
 ```
 
 ### USER-JOURNEY-VALIDATION-REPORT.md
 
 ```diff
-- ## {{PROJECT_NAME}}-Agentic-Workflow Repository
+- ## mobile-app-Agentic-Workflow Repository
 + ## SAFe-Agentic-Workflow Repository
 
-- **Ticket**: {{TICKET_PREFIX}}-326
-+ **Ticket**: {{TICKET_PREFIX}}-326
+- **Ticket**: MOB-326
++ **Ticket**: MOB-326
 
-- **Repository**: https://github.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-Agentic-Workflow
-+ **Repository**: {{GITHUB_REPO_URL}}
+- **Repository**: https://github.com/tamasha-live/mobile-app-Agentic-Workflow
++ **Repository**: https://github.com/tamasha-live/mobile-app
 
-- **URL**: https://gitingest.com/{{GITHUB_ORG}}/{{PROJECT_NAME}}-Agentic-Workflow
-+ **URL**: https://gitingest.com/{{GITHUB_ORG}}/{{GITHUB_REPO}}
+- **URL**: https://gitingest.com/tamasha-live/mobile-app-Agentic-Workflow
++ **URL**: https://gitingest.com/tamasha-live/{{GITHUB_REPO}}
 
-- ### ✅ COMPLETED ({{TICKET_PREFIX}}-326)
-+ ### ✅ COMPLETED ({{TICKET_PREFIX}}-326)
+- ### ✅ COMPLETED (MOB-326)
++ ### ✅ COMPLETED (MOB-326)
 
-- ### Future Enhancements (Post-{{TICKET_PREFIX}}-326)
-+ ### Future Enhancements (Post-{{TICKET_PREFIX}}-326)
+- ### Future Enhancements (Post-MOB-326)
++ ### Future Enhancements (Post-MOB-326)
 
-- **{{TICKET_PREFIX}}-326 Achievement**: Transformed user onboarding
-+ **{{TICKET_PREFIX}}-326 Achievement**: Transformed user onboarding
+- **MOB-326 Achievement**: Transformed user onboarding
++ **MOB-326 Achievement**: Transformed user onboarding
 ```
 
 ## Verification
@@ -220,14 +220,14 @@ If you need to make changes manually, here are the specific updates required:
 After making changes, verify with:
 
 ```bash
-# Check for remaining {{PROJECT_SHORT}} references (should find none)
-grep -r "{{PROJECT_SHORT}}" docs/onboarding/*.md
+# Check for remaining MOB references (should find none)
+grep -r "MOB" docs/onboarding/*.md
 
 # Check for hardcoded GitHub URLs (should find only generic ones)
-grep -r "{{GITHUB_ORG}}" docs/onboarding/*.md
+grep -r "tamasha-live" docs/onboarding/*.md
 
-# Check for {{TICKET_PREFIX}}- ticket prefixes (should find none)
-grep -r "{{TICKET_PREFIX}}-" docs/onboarding/*.md
+# Check for MOB- ticket prefixes (should find none)
+grep -r "MOB-" docs/onboarding/*.md
 ```
 
 ## Rollback
@@ -253,10 +253,10 @@ These changes make the onboarding documentation:
 
 After generalization, teams adopting this methodology should:
 
-1. Replace `{{GITHUB_REPO_URL}}` with their repository URL
-2. Replace `{{GITHUB_ORG}}` and `{{GITHUB_REPO}}` with their GitHub org/repo names
-3. Replace `{{PROJECT_NAME}}` with their project directory name
-4. Replace `{{TICKET_PREFIX}}` with their ticket prefix (e.g., `PROJ`, `TASK`, `FEAT`)
+1. Replace `https://github.com/tamasha-live/mobile-app` with their repository URL
+2. Replace `tamasha-live` and `{{GITHUB_REPO}}` with their GitHub org/repo names
+3. Replace `mobile-app` with their project directory name
+4. Replace `MOB` with their ticket prefix (e.g., `PROJ`, `TASK`, `FEAT`)
 5. Update contact information (remove or replace email addresses)
 
 These replacements can be done with a single script or manually as part of repository customization.

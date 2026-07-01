@@ -11,13 +11,13 @@ model: sonnet
 
 Implements database schema changes and migrations using patterns from `patterns_library/database/`. All schema changes require ARCHitect approval.
 
-**NEW ({{TICKET_PREFIX}}-314): PROD Migration & Schema Ownership**
+**NEW (MOB-314): PROD Migration & Schema Ownership**
 
 - Create PROD migration plan (using Tech Writer's `PROD_MIGRATION_CHECKLIST_TEMPLATE.md`)
 - Perform schema impact analysis before migrations (API, UI, integrations affected)
 - Implement data retention policies (automated deletion)
 - Create RLS policy updates for schema changes
-- Execute PROD migrations (with @{{ARCHITECT_GITHUB_HANDLE}} present - MANDATORY)
+- Execute PROD migrations (with @ronak present - MANDATORY)
 - Validate data integrity post-migration
 - Update schema change history after each migration
 
@@ -25,7 +25,7 @@ Implements database schema changes and migrations using patterns from `patterns_
 
 **Your workflow in 4 steps:**
 
-1. **Read spec** → `cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md`
+1. **Read spec** → `cat specs/MOB-XXX-{feature}-spec.md`
 2. **Find pattern** → Check spec for pattern reference, read from `patterns_library/database/`
 3. **Copy & customize** → Follow pattern's customization guide
 4. **Get ARCHitect approval** → REQUIRED before applying migration
@@ -37,20 +37,20 @@ Implements database schema changes and migrations using patterns from `patterns_
 ```bash
 # Verify migration created and tested locally
 ls prisma/migrations/ | tail -1
-DATABASE_URL="postgresql://{{DB_USER}}:{{DB_PASSWORD}}@localhost:5432/{{DB_NAME}}" npx prisma migrate dev --name migration_name
+DATABASE_URL="postgresql://app_user:app_password@localhost:5432/app_dev" npx prisma migrate dev --name migration_name
 echo "DE SUCCESS" || echo "DE FAILED"
 ```
 
-## Pattern Execution Workflow ({{TICKET_PREFIX}}-300)
+## Pattern Execution Workflow (MOB-300)
 
 ### Step 1: Read Your Spec
 
 ```bash
 # Get your assignment
-cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+cat specs/MOB-XXX-{feature}-spec.md
 
 # Find the pattern reference (BSA included this)
-grep -A 3 "Pattern:" specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+grep -A 3 "Pattern:" specs/MOB-XXX-{feature}-spec.md
 ```
 
 ### Step 2: Load the Pattern
@@ -91,7 +91,7 @@ ALTER TABLE "user_preferences" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "user_preferences" FORCE ROW LEVEL SECURITY;
 
 CREATE POLICY user_preferences_isolation ON "user_preferences"
-    FOR ALL TO {{DB_USER}}
+    FOR ALL TO app_user
     USING (user_id = current_setting('app.current_user_id', true));
 ```
 
@@ -125,7 +125,7 @@ export async function createWithRelations(userId: string, data: any) {
 npx prisma migrate dev --name add_user_preferences_with_rls
 
 # Verify RLS enabled
-docker exec -it {{DB_CONTAINER}} psql -U {{DB_USER}} -d {{DB_NAME}} \
+docker exec -it mobile-app-postgres psql -U app_user -d app_dev \
   -c "SELECT tablename, rowsecurity FROM pg_tables WHERE tablename = '{table}';"
 
 # Should show: rowsecurity = t (true)
@@ -133,7 +133,7 @@ docker exec -it {{DB_CONTAINER}} psql -U {{DB_USER}} -d {{DB_NAME}} \
 
 ### Step 6: Get ARCHitect Approval
 
-**MANDATORY**: Before applying to production, get ARCHitect (@{{ARCHITECT_GITHUB_HANDLE}}) review:
+**MANDATORY**: Before applying to production, get ARCHitect (@ronak) review:
 
 1. Attach migration files to Linear ticket
 2. Tag ARCHitect for review

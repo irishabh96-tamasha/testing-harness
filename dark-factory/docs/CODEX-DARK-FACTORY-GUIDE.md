@@ -113,7 +113,7 @@ tmux -V                # Should print tmux 3.x+
 ```
 +------------------------------ Remote Server ----------------------------+
 |                                                                         |
-|  tmux session: codex-factory-{{TICKET_PREFIX}}-123                      |
+|  tmux session: codex-factory-MOB-123                      |
 |  +-------------------------------------------------------------------+ |
 |  | Window 1: TDM (lead)          | Window 2: BE Developer            | |
 |  |   codex --agent tdm           |   codex --agent be-developer      | |
@@ -219,31 +219,31 @@ This example launches a story-level team: TDM + BE Developer + QAS.
 
 ```bash
 # Create the tmux session
-tmux new-session -d -s "codex-factory-{{TICKET_PREFIX}}-123"
+tmux new-session -d -s "codex-factory-MOB-123"
 
 # Window 1: TDM (team lead)
-tmux rename-window -t "codex-factory-{{TICKET_PREFIX}}-123:1" "TDM"
-tmux send-keys -t "codex-factory-{{TICKET_PREFIX}}-123:TDM" \
+tmux rename-window -t "codex-factory-MOB-123:1" "TDM"
+tmux send-keys -t "codex-factory-MOB-123:TDM" \
   "cd {{PROJECT_PATH}} && codex-yolo codex --agent tdm \
-  'You are leading work on {{TICKET_PREFIX}}-123. Read the spec and coordinate.'" Enter
+  'You are leading work on MOB-123. Read the spec and coordinate.'" Enter
 
 # Window 2: BE Developer
-tmux new-window -t "codex-factory-{{TICKET_PREFIX}}-123" -n "BE-Dev"
-tmux send-keys -t "codex-factory-{{TICKET_PREFIX}}-123:BE-Dev" \
+tmux new-window -t "codex-factory-MOB-123" -n "BE-Dev"
+tmux send-keys -t "codex-factory-MOB-123:BE-Dev" \
   "cd {{PROJECT_PATH}} && codex-yolo codex --agent be-developer" Enter
 
 # Window 3: QAS
-tmux new-window -t "codex-factory-{{TICKET_PREFIX}}-123" -n "QAS"
-tmux send-keys -t "codex-factory-{{TICKET_PREFIX}}-123:QAS" \
+tmux new-window -t "codex-factory-MOB-123" -n "QAS"
+tmux send-keys -t "codex-factory-MOB-123:QAS" \
   "cd {{PROJECT_PATH}} && codex-yolo codex --agent qas" Enter
 
 # Window 4: Control (audit log)
-tmux new-window -t "codex-factory-{{TICKET_PREFIX}}-123" -n "Control"
-tmux send-keys -t "codex-factory-{{TICKET_PREFIX}}-123:Control" \
+tmux new-window -t "codex-factory-MOB-123" -n "Control"
+tmux send-keys -t "codex-factory-MOB-123:Control" \
   "tail -f ~/.codex-yolo/audit.log" Enter
 
 # Attach
-tmux attach -t "codex-factory-{{TICKET_PREFIX}}-123"
+tmux attach -t "codex-factory-MOB-123"
 ```
 
 ---
@@ -275,7 +275,7 @@ Prefix + w          Interactive window list
 
 ```bash
 # List all windows in the session
-tmux list-windows -t "codex-factory-{{TICKET_PREFIX}}-123"
+tmux list-windows -t "codex-factory-MOB-123"
 
 # Check if codex processes are running
 pgrep -a codex

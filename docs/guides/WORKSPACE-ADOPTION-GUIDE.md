@@ -51,7 +51,7 @@ docs/             # Documentation
 
 ```bash
 cd /path/to/your-project
-git remote add harness https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}.git
+git remote add harness https://github.com/tamasha-live/mobile-app.git
 git fetch harness
 ```
 
@@ -59,7 +59,7 @@ git fetch harness
 
 ```bash
 # Checkout harness directories into your repo
-git checkout harness/{{MAIN_BRANCH}} -- \
+git checkout harness/main -- \
   .claude/ \
   .gemini/ \
   .codex/ \
@@ -126,13 +126,13 @@ packages repo), each can adopt the harness independently.
 ### Architecture
 
 ```
-{{GITHUB_ORG}}/
-├── {{PROJECT_NAME}}/             # Main application repo (PRIMARY)
+tamasha-live/
+├── mobile-app/             # Main application repo (PRIMARY)
 │   ├── .claude/                  # Full harness
 │   ├── dark-factory/             # Agent teams run here
 │   └── ...
 │
-└── {{PROJECT_NAME}}-packages/    # Shared packages repo (SECONDARY)
+└── mobile-app-packages/    # Shared packages repo (SECONDARY)
     ├── .claude/                  # Synced harness (subset or full)
     └── ...
 ```
@@ -142,7 +142,7 @@ packages repo), each can adopt the harness independently.
 Your main workspace gets the full harness:
 
 ```bash
-cd {{PROJECT_NAME}}
+cd mobile-app
 # Full adoption as described in "Single Repo Adoption" above
 ```
 
@@ -153,10 +153,10 @@ Other repos can adopt the same harness:
 **Option A: Independent adoption** (simpler)
 
 ```bash
-cd {{PROJECT_NAME}}-packages
-git remote add harness https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}.git
+cd mobile-app-packages
+git remote add harness https://github.com/tamasha-live/mobile-app.git
 git fetch harness
-git checkout harness/{{MAIN_BRANCH}} -- .claude/ .gemini/ .codex/ .cursor/ .agents/ CLAUDE.md AGENTS.md
+git checkout harness/main -- .claude/ .gemini/ .codex/ .cursor/ .agents/ CLAUDE.md AGENTS.md
 # Run setup wizard with this repo's values
 bash scripts/setup-template.sh
 ```
@@ -164,18 +164,18 @@ bash scripts/setup-template.sh
 **Option B: Sync from primary** (keeps repos aligned)
 
 ```bash
-cd {{PROJECT_NAME}}-packages
+cd mobile-app-packages
 # Copy harness from workspace
-cp -r ../{{PROJECT_NAME}}/.claude/ .claude/
-cp -r ../{{PROJECT_NAME}}/.gemini/ .gemini/
-cp -r ../{{PROJECT_NAME}}/.codex/ .codex/
-cp -r ../{{PROJECT_NAME}}/.cursor/ .cursor/
-cp -r ../{{PROJECT_NAME}}/.agents/ .agents/
-cp ../{{PROJECT_NAME}}/CLAUDE.md .
-cp ../{{PROJECT_NAME}}/AGENTS.md .
+cp -r ../mobile-app/.claude/ .claude/
+cp -r ../mobile-app/.gemini/ .gemini/
+cp -r ../mobile-app/.codex/ .codex/
+cp -r ../mobile-app/.cursor/ .cursor/
+cp -r ../mobile-app/.agents/ .agents/
+cp ../mobile-app/CLAUDE.md .
+cp ../mobile-app/AGENTS.md .
 
 # Adjust project-specific values
-sed -i "s/{{PROJECT_NAME}}/{{PROJECT_NAME}}-packages/g" CLAUDE.md
+sed -i "s/mobile-app/mobile-app-packages/g" CLAUDE.md
 ```
 
 ### Cross-Repo Agent Work
@@ -187,12 +187,12 @@ Agents in the dark factory can work across repos by:
 2. **Multiple sessions** — Run separate dark factory sessions for each repo:
    ```bash
    # Session 1: workspace
-   cd {{PROJECT_NAME}}
-   ./dark-factory/scripts/factory-start.sh feature {{TICKET_PREFIX}}-10
+   cd mobile-app
+   ./dark-factory/scripts/factory-start.sh feature MOB-10
 
    # Session 2: packages (in another terminal)
-   cd {{PROJECT_NAME}}-packages
-   ./dark-factory/scripts/factory-start.sh story {{TICKET_PREFIX}}-11
+   cd mobile-app-packages
+   ./dark-factory/scripts/factory-start.sh story MOB-11
    ```
 3. **Shared Linear** — Both repos use the same Linear workspace and ticket
    prefix, so agents reference the same tickets
@@ -209,9 +209,9 @@ Use the harness sync script to pull upstream updates into both repos:
 Or sync manually from your primary repo:
 
 ```bash
-cd {{PROJECT_NAME}}-packages
-cp -r ../{{PROJECT_NAME}}/.claude/ .claude/
-cp -r ../{{PROJECT_NAME}}/.gemini/ .gemini/
+cd mobile-app-packages
+cp -r ../mobile-app/.claude/ .claude/
+cp -r ../mobile-app/.gemini/ .gemini/
 bash scripts/setup-template.sh
 ```
 
@@ -225,8 +225,8 @@ On your remote dev server (any always-on Linux machine with SSH access):
 
 ```bash
 # 1. Clone your primary workspace
-git clone git@github.com:{{GITHUB_ORG}}/{{PROJECT_NAME}}.git
-cd {{PROJECT_NAME}}
+git clone git@github.com:tamasha-live/mobile-app.git
+cd mobile-app
 
 # 2. Run dark factory setup
 ./dark-factory/scripts/factory-setup.sh
@@ -240,9 +240,9 @@ nano ~/.dark-factory/env
 Edit `~/.dark-factory/env` with your actual values:
 
 ```bash
-FACTORY_PROJECT_DIR="/home/{{REMOTE_USER}}/{{PROJECT_NAME}}"
-FACTORY_MAIN_BRANCH="{{MAIN_BRANCH}}"
-FACTORY_TICKET_PREFIX="{{TICKET_PREFIX}}"
+FACTORY_PROJECT_DIR="/home/{{REMOTE_USER}}/mobile-app"
+FACTORY_MAIN_BRANCH="main"
+FACTORY_TICKET_PREFIX="MOB"
 FACTORY_LOG_DIR="$HOME/.dark-factory/logs"
 FACTORY_WORKTREE_DIR="$HOME/.dark-factory/worktrees"
 FACTORY_USE_WORKTREES=true
@@ -254,7 +254,7 @@ CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 
 ```bash
 # Start a feature team for a ticket
-./dark-factory/scripts/factory-start.sh feature {{TICKET_PREFIX}}-10
+./dark-factory/scripts/factory-start.sh feature MOB-10
 
 # Monitor from your local machine via SSH
 ssh {{REMOTE_HOST}} './dark-factory/scripts/factory-status.sh'
@@ -270,12 +270,12 @@ To have agents work on a secondary repo from the same server:
 ```bash
 # Clone the packages repo alongside workspace
 cd /home/{{REMOTE_USER}}
-git clone git@github.com:{{GITHUB_ORG}}/{{PROJECT_NAME}}-packages.git
+git clone git@github.com:tamasha-live/mobile-app-packages.git
 
 # Start a separate factory session pointing to packages
-cd {{PROJECT_NAME}}-packages
+cd mobile-app-packages
 # Temporarily override FACTORY_PROJECT_DIR
-FACTORY_PROJECT_DIR="$(pwd)" ./dark-factory/scripts/factory-start.sh story {{TICKET_PREFIX}}-11
+FACTORY_PROJECT_DIR="$(pwd)" ./dark-factory/scripts/factory-start.sh story MOB-11
 ```
 
 ---
@@ -339,14 +339,14 @@ changes, or Gemini harness updates:
 ```bash
 # 1. Ensure you have the harness remote
 git remote get-url harness || \
-  git remote add harness https://github.com/{{GITHUB_ORG}}/{{PROJECT_REPO}}.git
+  git remote add harness https://github.com/tamasha-live/mobile-app.git
 
 # 2. Fetch the latest
 git fetch harness
 
 # 3. Checkout updated directories (review the list — skip any you've
 #    heavily customized and want to merge manually)
-git checkout harness/{{MAIN_BRANCH}} -- \
+git checkout harness/main -- \
   .claude/ \
   .gemini/ \
   .codex/ \
@@ -377,8 +377,8 @@ For these files, manually diff and merge:
 
 ```bash
 # Compare your version with upstream
-git diff HEAD harness/{{MAIN_BRANCH}} -- CLAUDE.md
-git diff HEAD harness/{{MAIN_BRANCH}} -- .claude/team-config.json
+git diff HEAD harness/main -- CLAUDE.md
+git diff HEAD harness/main -- .claude/team-config.json
 ```
 
 ### What to Update vs. What to Keep
@@ -408,18 +408,18 @@ If you have multiple repos using the harness:
 
 ```bash
 # Update primary repo first
-cd {{PROJECT_NAME}}
-git fetch harness && git checkout harness/{{MAIN_BRANCH}} -- .claude/ .gemini/ .codex/ .cursor/ .agents/
+cd mobile-app
+git fetch harness && git checkout harness/main -- .claude/ .gemini/ .codex/ .cursor/ .agents/
 bash scripts/setup-template.sh
 git add -A && git commit -m "chore: upgrade harness to vX.Y.Z"
 
 # Then sync secondary repos from primary
-cd ../{{PROJECT_NAME}}-packages
-cp -r ../{{PROJECT_NAME}}/.claude/ .claude/
-cp -r ../{{PROJECT_NAME}}/.gemini/ .gemini/
-cp -r ../{{PROJECT_NAME}}/.codex/ .codex/
-cp -r ../{{PROJECT_NAME}}/.cursor/ .cursor/
-cp -r ../{{PROJECT_NAME}}/.agents/ .agents/
+cd ../mobile-app-packages
+cp -r ../mobile-app/.claude/ .claude/
+cp -r ../mobile-app/.gemini/ .gemini/
+cp -r ../mobile-app/.codex/ .codex/
+cp -r ../mobile-app/.cursor/ .cursor/
+cp -r ../mobile-app/.agents/ .agents/
 # Adjust project-specific values
 bash scripts/setup-template.sh
 git add -A && git commit -m "chore: upgrade harness to vX.Y.Z"

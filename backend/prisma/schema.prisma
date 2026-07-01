@@ -1,0 +1,141 @@
+// Prisma schema for mobile-app backend.
+//
+// RLS NOTE: Row Level Security policies (when needed) live in SQL migrations,
+// not here. All DB access goes through the context helpers in src/lib/rls-context.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Example user table (kept for the auth work to come).
+model User {
+  user_id    String   @id @default(uuid())
+  email      String   @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("users")
+}
+
+/// The user's editable profile (Personal + Business details). Singleton "me"
+/// until auth lands, at which point this becomes per-user.
+model Profile {
+  id              String   @id @default("me")
+  name            String   @default("")
+  avatarUrl       String   @default("")
+  businessName    String   @default("")
+  businessDetails String   @default("")
+  businessMobile  String   @default("")
+  updated_at      DateTime @default(now()) @updatedAt
+
+  @@map("profiles")
+}
+
+/// A book in the library (scripture / devotional text).
+model Book {
+  id       String    @id
+  title    String
+  author   String
+  coverUrl String    @default("")
+  category String    @default("")
+  sort     Int       @default(0)
+  chapters Chapter[]
+
+  @@map("books")
+}
+
+/// A chapter within a book. `section` is the Kanda/part name used to group
+/// chapters on the contents screen. `audioUrl` powers "Listen Audio".
+model Chapter {
+  id          String @id @default(uuid())
+  book        Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  bookId      String
+  section     String @default("")
+  sectionSort Int    @default(0)
+  title       String
+  body        String
+  audioUrl    String @default("")
+  sort        Int    @default(0)
+
+  @@index([bookId, sectionSort, sort])
+  @@map("chapters")
+}
+
+/// A wallpaper image, grouped by `collection` (live | new | trending) and
+/// associated with a deity for the selector filter.
+model Wallpaper {
+  id         String @id @default(uuid())
+  deityId    String
+  imageUrl   String
+  collection String @default("new")
+  likes      Int    @default(0)
+  shares     Int    @default(0)
+  setCount   Int    @default(0)
+  sort       Int    @default(0)
+
+  @@index([deityId, collection, sort])
+  @@map("wallpapers")
+}
+
+/// A devotional ringtone (audio) with play/download counts.
+model Ringtone {
+  id        String @id @default(uuid())
+  deityId   String
+  title     String
+  imageUrl  String
+  audioUrl  String
+  plays     Int    @default(0)
+  downloads Int    @default(0)
+  likes     Int    @default(0)
+  shares    Int    @default(0)
+  setCount  Int    @default(0)
+  sort      Int    @default(0)
+
+  @@index([deityId, sort])
+  @@map("ringtones")
+}
+
+/// A zodiac sign and its (daily) horoscope reading.
+model Horoscope {
+  id      String @id
+  name    String
+  reading String
+  sort    Int    @default(0)
+
+  @@map("horoscopes")
+}
+
+/// A deity shown in the Status selector.
+model Deity {
+  id       String   @id
+  name     String
+  imageUrl String
+  sort     Int      @default(0)
+  statuses Status[]
+
+  @@map("deities")
+}
+
+/// A status card belonging to a deity.
+model Status {
+  id              String   @id @default(uuid())
+  deity           Deity    @relation(fields: [deityId], references: [id], onDelete: Cascade)
+  deityId         String
+  imageUrl        String
+  authorName      String
+  authorSubtitle  String
+  tagline         String
+  authorAvatarUrl String
+  likes           Int      @default(0)
+  views           Int      @default(0)
+  sort            Int      @default(0)
+  created_at      DateTime @default(now())
+
+  @@index([deityId, sort])
+  @@map("statuses")
+}

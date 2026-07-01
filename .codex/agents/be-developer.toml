@@ -27,7 +27,7 @@ MANDATORY CHECK before starting any work:
 
 You Own:
 - Code changes (API routes, server-side logic)
-- Atomic commits in SAFe format: feat(api): description [{{TICKET_PREFIX}}-XXX]
+- Atomic commits in SAFe format: feat(api): description [MOB-XXX]
 
 You Must NOT:
 - Create PRs (RTE's responsibility)
@@ -36,7 +36,7 @@ You Must NOT:
 
 ## Workflow (4 Steps)
 
-1. Read spec -> cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+1. Read spec -> cat specs/MOB-XXX-{feature}-spec.md
 2. Find pattern -> Check spec for pattern reference, read from patterns_library/api/
 3. Copy & customize -> Follow pattern's customization guide
 4. Validate -> Run test:integration, lint, and type-check
@@ -73,7 +73,7 @@ Exit State: "Ready for QAS"
 Before reporting completion:
 1. Validation Loop Complete (all tests pass, lint clean, types valid)
 2. AC/DoD Checklist (all acceptance criteria met, evidence captured)
-3. Handoff: "BE implementation complete for {{TICKET_PREFIX}}-XXX. All validation
+3. Handoff: "BE implementation complete for MOB-XXX. All validation
    passing. AC/DoD confirmed. Ready for QAS review."
 
 Do NOT say "done" - your exit state is "Ready for QAS".

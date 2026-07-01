@@ -38,7 +38,7 @@ MIT License.
 
 **How to Update**:
 
-1. Go to: {{GITHUB_REPO_URL}}
+1. Go to: https://github.com/tamasha-live/mobile-app
 2. Click ⚙️ **Settings** (requires admin access)
 3. Under "General" → "Description", paste the text
 4. Click **Save**
@@ -66,7 +66,7 @@ production-validated
 
 **How to Add**:
 
-1. Go to repository homepage: {{GITHUB_REPO_URL}}
+1. Go to repository homepage: https://github.com/tamasha-live/mobile-app
 2. Click ⚙️ (gear icon) next to "About"
 3. Add topics in the "Topics" field (comma-separated)
 4. Click **Save changes**
@@ -127,7 +127,7 @@ production-validated
 
 1. Create image (1200x630px)
 2. Save as PNG or JPEG (< 1 MB)
-3. Go to: {{GITHUB_REPO_URL}}/settings
+3. Go to: https://github.com/tamasha-live/mobile-app/settings
 4. Scroll to **Social preview**
 5. Click **Upload an image...**
 6. Select your image
@@ -148,7 +148,7 @@ Test how your repository will appear on different platforms:
 https://cards-dev.twitter.com/validator
 ```
 
-Enter: `{{GITHUB_REPO_URL}}`
+Enter: `https://github.com/tamasha-live/mobile-app`
 
 **LinkedIn Post Inspector**:
 
@@ -169,7 +169,7 @@ https://developers.facebook.com/tools/debug/
 **Generic Open Graph Checker**:
 
 ```
-https://www.opengraph.xyz/url/https%3A%2F%2Fgithub.com%2F{{GITHUB_ORG}}%2F{{PROJECT_NAME}}-Agentic-Workflow
+https://www.opengraph.xyz/url/https%3A%2F%2Fgithub.com%2Ftamasha-live%2Fmobile-app-Agentic-Workflow
 ```
 
 ### Clear Cache
@@ -207,7 +207,7 @@ If you want MORE control over social sharing, create a GitHub Pages landing page
     <meta property="og:type" content="website" />
     <meta
       property="og:url"
-      content="https://{{GITHUB_ORG}}.github.io/{{GITHUB_REPO}}/"
+      content="https://tamasha-live.github.io/{{GITHUB_REPO}}/"
     />
     <meta property="og:title" content="SAFe Multi-Agent Development" />
     <meta
@@ -216,14 +216,14 @@ If you want MORE control over social sharing, create a GitHub Pages landing page
     />
     <meta
       property="og:image"
-      content="https://{{GITHUB_ORG}}.github.io/{{GITHUB_REPO}}/social-preview.png"
+      content="https://tamasha-live.github.io/{{GITHUB_REPO}}/social-preview.png"
     />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta
       property="twitter:url"
-      content="https://{{GITHUB_ORG}}.github.io/{{GITHUB_REPO}}/"
+      content="https://tamasha-live.github.io/{{GITHUB_REPO}}/"
     />
     <meta property="twitter:title" content="SAFe Multi-Agent Development" />
     <meta
@@ -232,16 +232,16 @@ If you want MORE control over social sharing, create a GitHub Pages landing page
     />
     <meta
       property="twitter:image"
-      content="https://{{GITHUB_ORG}}.github.io/{{GITHUB_REPO}}/social-preview.png"
+      content="https://tamasha-live.github.io/{{GITHUB_REPO}}/social-preview.png"
     />
 
     <!-- Redirect to GitHub repo -->
-    <meta http-equiv="refresh" content="0; url={{GITHUB_REPO_URL}}" />
+    <meta http-equiv="refresh" content="0; url=https://github.com/tamasha-live/mobile-app" />
   </head>
   <body>
     <p>
       Redirecting to
-      <a href="{{GITHUB_REPO_URL}}">SAFe Multi-Agent Development</a>...
+      <a href="https://github.com/tamasha-live/mobile-app">SAFe Multi-Agent Development</a>...
     </p>
   </body>
 </html>
@@ -254,7 +254,7 @@ If you want MORE control over social sharing, create a GitHub Pages landing page
 3. Branch: `main` → `/docs`
 4. Click **Save**
 5. Wait for deployment (2-3 minutes)
-6. Your landing page: `https://{{GITHUB_ORG}}.github.io/{{GITHUB_REPO}}/`
+6. Your landing page: `https://tamasha-live.github.io/{{GITHUB_REPO}}/`
 
 **Then share the GitHub Pages URL instead of the repo URL** for full Open Graph control.
 
@@ -276,7 +276,7 @@ If you want MORE control over social sharing, create a GitHub Pages landing page
 🎯 90.9% PR merge rate
 
 Whitepaper + complete working template:
-{{GITHUB_REPO_URL}}
+https://github.com/tamasha-live/mobile-app
 
 #AI #Claude #AgenticAI #SoftwareDevelopment
 ```
@@ -304,7 +304,7 @@ The repository includes:
 
 MIT License - Free to use and adapt for your team.
 
-{{GITHUB_REPO_URL}}
+https://github.com/tamasha-live/mobile-app
 
 What's your experience with multi-agent development?
 Let's discuss in the comments.
@@ -330,7 +330,7 @@ Key insights:
 
 All metrics are verifiable (Linear API, GitHub API).
 
-Repository: {{GITHUB_REPO_URL}}
+Repository: https://github.com/tamasha-live/mobile-app
 
 Happy to answer questions about the methodology or implementation.
 ```
@@ -340,7 +340,7 @@ Happy to answer questions about the methodology or implementation.
 ```
 Title: Evidence-Based Multi-Agent Development with Claude Code (5 months production data)
 
-URL: {{GITHUB_REPO_URL}}
+URL: https://github.com/tamasha-live/mobile-app
 ```
 
 ---
@@ -351,8 +351,8 @@ Set your repository's website field to your primary documentation or landing pag
 
 **Options**:
 
-- `https://{{PROJECT_DOMAIN}}` (your main site)
-- `https://{{GITHUB_ORG}}.github.io/{{GITHUB_REPO}}/` (if you create GitHub Pages)
+- `https://example.com` (your main site)
+- `https://tamasha-live.github.io/{{GITHUB_REPO}}/` (if you create GitHub Pages)
 - A dedicated landing page on your domain
 
 **How to Set**:
@@ -370,7 +370,7 @@ Track how your repository is being shared:
 
 ### GitHub Insights
 
-Go to: {{GITHUB_REPO_URL}}/graphs/traffic
+Go to: https://github.com/tamasha-live/mobile-app/graphs/traffic
 
 - **Views**: Total repository views
 - **Unique visitors**: Individual visitors

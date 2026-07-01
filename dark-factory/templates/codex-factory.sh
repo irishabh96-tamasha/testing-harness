@@ -24,7 +24,7 @@ set -euo pipefail
 # ── Configuration (replace {{PLACEHOLDER}} tokens) ──────────────────────────
 
 PROJECT_PATH="{{PROJECT_PATH}}"               # Absolute path to project root
-TICKET_PREFIX="{{TICKET_PREFIX}}"             # e.g., REN, SAW
+TICKET_PREFIX="MOB"             # e.g., REN, SAW
 TICKET_ID="{{TICKET_ID}}"                    # e.g., 123
 TEAM_SIZE="{{TEAM_SIZE}}"                    # story | feature | epic
 

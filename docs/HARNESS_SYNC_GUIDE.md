@@ -81,7 +81,7 @@ When you run `sync`, the script performs these steps in order:
 2. **Fetch upstream** -- Downloads the upstream `.claude/` directory as a
    tarball from the specified version or branch.
 3. **Apply substitutions** -- Replaces `{{PLACEHOLDER}}` tokens in upstream
-   files with your manifest's identity values (e.g., `{{TICKET_PREFIX}}`
+   files with your manifest's identity values (e.g., `MOB`
    becomes `REN`).
 4. **Build sync plan** -- Enumerates every file that would be written,
    resolving renames from upstream paths to local paths.
@@ -105,7 +105,7 @@ Upstream repo                    Your fork
     stripe-patterns/ ---rename-->    payment-patterns/
   hooks-config.json                hooks-config.json    [protected - skipped]
   commands/                        commands/
-    start-work.md   ---substitute-->  start-work.md ({{TICKET_PREFIX}} -> SCA)
+    start-work.md   ---substitute-->  start-work.md (MOB -> SCA)
 ```
 
 ---
@@ -433,8 +433,8 @@ How it works:
 1. The sync script builds a substitution map from `identity` + `substitutions`
    + derived values.
 2. Keys are sorted by length descending (longest-match-first) to prevent
-   partial matches. For example, `{{GITHUB_REPO_URL}}` is replaced before
-   `{{GITHUB_ORG}}`.
+   partial matches. For example, `https://github.com/tamasha-live/mobile-app` is replaced before
+   `tamasha-live`.
 3. Each `{{KEY}}` token in text files is replaced with the corresponding
    value via `sed`.
 4. Only files with extensions listed in `sync.substitution_extensions` are
@@ -490,7 +490,7 @@ are modified:
 ```text
 [ERROR] Preflight failed: 2 issue(s) found
   agents/system-architect.md: would modify protected file
-  commands/start-work.md:12: unreplaced token {{PROJECT_NAME}}
+  commands/start-work.md:12: unreplaced token mobile-app
 [INFO] Use --skip-preflight to bypass (advanced users only)
 ```
 

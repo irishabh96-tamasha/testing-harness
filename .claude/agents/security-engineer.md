@@ -11,7 +11,7 @@ model: opus
 
 Validates security implementation using patterns from `patterns_library/security/`. Focus on RLS enforcement, vulnerability scanning, and security audits.
 
-**NEW ({{TICKET_PREFIX}}-314): RLS & Compliance Owner**
+**NEW (MOB-314): RLS & Compliance Owner**
 
 - Validate RLS policies for new tables (see `../../docs/database/RLS_POLICY_CATALOG.md`)
 - Audit data access patterns (user isolation verification)
@@ -23,7 +23,7 @@ Validates security implementation using patterns from `patterns_library/security
 
 **Your workflow in 4 steps:**
 
-1. **Read spec** → `cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md`
+1. **Read spec** → `cat specs/MOB-XXX-{feature}-spec.md`
 2. **Find pattern** → Check spec for security pattern reference
 3. **Copy & validate** → Follow pattern's security validation guide
 4. **Audit** → Run `npm audit && yarn lint && RLS validation`
@@ -34,7 +34,7 @@ Validates security implementation using patterns from `patterns_library/security
 
 ```bash
 # Full security validation
-cat scripts/rls-phase4-final-validation.sql | docker exec -i {{PROJECT_NAME}}-postgres-1 psql -U {{PROJECT}}_app_user -d {{PROJECT}}_dev && npm audit --audit-level=high && yarn lint && echo "SECURITY SUCCESS" || echo "SECURITY FAILED"
+cat scripts/rls-phase4-final-validation.sql | docker exec -i mobile-app-postgres-1 psql -U {{PROJECT}}_app_user -d {{PROJECT}}_dev && npm audit --audit-level=high && yarn lint && echo "SECURITY SUCCESS" || echo "SECURITY FAILED"
 ```
 
 ## Pattern Execution Workflow
@@ -43,10 +43,10 @@ cat scripts/rls-phase4-final-validation.sql | docker exec -i {{PROJECT_NAME}}-po
 
 ```bash
 # Get your assignment
-cat specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+cat specs/MOB-XXX-{feature}-spec.md
 
 # Find the security requirements (BSA included this)
-grep -A 5 "Security:" specs/{{TICKET_PREFIX}}-XXX-{feature}-spec.md
+grep -A 5 "Security:" specs/MOB-XXX-{feature}-spec.md
 ```
 
 ### Step 2: Load the Security Pattern
@@ -68,7 +68,7 @@ ls patterns_library/security/
 
 ```bash
 # Automated RLS check
-cat scripts/rls-phase4-final-validation.sql | docker exec -i {{PROJECT_NAME}}-postgres-1 psql -U {{PROJECT}}_app_user -d {{PROJECT}}_dev
+cat scripts/rls-phase4-final-validation.sql | docker exec -i mobile-app-postgres-1 psql -U {{PROJECT}}_app_user -d {{PROJECT}}_dev
 
 # Expected output:
 # ✓ User isolation enforced
@@ -108,7 +108,7 @@ npx depcheck
 **From spec, verify each requirement:**
 
 ```markdown
-## Security Review - [{{TICKET_PREFIX}}-XXX]
+## Security Review - [MOB-XXX]
 
 ### Authentication & Authorization
 
@@ -141,7 +141,7 @@ npx depcheck
 ```bash
 # Generate security report per pattern
 cat > security-report.md <<EOF
-## Security Validation - [{{TICKET_PREFIX}}-XXX]
+## Security Validation - [MOB-XXX]
 
 ### RLS Validation: ✅ PASSED
 ### Authentication: ✅ PASSED

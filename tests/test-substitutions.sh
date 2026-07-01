@@ -210,12 +210,12 @@ SOURCEABLE=$(create_sourceable_script "$PROJ")
 # Create a test file with template placeholders
 mkdir -p "$PROJ/.claude/agents"
 cat > "$PROJ/.claude/agents/test-agent.md" <<'EOF'
-# {{PROJECT_NAME}} Agent
+# mobile-app Agent
 
-Ticket prefix: {{TICKET_PREFIX}}
-Organization: {{GITHUB_ORG}}
-Repo: {{PROJECT_REPO}}
-Short: {{PROJECT_SHORT}}
+Ticket prefix: MOB
+Organization: tamasha-live
+Repo: mobile-app
+Short: MOB
 EOF
 
 output=$(
@@ -232,15 +232,15 @@ output=$(
     rm -rf "$TMP_DIR"
 )
 
-assert_contains "$output" "# MyProject Agent" "{{PROJECT_NAME}} replaced with MyProject"
-assert_contains "$output" "Ticket prefix: MYP" "{{TICKET_PREFIX}} replaced with MYP"
-assert_contains "$output" "Organization: my-org" "{{GITHUB_ORG}} replaced with my-org"
-assert_not_contains "$output" "{{TICKET_PREFIX}}" "no remaining {{TICKET_PREFIX}} placeholders"
-assert_not_contains "$output" "{{GITHUB_ORG}}" "no remaining {{GITHUB_ORG}} placeholders"
+assert_contains "$output" "# MyProject Agent" "mobile-app replaced with MyProject"
+assert_contains "$output" "Ticket prefix: MYP" "MOB replaced with MYP"
+assert_contains "$output" "Organization: my-org" "tamasha-live replaced with my-org"
+assert_not_contains "$output" "MOB" "no remaining MOB placeholders"
+assert_not_contains "$output" "tamasha-live" "no remaining tamasha-live placeholders"
 
 # Identity fields without explicit substitutions should also be replaced
-assert_contains "$output" "Repo: my-project" "{{PROJECT_REPO}} replaced from identity"
-assert_contains "$output" "Short: MYP" "{{PROJECT_SHORT}} replaced from identity"
+assert_contains "$output" "Repo: my-project" "mobile-app replaced from identity"
+assert_contains "$output" "Short: MYP" "MOB replaced from identity"
 
 # =============================================================================
 echo -e "\n${CYAN}=== Test 2: apply_substitutions -- longest-match-first order ===${NC}\n"
@@ -258,8 +258,8 @@ identity:
   TICKET_PREFIX: "MYP"
   MAIN_BRANCH: "main"
 substitutions:
-  "{{GITHUB_REPO_URL}}": "https://github.com/my-org/my-project"
-  "{{GITHUB_ORG}}": "my-org"
+  "https://github.com/tamasha-live/mobile-app": "https://github.com/my-org/my-project"
+  "tamasha-live": "my-org"
 YAML
 
 "$PROJ/scripts/sync-claude-harness.sh" init >/dev/null 2>&1
@@ -268,8 +268,8 @@ SOURCEABLE=$(create_sourceable_script "$PROJ")
 # Create a test file with overlapping placeholders
 mkdir -p "$PROJ/.claude/agents"
 cat > "$PROJ/.claude/agents/overlap.md" <<'EOF'
-Repo URL: {{GITHUB_REPO_URL}}
-Org: {{GITHUB_ORG}}
+Repo URL: https://github.com/tamasha-live/mobile-app
+Org: tamasha-live
 EOF
 
 output=$(
@@ -286,9 +286,9 @@ output=$(
     rm -rf "$TMP_DIR"
 )
 
-assert_contains "$output" "Repo URL: https://github.com/my-org/my-project" "longer {{GITHUB_REPO_URL}} substituted correctly"
-assert_contains "$output" "Org: my-org" "shorter {{GITHUB_ORG}} still works"
-assert_not_contains "$output" "{{GITHUB_REPO_URL}}" "no remaining {{GITHUB_REPO_URL}}"
+assert_contains "$output" "Repo URL: https://github.com/my-org/my-project" "longer https://github.com/tamasha-live/mobile-app substituted correctly"
+assert_contains "$output" "Org: my-org" "shorter tamasha-live still works"
+assert_not_contains "$output" "https://github.com/tamasha-live/mobile-app" "no remaining https://github.com/tamasha-live/mobile-app"
 
 # =============================================================================
 echo -e "\n${CYAN}=== Test 3: apply_substitutions -- code examples not accidentally substituted ===${NC}\n"
@@ -322,7 +322,7 @@ Use `{{CHECKOUT_SESSION_ID}}` in your redirect URL:
 https://example.com/success?session_id={{CHECKOUT_SESSION_ID}}
 ```
 
-Ticket prefix: {{TICKET_PREFIX}}
+Ticket prefix: MOB
 Some other template: {{UNKNOWN_PLACEHOLDER}}
 Mustache syntax: {{#items}} and {{/items}}
 EOF
@@ -347,8 +347,8 @@ assert_contains "$output" "{{UNKNOWN_PLACEHOLDER}}" "non-manifest {{UNKNOWN_PLAC
 assert_contains "$output" "{{#items}}" "Mustache {{#items}} preserved"
 assert_contains "$output" "{{/items}}" "Mustache {{/items}} preserved"
 # But the manifest-defined one SHOULD be replaced
-assert_contains "$output" "Ticket prefix: MYP" "manifest {{TICKET_PREFIX}} still replaced"
-assert_not_contains "$output" "Ticket prefix: {{TICKET_PREFIX}}" "{{TICKET_PREFIX}} removed"
+assert_contains "$output" "Ticket prefix: MYP" "manifest MOB still replaced"
+assert_not_contains "$output" "Ticket prefix: MOB" "MOB removed"
 
 # =============================================================================
 echo -e "\n${CYAN}=== Test 4: apply_substitutions -- literal string substitutions ===${NC}\n"
@@ -428,9 +428,9 @@ YAML
 MOCK_UPSTREAM="$TEST_DIR/mock-upstream-noplc"
 mkdir -p "$MOCK_UPSTREAM/.claude/agents"
 cat > "$MOCK_UPSTREAM/.claude/agents/test-agent.md" <<'EOF'
-# {{PROJECT_NAME}} Agent
-Ticket: {{TICKET_PREFIX}}
-Org: {{GITHUB_ORG}}
+# mobile-app Agent
+Ticket: MOB
+Org: tamasha-live
 EOF
 
 MOCKED_SCRIPT=$(create_mocked_script "$PROJ" "$MOCK_UPSTREAM")
@@ -438,8 +438,8 @@ output=$("$MOCKED_SCRIPT" sync --no-placeholders 2>&1 || true)
 
 # Verify placeholders were NOT substituted
 assert_contains "$output" "Skipping placeholder substitutions (--no-placeholders)" "reports skipping substitutions"
-assert_file_contains "$PROJ/.claude/agents/test-agent.md" "{{TICKET_PREFIX}}" "placeholders preserved with --no-placeholders"
-assert_file_contains "$PROJ/.claude/agents/test-agent.md" "{{GITHUB_ORG}}" "{{GITHUB_ORG}} preserved with --no-placeholders"
+assert_file_contains "$PROJ/.claude/agents/test-agent.md" "MOB" "placeholders preserved with --no-placeholders"
+assert_file_contains "$PROJ/.claude/agents/test-agent.md" "tamasha-live" "tamasha-live preserved with --no-placeholders"
 
 # =============================================================================
 echo -e "\n${CYAN}=== Test 6: Backup retains upstream originals ===${NC}\n"
@@ -471,8 +471,8 @@ echo "# Old content" > "$PROJ/.claude/agents/existing.md"
 MOCK_UPSTREAM2="$TEST_DIR/mock-upstream-backup"
 mkdir -p "$MOCK_UPSTREAM2/.claude/agents"
 cat > "$MOCK_UPSTREAM2/.claude/agents/existing.md" <<'EOF'
-# {{PROJECT_NAME}} Agent
-Ticket: {{TICKET_PREFIX}}
+# mobile-app Agent
+Ticket: MOB
 EOF
 
 MOCKED_SCRIPT2=$(create_mocked_script "$PROJ" "$MOCK_UPSTREAM2")
@@ -480,7 +480,7 @@ output=$("$MOCKED_SCRIPT2" sync 2>&1 || true)
 
 # After sync, local should have substituted content
 assert_file_contains "$PROJ/.claude/agents/existing.md" "# MyProject Agent" "local file has substituted content"
-assert_file_not_contains "$PROJ/.claude/agents/existing.md" "{{PROJECT_NAME}}" "local file has no remaining {{PROJECT_NAME}}"
+assert_file_not_contains "$PROJ/.claude/agents/existing.md" "mobile-app" "local file has no remaining mobile-app"
 
 # Backup should retain the OLD local content (pre-sync)
 # The backup contains whatever was in .claude/ before the sync, not the upstream originals.
@@ -532,16 +532,16 @@ mkdir -p "$MOCK_UPSTREAM3/.claude/agents"
 mkdir -p "$MOCK_UPSTREAM3/.claude/skills/testing-patterns"
 
 cat > "$MOCK_UPSTREAM3/.claude/agents/be-developer.md" <<'EOF'
-# {{PROJECT_NAME}} BE Developer
+# mobile-app BE Developer
 
-Commit format: `feat(scope): description [{{TICKET_PREFIX}}-XXX]`
-Repository: {{GITHUB_ORG}}/{{PROJECT_REPO}}
+Commit format: `feat(scope): description [MOB-XXX]`
+Repository: tamasha-live/mobile-app
 EOF
 
 cat > "$MOCK_UPSTREAM3/.claude/skills/testing-patterns/SKILL.md" <<'EOF'
-# Testing Patterns for {{PROJECT_NAME}}
+# Testing Patterns for mobile-app
 
-Use ticket prefix {{TICKET_PREFIX}} in all test names.
+Use ticket prefix MOB in all test names.
 EOF
 
 MOCKED_SCRIPT3=$(create_mocked_script "$PROJ" "$MOCK_UPSTREAM3")
@@ -553,7 +553,7 @@ assert_contains "$output" "Applied substitutions" "substitution summary reported
 assert_file_contains "$PROJ/.claude/agents/be-developer.md" "# MyProject BE Developer" "BE developer has project name"
 assert_file_contains "$PROJ/.claude/agents/be-developer.md" "[MYP-XXX]" "BE developer has ticket prefix"
 assert_file_contains "$PROJ/.claude/agents/be-developer.md" "my-org/my-project" "BE developer has org/repo"
-assert_file_not_contains "$PROJ/.claude/agents/be-developer.md" "{{TICKET_PREFIX}}" "BE developer no remaining {{TICKET_PREFIX}}"
+assert_file_not_contains "$PROJ/.claude/agents/be-developer.md" "MOB" "BE developer no remaining MOB"
 
 # Verify skill file was substituted
 assert_file_contains "$PROJ/.claude/skills/testing-patterns/SKILL.md" "Testing Patterns for MyProject" "skill file has project name"
@@ -569,8 +569,8 @@ PROJ=$(setup_project "no-manifest-subs")
 MOCK_UPSTREAM4="$TEST_DIR/mock-upstream-nomnfst"
 mkdir -p "$MOCK_UPSTREAM4/.claude/agents"
 cat > "$MOCK_UPSTREAM4/.claude/agents/test-agent.md" <<'EOF'
-# {{PROJECT_NAME}} Agent
-Ticket: {{TICKET_PREFIX}}
+# mobile-app Agent
+Ticket: MOB
 EOF
 
 MOCKED_SCRIPT4=$(create_mocked_script "$PROJ" "$MOCK_UPSTREAM4")
@@ -605,7 +605,7 @@ SOURCEABLE=$(create_sourceable_script "$PROJ")
 # Create a test file -- identity fields should still be substituted
 mkdir -p "$PROJ/.claude/agents"
 cat > "$PROJ/.claude/agents/test.md" <<'EOF'
-Ticket: {{TICKET_PREFIX}}
+Ticket: MOB
 EOF
 
 output=$(
@@ -622,7 +622,7 @@ output=$(
     rm -rf "$TMP_DIR"
 )
 
-# Identity-derived {{TICKET_PREFIX}} -> MYP should still work even with empty substitutions
+# Identity-derived MOB -> MYP should still work even with empty substitutions
 assert_contains "$output" "Ticket: MYP" "empty substitutions: identity values still applied"
 
 # =============================================================================
@@ -640,8 +640,8 @@ identity:
   TICKET_PREFIX: "MSP"
   MAIN_BRANCH: "main"
 substitutions:
-  "{{AUTHOR_WEBSITE}}": "https://example.com/~user"
-  "{{AUTHOR_EMAIL}}": "user@example.com"
+  "https://tamasha.live": "https://example.com/~user"
+  "ronak@tamasha.live": "user@example.com"
 YAML
 
 "$PROJ/scripts/sync-claude-harness.sh" init >/dev/null 2>&1
@@ -649,9 +649,9 @@ SOURCEABLE=$(create_sourceable_script "$PROJ")
 
 mkdir -p "$PROJ/.claude/agents"
 cat > "$PROJ/.claude/agents/special.md" <<'EOF'
-Website: {{AUTHOR_WEBSITE}}
-Email: {{AUTHOR_EMAIL}}
-Project: {{PROJECT_NAME}}
+Website: https://tamasha.live
+Email: ronak@tamasha.live
+Project: mobile-app
 EOF
 
 output=$(
@@ -732,9 +732,9 @@ SOURCEABLE=$(create_sourceable_script "$PROJ")
 
 # Create files of different types
 mkdir -p "$PROJ/.claude/agents"
-echo "{{TICKET_PREFIX}}" > "$PROJ/.claude/agents/test.md"
-echo "{{TICKET_PREFIX}}" > "$PROJ/.claude/agents/test.json"
-echo "{{TICKET_PREFIX}}" > "$PROJ/.claude/agents/test.png"  # binary extension
+echo "MOB" > "$PROJ/.claude/agents/test.md"
+echo "MOB" > "$PROJ/.claude/agents/test.json"
+echo "MOB" > "$PROJ/.claude/agents/test.png"  # binary extension
 
 output=$(
     source "$SOURCEABLE"
@@ -752,7 +752,7 @@ output=$(
 assert_file_contains "$PROJ/.claude/agents/test.md" "MYP" "markdown file substituted"
 assert_file_contains "$PROJ/.claude/agents/test.json" "MYP" "JSON file substituted"
 # .png should NOT be processed (not in text file extension list)
-assert_file_contains "$PROJ/.claude/agents/test.png" "{{TICKET_PREFIX}}" "binary extension file NOT substituted"
+assert_file_contains "$PROJ/.claude/agents/test.png" "MOB" "binary extension file NOT substituted"
 
 # =============================================================================
 echo -e "\n${CYAN}=== Test 13: Script syntax validation ===${NC}\n"

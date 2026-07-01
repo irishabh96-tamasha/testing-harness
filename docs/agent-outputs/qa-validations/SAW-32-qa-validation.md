@@ -42,7 +42,7 @@
 | Shared skills (SKILL.md) | 18 | All present | PASS |
 | Cursor rules (.mdc) | 16 | All present | PASS |
 | Cursor MCP config | 1 | Valid JSON | PASS |
-| Codex config.toml | 1 | Structure valid; strict TOML parse fails on `{{MCP_LINEAR_SERVER}}` table name (expected — placeholder resolved after `setup-template.sh`) | PASS (with caveat) |
+| Codex config.toml | 1 | Structure valid; strict TOML parse fails on `linear-mcp` table name (expected — placeholder resolved after `setup-template.sh`) | PASS (with caveat) |
 
 ## 5. Regression Testing
 
@@ -84,7 +84,7 @@
 
 ## 9. Known Acceptable Issues
 
-- `.codex/config.toml` fails strict TOML parse due to `{{MCP_LINEAR_SERVER}}` placeholder — this is by design for template repos, resolved after `setup-template.sh` runs
+- `.codex/config.toml` fails strict TOML parse due to `linear-mcp` placeholder — this is by design for template repos, resolved after `setup-template.sh` runs
 - 3 of 64 commits (4.7%) lack proper ticket references — preserved for lineage continuity per Architect review
 - Historical merge commit messages reference "into template" — harmless artifacts from pre-rename
 

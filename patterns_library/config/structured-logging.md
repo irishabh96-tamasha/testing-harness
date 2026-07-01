@@ -226,7 +226,7 @@ function createLogger(options: LoggerOptions): Logger {
 const logger = createLogger({
   level: (process.env.LOG_LEVEL as LogLevel) || 'info',
   format: process.env.NODE_ENV === 'production' ? 'json' : 'pretty',
-  service: '{{PROJECT_NAME}}',
+  service: 'mobile-app',
 });
 
 export { logger };
@@ -390,7 +390,7 @@ function logBusinessEvent(logger: Logger, event: string, data: Record<string, un
    - `{{LANGUAGE}}` with your language (e.g., `typescript`, `python`, `go`)
    - `{{EXT}}` with your file extension (e.g., `ts`, `py`, `go`)
    - `{{SOURCE_DIR}}` with your source directory (e.g., `src`, `app`, `lib`)
-   - `{{PROJECT_NAME}}` with your project/service name
+   - `mobile-app` with your project/service name
 
 2. **Choose your logging library** (or use the built-in implementation above):
    - **Node.js**: pino, winston, bunyan (all support structured JSON output)

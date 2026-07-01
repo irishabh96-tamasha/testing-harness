@@ -29,7 +29,7 @@ Ensure consistent PR creation, CI/CD validation, and release coordination follow
 
 ```bash
 # FORBIDDEN: Missing ticket reference
-gh pr create --title "feat: add feature"  # Missing [{{TICKET_PREFIX}}-XXX]
+gh pr create --title "feat: add feature"  # Missing [MOB-XXX]
 
 # FORBIDDEN: Using squash/merge commits (breaks linear history)
 gh pr merge --squash
@@ -39,14 +39,14 @@ gh pr merge --merge
 git push origin feature  # Without {{CI_VALIDATE_COMMAND}} first
 
 # FORBIDDEN: Pushing without rebase
-git push origin feature  # When branch is behind {{MAIN_BRANCH}}
+git push origin feature  # When branch is behind main
 ```
 
 ### CORRECT Patterns
 
 ```bash
 # CORRECT: Ticket reference in title
-gh pr create --title "feat(scope): description [{{TICKET_PREFIX}}-XXX]"
+gh pr create --title "feat(scope): description [MOB-XXX]"
 
 # CORRECT: Rebase merge only
 gh pr merge --rebase --delete-branch
@@ -55,17 +55,17 @@ gh pr merge --rebase --delete-branch
 {{CI_VALIDATE_COMMAND}} && git push --force-with-lease
 
 # CORRECT: Always rebase first
-git fetch origin && git rebase origin/{{MAIN_BRANCH}}
-git push --force-with-lease origin {{TICKET_PREFIX}}-XXX-description
+git fetch origin && git rebase origin/main
+git push --force-with-lease origin MOB-XXX-description
 ```
 
 ## Pre-PR Checklist (MANDATORY)
 
 Before creating any PR:
 
-- [ ] Branch name: `{{TICKET_PREFIX}}-{number}-{description}`
-- [ ] Commits follow: `type(scope): description [{{TICKET_PREFIX}}-XXX]`
-- [ ] Rebased on latest {{MAIN_BRANCH}}: `git fetch origin && git rebase origin/{{MAIN_BRANCH}}`
+- [ ] Branch name: `MOB-{number}-{description}`
+- [ ] Commits follow: `type(scope): description [MOB-XXX]`
+- [ ] Rebased on latest main: `git fetch origin && git rebase origin/main`
 - [ ] CI passes locally: `{{CI_VALIDATE_COMMAND}}`
 - [ ] Linear history: No merge commits (`git log --oneline --graph -10`)
 
@@ -79,12 +79,12 @@ Before creating any PR:
 ## PR Creation Template
 
 ```bash
-gh pr create --title "feat(scope): description [{{TICKET_PREFIX}}-XXX]" --body "$(cat <<'EOF'
+gh pr create --title "feat(scope): description [MOB-XXX]" --body "$(cat <<'EOF'
 ## Summary
 
-Implements [feature/fix] as specified in ticket {{TICKET_PREFIX}}-XXX.
+Implements [feature/fix] as specified in ticket MOB-XXX.
 
-**Ticket**: https://linear.app/{{LINEAR_WORKSPACE}}/issue/{{TICKET_PREFIX}}-XXX
+**Ticket**: https://linear.app/tamasha/issue/MOB-XXX
 
 ## Changes Made
 
@@ -98,7 +98,7 @@ Implements [feature/fix] as specified in ticket {{TICKET_PREFIX}}-XXX.
 
 ## Pre-merge Checklist
 
-- [x] Rebased on latest {{MAIN_BRANCH}}
+- [x] Rebased on latest main
 - [x] CI passes
 - [x] Ticket referenced
 EOF
@@ -123,7 +123,7 @@ gh pr merge --merge    # Creates merge commits
 Before merging any PR, invoke QAS for independent review:
 
 ```text
-Prompt: "Review PR #XXX for {{TICKET_PREFIX}}-YYY. Validate commit format,
+Prompt: "Review PR #XXX for MOB-YYY. Validate commit format,
 CI status, patterns."
 ```
 
@@ -148,8 +148,8 @@ git push origin v{{VERSION}}
 gh release create v{{VERSION}} --title "v{{VERSION}}" --notes "$(cat <<'EOF'
 ## Changes
 
-- feat(scope): description [{{TICKET_PREFIX}}-XXX]
-- fix(scope): description [{{TICKET_PREFIX}}-YYY]
+- feat(scope): description [MOB-XXX]
+- fix(scope): description [MOB-YYY]
 
 ## Breaking Changes
 
@@ -166,9 +166,9 @@ EOF
 
 ```bash
 # After release merge, sync branches
-git checkout {{MAIN_BRANCH}} && git pull origin {{MAIN_BRANCH}}
+git checkout main && git pull origin main
 git checkout dev && git pull origin dev
-git merge {{MAIN_BRANCH}}  # Only case where merge commits are allowed
+git merge main  # Only case where merge commits are allowed
 git push origin dev
 ```
 
